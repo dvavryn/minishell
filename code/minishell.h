@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 13:19:25 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/07/07 16:54:59 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/07/07 15:59:49 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/07/07 16:48:14 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int tokenize(char *input)
-{
-	return (0);
-}
+# include "minishell_head.h"
+# include "minishell_define.h"
+# include "minishell_td.h"
 
-int	main(void)
-{
-	t_data	data;
-		
-	print_startup();
-	while (1)
-	{
-		data.input = readline("minishell> ");
-		if (!data.input || !*data.input)
-			printf("");
-		else
-			add_history(data.input);
-		if (!strncmp(data.input, "echo", 4))
-			printf("%s\n", data.input + 5);
-		tokenize(data.input);
-		free(data.input);
-	}
-}
+void	print_startup(void);
+
+#endif

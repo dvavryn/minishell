@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell_define.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 13:19:25 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/07/07 16:54:59 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/07/07 16:17:42 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/07/07 16:18:12 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_DEFINE_H
+# define MINISHELL_DEFINE_H
 
-int tokenize(char *input)
-{
-	return (0);
-}
+# define RESET   "\033[0m"
+# define BLACK   "\033[30m"
+# define RED     "\033[31m"
+# define GREEN   "\033[32m"
+# define YELLOW  "\033[33m"
+# define BLUE    "\033[34m"
+# define MAGENTA "\033[35m"
+# define CYAN    "\033[36m"
+# define WHITE   "\033[37m"
 
-int	main(void)
-{
-	t_data	data;
-		
-	print_startup();
-	while (1)
-	{
-		data.input = readline("minishell> ");
-		if (!data.input || !*data.input)
-			printf("");
-		else
-			add_history(data.input);
-		if (!strncmp(data.input, "echo", 4))
-			printf("%s\n", data.input + 5);
-		tokenize(data.input);
-		free(data.input);
-	}
-}
+#endif

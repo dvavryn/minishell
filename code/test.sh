@@ -1,2 +1,2 @@
-cc main.c -o minishell -lreadline
+make re
 ./minishell
