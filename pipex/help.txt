@@ -1,0 +1,2 @@
+'\n'	-	newline // no history
+spaces	-	newline // no history
