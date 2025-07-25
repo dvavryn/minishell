@@ -1,0 +1,159 @@
+Alright, Dom, this is a classic challenge! Building a minishell is an excellent way to deepen your understanding of C, system calls, and how an operating system works. It's a big project, but completely doable if you break it down.
+
+Here's a prioritized to-do list, structured like a cool teacher would, moving from foundational elements to more complex features. We'll start with the absolute basics to get a runnable shell, then build up its capabilities.
+
+Minishell Project To-Do List (The Cool Teacher's Guide)
+
+Phase 1: The Barebones Shell (Get it Running!)
+
+    Set up the Readline Loop & Basic Prompt:
+
+        Initialize readline.
+
+        Implement a loop that displays a prompt (e.g., minishell> ) and waits for user input using readline().
+
+        Handle 
+
+        ctrl-D to exit the shell.
+
+Implement 
+
+add_history() to get basic history functionality working.
+
+Handle 
+
+ctrl-C to display a new prompt on a new line.
+
+Handle 
+
+ctrl-\ to do nothing.
+
+Basic Command Execution (execve & fork/wait):
+
+    After reading a command, parse it into an executable path and arguments (e.g., ls -l becomes ls and -l).
+
+    Use fork() to create a child process.
+
+    In the child process, use execve() to try and execute the command.
+
+    In the parent process, use wait() or waitpid() to wait for the child process to finish.
+
+    Implement basic path searching: check /bin/ls, then /usr/bin/ls, etc., based on the PATH environment variable. Also, handle absolute (
+
+    /bin/ls) and relative (./my_script) paths.
+
+Phase 2: Essential Shell Features (Making it Usable)
+
+    Implement Basic Built-in Commands: Start with the simplest ones. These commands are executed directly by your shell, not by execve.
+
+        env (no options/arguments) 
+
+pwd (no options) 
+
+echo (basic, without -n option initially) 
+
+Signal Handling (Carefully!): This is crucial for interactive shells.
+
+    Use 
+
+    at most one global variable to indicate a received signal.
+
+This global variable should 
+
+only store the signal number and not provide any additional information or access to data.
+
+Forbidden: Using "norm" type structures in the global scope.
+
+Consider implications: your signal handler should not access your main data structures.
+
+Set up signal handlers for 
+
+SIGINT (Ctrl-C) and SIGQUIT (Ctrl-) to match bash behavior.
+
+Phase 3: Parsing & Redirections (The Core Logic)
+
+    Robust Input Parsing - Quoting & Expansion: This is often the trickiest part!
+
+        Tokenization: Break the input line into individual "tokens" (commands, arguments, operators).
+
+        Handle Single Quotes: Prevent interpretation of meta-characters within single quotes.
+
+Handle Double Quotes: Prevent interpretation of meta-characters except for $ within double quotes.
+
+Environment Variable Expansion: Expand $VAR to its value. This needs to happen 
+
+after parsing and considering quotes.
+
+No Unclosed Quotes or Unrequired Special Characters: Your shell should not interpret unclosed quotes or special characters like backslash or semicolon.
+
+Redirections: Implement these once you have solid parsing.
+
+    < (redirect input) 
+
+> (redirect output) 
+
+>> (redirect output in append mode) 
+
+<< (heredoc): given a delimiter, read input until that delimiter is seen. Does 
+
+not need to update history.
+
+Pipes: The classic | functionality.
+
+    Connect the output of one command to the input of the next command. This will involve 
+
+        pipe() and careful dup2() calls in child processes.
+
+Phase 4: Remaining Built-ins & Polish
+
+    Complete Built-in Commands:
+
+        echo (with -n option) 
+
+cd (only relative or absolute paths) 
+
+export (no options) 
+
+unset (no options) 
+
+exit (no options) 
+
+Error Handling & Edge Cases:
+
+    Ensure robust error reporting (e.g., using 
+
+    perror() or strerror() for system calls).
+
+        Handle cases where commands aren't found, permissions issues, etc., gracefully, similar to bash.
+
+Phase 5: Bonus Features (If Time Permits)
+
+    && and || (Logical Operators):
+
+        Implement && (execute next command only if previous succeeded).
+
+        Implement || (execute next command only if previous failed).
+
+        Parentheses for Priorities: This is a big one and will likely require a recursive parsing approach.
+
+Wildcards (*):
+
+    Expand 
+
+    * to match files/directories in the current working directory.
+
+Important Reminders from Your Cool Teacher:
+
+    Memory Management: While readline() might leak, your own code must not have memory leaks. Use 
+
+malloc and free responsibly!
+
+Stick to the Subject: Only implement what's asked. If in doubt about a requirement, take 
+
+bash as your reference.
+
+    Test, Test, Test: After every small feature you implement, test it thoroughly. Create specific test cases for edge scenarios (empty strings, weird paths, multiple pipes, etc.).
+
+    Git Commit Frequently: Make small, logical commits. This will save you headaches when you need to revert or find where a bug was introduced.
+
+This is a solid roadmap, Dom. Take it step by step, celebrate small victories, and don't hesitate to ask questions when you get stuck. You've got this! Which part are you thinking of starting with first?
