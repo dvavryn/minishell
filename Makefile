@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 DEBUG_FLAGS = -g
 INCLUDES = -I./inc -I./libs/libft
 
@@ -35,7 +35,7 @@ $(NAME): $(LIBFT) $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -lreadline
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)

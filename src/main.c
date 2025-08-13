@@ -12,7 +12,7 @@ int	main(void)
 			printf("exit\n");
 			exit(0);
 		}
-		else if (input = 0 )
+		else if (input == 0 )
 		{
 			free(input);
 		}
