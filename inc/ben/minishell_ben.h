@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/25 15:07:39 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:10:55 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_token
 }	t_token;
 
 t_token	*lex_input(char *str);
+void	free_tokens(t_token *token);
 void	print_tokens(t_token *token);
-void	free_tokens(t_token **token);
 char	*read_quotes(char *input, ssize_t *i);
 // char	*expand_token_value(const char *value);
 
