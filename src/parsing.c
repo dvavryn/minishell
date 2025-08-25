@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/22 15:13:37 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 14:25:44 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand_tokens(t_token *tokens)
-{
-	t_token	*curr;
-	char	*expanded;
+// static void	expand_tokens(t_token *tokens)
+// {
+// 	t_token	*curr;
+// 	char	*expanded;
 
-	curr = tokens;
-	while (curr)
-	{
-		if (curr->type == TOKEN_WORD)
-		{
-			expanded = expand_token_value(curr->value);
-			free(curr->value);
-			curr->value = expanded;
-		}
-		curr = curr->next;
-	}
-}
+// 	curr = tokens;
+// 	while (curr)
+// 	{
+// 		if (curr->type == TOKEN_WORD)
+// 		{
+// 			// expanded = expand_token_value(curr->value);
+// 			free(curr->value);
+// 			curr->value = expanded;
+// 		}
+// 		curr = curr->next;
+// 	}
+// }
 
 static t_token	*new_token(char *value, t_token_type type)
 {
@@ -60,29 +60,28 @@ static void	add_token(t_token **token, t_token *new)
 
 t_token	*lex_input(char *input)
 {
-	t_token	*tokens;
+	t_token	*tokens = NULL;
 	ssize_t	i;
 	ssize_t	start;
 	char	*word;
 
-	i = -1;
-	tokens = (t_token){0};
-	while (input[++i])
+	i = 0;
+	while (input[i])
 	{
 		while (ft_isspace(input[i]))
 			i++;
-		if (input[i] == '\0')
+		if (!input[i])
 			break;
 		if (input[i] == '|')
 		{
-			add_token(&tokens, new_token('|', TOKEN_PIPE));
+			add_token(&tokens, new_token("|", TOKEN_PIPE));
 			i++;
 		}
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
 			word = read_quotes(input, &i);
 			if (!word)
-				return (free_tokens(tokens), NULL);
+				return (free_tokens(&tokens), NULL);
 			add_token(&tokens, new_token(word, TOKEN_WORD));
 			free(word);
 		}
@@ -96,6 +95,6 @@ t_token	*lex_input(char *input)
 			free(word);
 		}
 	}
-	expand_tokens(tokens);
+	// expand_tokens(tokens);
 	return (tokens);
 }

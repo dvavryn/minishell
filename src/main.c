@@ -2,7 +2,8 @@
 
 int	main(void)
 {
-	char *input;
+	t_token	*token;
+	char 	*input;
 
 	while (1)
 	{
@@ -19,6 +20,9 @@ int	main(void)
 		else
 		{
 			add_history(input);
+			token = lex_input(input);
+			print_tokens(&token);
+			// free_tokens(&token);
 		}
 	}
 }

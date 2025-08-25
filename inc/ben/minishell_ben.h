@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_ben.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/22 15:13:42 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 14:05:47 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-void	lex_input(char *str);
+t_token	*lex_input(char *str);
 void	free_tokens(t_token **tokens);
-char	*read_quotes(const char *input, int i);
-char	*read_var_name(const char *str, int *i);
-char	*expand_token_value(const char *value);
+char	*read_quotes(char *input, ssize_t *i);
+void	print_tokens(t_token *token);
+void	free_tokens(t_token **tokens);
+// char	*expand_token_value(const char *value);
 
 #endif

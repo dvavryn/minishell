@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_ops.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/22 13:57:09 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 13:55:50 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	free_tokens(t_token **tokens)
 		free(TOKEN_WORD);
 	if (TOKEN_PIPE)
 		free(TOKEN_PIPE);
-	if (TOKEN_REDIR_IN)
-		free(TOKEN_REDIR_IN);
-	if (TOKEN_REDIR_OUT)
-		free(TOKEN_REDIR_OUT);
+	// if (TOKEN_REDIR_IN)
+	// 	free(TOKEN_REDIR_IN);
+	// if (TOKEN_REDIR_OUT)
+	// 	free(TOKEN_REDIR_OUT);
 }
 
-char	*read_quotes(const char *input, int *i)
+char	*read_quotes(char *input, ssize_t *i)
 {
 	int		start;
 	char	quote;
@@ -40,7 +40,7 @@ char	*read_quotes(const char *input, int *i)
 		//error endet nicht mit quote
 		return (NULL);
 	}
-	word = ft_strndup(input[start],  *i - start);
+	word = ft_strndup(&input[start],  *i - start);
 	if (input[*i] == quote)
 		(*i)++;
 	return (word);
