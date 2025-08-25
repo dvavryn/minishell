@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:10:24 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 16:15:14 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:15:58 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	print_tokens(t_token *token)
 	{
 		if (token->type == TOKEN_WORD)
 			printf("Token: %s Type: WORD\n", token->value);
+		else if (token->type == TOKEN_REDIR_IN)
+			printf("Token: %s Type: RED_IN\n", token->value);
+		else if (token->type == TOKEN_REDIR_OUT)
+			printf("Token: %s Type: RED_OUT\n", token->value);		
 		else if (token->type == TOKEN_PIPE)
 			printf("Token: %s Type: PIPE\n", token->value);
 		token = token->next;

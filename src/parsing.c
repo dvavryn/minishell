@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 16:19:58 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:21:58 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	add_token(t_token **token, t_token *new)
 {
 	t_token	*tmp;
 
+	if (!new)
+		return ;
 	if (!*token)
 	{
 		*token = new;
@@ -70,10 +72,15 @@ t_token	*lex_input(char *input)
 			i++;
 		if (!input[i])
 			break ;
-		if (input[i++] == '|')
+		else if (input[i] == '|')
 			add_token(&token, new_token("|", TOKEN_PIPE));
+		else if (input[i] == '<')
+			add_token(&token, new_token("<", TOKEN_REDIR_IN));
+		else if (input[i] == '>')
+			add_token(&token, new_token(">", TOKEN_REDIR_OUT));
 		else
 			token = add_word_token(token, input, &i);
+		i++;
 	}
 	// expand_token(token);
 	return (token);
