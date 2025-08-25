@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 16:09:11 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:20:39 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 {
 	char	*word;
 	ssize_t	start;
-	
+
 	if (input[*i] == '\'' || input[*i] == '\"')
 	{
 		word = read_quotes(input, i);
@@ -27,7 +27,6 @@ t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 	}
 	else
 	{
-		printf("1\n");
 		start = *i;
 		while (input[*i] && !ft_isspace(input[*i]) && input[*i] != '|')
 			(*i)++;
