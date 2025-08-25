@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 15:28:00 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:59:38 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 // 	}
 // }
 
-static t_token	*new_token(char *value, t_token_type type)
+t_token	*new_token(char *value, t_token_type type)
 {
 	t_token	*new;
 
@@ -43,7 +43,7 @@ static t_token	*new_token(char *value, t_token_type type)
 	return (new);
 }
 
-static void	add_token(t_token **token, t_token *new)
+void	add_token(t_token **token, t_token *new)
 {
 	t_token	*tmp;
 
@@ -62,8 +62,6 @@ t_token	*lex_input(char *input)
 {
 	t_token	*token = NULL;
 	ssize_t	i;
-	ssize_t	start;
-	char	*word;
 
 	i = 0;
 	while (input[i])
@@ -77,23 +75,8 @@ t_token	*lex_input(char *input)
 			add_token(&token, new_token("|", TOKEN_PIPE));
 			i++;
 		}
-		else if (input[i] == '\'' || input[i] == '\"')
-		{
-			word = read_quotes(input, &i);
-			if (!word)
-				return (free_tokens(token), NULL);
-			add_token(&token, new_token(word, TOKEN_WORD));
-			free(word);
-		}
 		else
-		{
-			start = i;
-			while (input[i] && !ft_isspace(input[i]) && input[i] != '|')
-				i++;
-			word = ft_substr(input, start, i - start);
-			add_token(&token, new_token(word, TOKEN_WORD));
-			free(word);
-		}
+			add_word_token(token, input, &i);
 	}
 	// expand_token(token);
 	return (token);
