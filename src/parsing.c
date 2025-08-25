@@ -6,18 +6,18 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 14:25:44 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:08:08 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	expand_tokens(t_token *tokens)
+// static void	expand_token(t_token *token)
 // {
 // 	t_token	*curr;
 // 	char	*expanded;
 
-// 	curr = tokens;
+// 	curr = token;
 // 	while (curr)
 // 	{
 // 		if (curr->type == TOKEN_WORD)
@@ -60,7 +60,7 @@ static void	add_token(t_token **token, t_token *new)
 
 t_token	*lex_input(char *input)
 {
-	t_token	*tokens = NULL;
+	t_token	*token = NULL;
 	ssize_t	i;
 	ssize_t	start;
 	char	*word;
@@ -74,15 +74,15 @@ t_token	*lex_input(char *input)
 			break;
 		if (input[i] == '|')
 		{
-			add_token(&tokens, new_token("|", TOKEN_PIPE));
+			add_token(&token, new_token("|", TOKEN_PIPE));
 			i++;
 		}
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
 			word = read_quotes(input, &i);
 			if (!word)
-				return (free_tokens(&tokens), NULL);
-			add_token(&tokens, new_token(word, TOKEN_WORD));
+				return (free_tokens(&token), NULL);
+			add_token(&token, new_token(word, TOKEN_WORD));
 			free(word);
 		}
 		else
@@ -91,10 +91,10 @@ t_token	*lex_input(char *input)
 			while (input[i] && !ft_isspace(input[i]) && input[i] != '|')
 				i++;
 			word = ft_substr(input, start, i - start);
-			add_token(&tokens, new_token(word, TOKEN_WORD));
+			add_token(&token, new_token(word, TOKEN_WORD));
 			free(word);
 		}
 	}
-	// expand_tokens(tokens);
-	return (tokens);
+	// expand_token(token);
+	return (token);
 }

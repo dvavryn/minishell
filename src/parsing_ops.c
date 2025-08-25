@@ -6,13 +6,13 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 13:55:50 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:08:29 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tokens(t_token **tokens)
+void	free_tokens(t_token **token)
 {
 	if (TOKEN_WORD)
 		free(TOKEN_WORD);
