@@ -30,7 +30,7 @@ t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 		start = *i;
 		while (input[*i] && !ft_isspace(input[*i]) && input[*i] != '|')
 			(*i)++;
-		word = ft_substr(input, start, (long)i - start);
+		word = ft_substr(input, start - 1, (long)(*i) - start + 1);
 		add_token(&token, new_token(word, TOKEN_WORD));
 		free(word);
 	}
