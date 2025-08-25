@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/25 15:10:55 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:22:23 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef enum e_token_type
 	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
-}   t_token_type;
+}	t_token_type;
 
 typedef struct s_token
 {

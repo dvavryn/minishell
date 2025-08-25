@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/25 15:13:01 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:28:00 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_token	*lex_input(char *input)
 		while (ft_isspace(input[i]))
 			i++;
 		if (!input[i])
-			break;
+			break ;
 		if (input[i] == '|')
 		{
 			add_token(&token, new_token("|", TOKEN_PIPE));
