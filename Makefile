@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g
 DEBUG_FLAGS = -g
 INCLUDES = -I./inc -I./libs/libft
 

@@ -21,7 +21,7 @@ int	main(void)
 		{
 			add_history(input);
 			token = lex_input(input);
-			print_tokens(&token);
+			print_tokens(token);
 			// free_tokens(&token);
 		}
 	}
