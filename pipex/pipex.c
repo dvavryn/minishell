@@ -177,23 +177,3 @@ int main(int argc, char **argv, char **envp)
 	printf("The executable is: %s\n", executable);
 	free(executable);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	ssize_t	i;
-
-// 	if (argc != 2)
-// 		return (1);
-// 	i = -1;
-// 	while (argv[1][++i] && ft_isspace(argv[1][i]))
-// 		;
-// 	if (!argv[1][i])
-// 		return (1);
-// 	if (argv[1][i] == '.')
-// 		printf("relative\n");
-// 	else if (argv[1][i] == '/')
-// 		printf("absolut\n");
-// 	else
-// 		printf("binary-name\n");
-// 	return (0);
-// }
