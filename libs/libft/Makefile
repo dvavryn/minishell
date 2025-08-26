@@ -59,6 +59,7 @@ SRC_STRING =	./string/ft_split.c\
 				./string/ft_strnstr.c\
 				./string/ft_strrchr.c\
 				./string/ft_strtrim.c\
+				./string/ft_strndup.c\
 				./string/ft_substr.c
 
 SRC_UTILS =		./utils/ft_printf_utils.c\

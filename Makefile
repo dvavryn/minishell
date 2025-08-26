@@ -6,6 +6,9 @@ CFLAGS = -Wall -Wextra -g
 DEBUG_FLAGS = -g
 INCLUDES = -I./inc -I./libs/libft
 
+# Supress change directory
+MAKEFLAGS += --no-print-directory
+
 # Project name
 NAME = minishell
 
@@ -15,8 +18,8 @@ OBJ_DIR = ./objs
 LIBFT_DIR = ./libs/libft
 
 # Source files
-SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+SRCS := $(shell find $(SRC_DIR) -name "*.c")
+OBJS := $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 
 # Libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -34,8 +37,8 @@ $(NAME): $(LIBFT) $(OBJS)
 	@echo "$(GREEN)✅ $(NAME) compiled successfully!$(NC)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -lreadline
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
