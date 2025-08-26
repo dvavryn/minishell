@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -g
 DEBUG_FLAGS = -g
 INCLUDES = -I./inc -I./libs/libft
 
-# Supress change directory
+# Supress directory change
 MAKEFLAGS += --no-print-directory
 
 # Project name
