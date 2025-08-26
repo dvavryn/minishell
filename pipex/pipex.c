@@ -118,11 +118,13 @@ char	*get_access(char **path)
 	i = -1;
 	while (path[++i] && access(path[i], F_OK))
 		;
-	if (!path)
+	if (!path[i])
+	{
+		out = NULL;
 		write(2, "No such file or directory\n", 26);
-	if (access(path[i], X_OK))
-		write(2, "Permission denied\n", 18);
-	out = ft_strdup(path[i]);
+	}
+	else
+		out = ft_strdup(path[i]);
 	free_split(path);
 	return (out);
 }
@@ -136,19 +138,50 @@ int	get_path_type(char *bin)
 	return (SEARCH);
 }
 
-char	*get_relative_path(char	*bin)
+char	*shorten_path(char	*str)
 {
-	char *out = NULL;
 	ssize_t	i;
+	char	*ptr;
 
 	i = -1;
-	while (bin[++i])
-	{
-		
-	}
+	ptr = ft_strrchr(str, '/');
+	while (&str[++i] != ptr || ptr + 1 == 0)
+		;
+	return (ft_substr(str, 0, i));
+}
 
+char	*get_relative_path(char	*bin)
+{
+	size_t	i;
+	char	*out;
+	char	*tmp;
+
+	out = getcwd(NULL, 0);
+	if (!out)
+		return (NULL);
+	i = 0;
+	while (bin[i] && bin[i] == '.')
+	{
+		if (ft_strlen(&bin[i]) >= 2 && !ft_strncmp("./", &bin[i], 2))
+			i += 2;
+		if (ft_strlen(&bin[i]) >= 3 && !ft_strncmp("../", &bin[i], 3))
+		{
+			i += 3;
+			tmp = out;
+			out = shorten_path(out);
+			free(tmp);
+			if (!out)
+				return (NULL);
+		}
+	}
+	tmp = out;
+	out = ft_strjoin(out, &bin[i - 1]);
+	if (!out)
+		return (NULL);
 	return (out);
 }
+
+
 
 int main(int argc, char **argv, char **envp)
 {
@@ -168,7 +201,9 @@ int main(int argc, char **argv, char **envp)
 		executable = get_relative_path(argv[1]);
 	}
 	else if (path_type == ABSOLUTE)
+	{
 		executable = ft_strdup(argv[1]);
+	}
 	else if (path_type == SEARCH)
 	{
 		if (argv[1])
@@ -176,8 +211,20 @@ int main(int argc, char **argv, char **envp)
 		if (!path)
 			return (1);
 		executable = get_access(path);
-		if (!executable)
-			return (1);
+	}
+	if (!executable)
+		return (1);
+	if (access(executable, F_OK))
+	{
+		write(2, "no such file or directory: ", 28);
+		write(2, executable, ft_strlen(executable));
+		write(2, "\n", 1);
+		return (1);
+	}
+	else if (access(executable, X_OK))
+	{
+		write(2, "Permission denied!\n", 20);
+		return (1);
 	}
 	printf("The executable is: %s\n", executable);
 	free(executable);
