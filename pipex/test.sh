@@ -1,0 +1,1 @@
+cc pipex.c -I../libs/libft -L../libs/libft -lft -g -lreadline
