@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:10:24 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:05:16 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:27:48 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,21 @@ void	free_tokens(t_token *token)
 
 void	print_tokens(t_token *token)
 {
-	while (token)
+	if (token)
 	{
-		if (token->type == TOKEN_WORD)
+		printf("\n");
+		while (token)
+		{
+			if (token->type == TOKEN_WORD)
 			printf("Token: %s Type: WORD\n", token->value);
-		else if (token->type == TOKEN_REDIR_IN)
+			else if (token->type == TOKEN_REDIR_IN)
 			printf("Token: %s Type: RED_IN\n", token->value);
-		else if (token->type == TOKEN_REDIR_OUT)
+			else if (token->type == TOKEN_REDIR_OUT)
 			printf("Token: %s Type: RED_OUT\n", token->value);		
-		else if (token->type == TOKEN_PIPE)
+			else if (token->type == TOKEN_PIPE)
 			printf("Token: %s Type: PIPE\n", token->value);
-		token = token->next;
+			token = token->next;
+		}
+		printf("\n");
 	}
 }

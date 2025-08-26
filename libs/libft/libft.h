@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:56:49 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:05:08 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:11:34 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_dll
 	struct s_dll	*next;
 }	t_dll;
 
+//char functions
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
@@ -43,6 +44,7 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_isspace(int c);
 
+//string functions
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strchr(const char *s, int c);
@@ -59,6 +61,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strndup(const char *s, int n);
 
+//memory functions
 void	*ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_free(char **array);
@@ -68,11 +71,13 @@ void	*ft_memcpy(void	*dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 
+//integer functions
 int		ft_atoi(const char *nptr);
 char	*ft_itoa(int n);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
+//print functions
 int		ft_printf(const char *conv, ...);
 void	ft_perror(const char *str);
 int		ft_printf_char(int c);
@@ -85,6 +90,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 
+//list functions
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstclear(t_list **lst, void (*del)(void *));
@@ -95,6 +101,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 
+//others
 char	*get_next_line(int fd);
 
 #endif

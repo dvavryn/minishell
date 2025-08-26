@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:05:33 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:34:09 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 			printf("exit\n");
 			exit(0);
 		}
-		else if (input == 0)
+		else if (*input == 0)
 		{
 			free(input);
 		}
@@ -33,9 +33,7 @@ int	main(void)
 		{
 			add_history(input);
 			token = lex_input(input);
-			printf("\n");
 			print_tokens(token);
-			printf("\n");
 			free_tokens(token);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 12:04:22 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:04:19 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:24:54 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	ft_check(const char format)
 {
 	if (format == 's')
 		write(2, "syntaxerror", 12);
+	else if (format == 'p')
+		write(2, "parsingerror:", 14);
 }
 
 void	ft_perror(const char *str)
@@ -35,4 +37,5 @@ void	ft_perror(const char *str)
 		else
 			write(2, &str[i], 1);
 	}
+	write(2, "\n", 1);
 }

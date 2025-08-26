@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:01:37 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:22:18 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*read_quotes(char *input, ssize_t *i)
 		(*i)++;
 	if (input[*i] != quote)
 	{
-		//error endet nicht mit quote
+		ft_perror("minishell: %p unclosed quotes");
 		return (NULL);
 	}
 	word = ft_strndup(&input[start], *i - start);
