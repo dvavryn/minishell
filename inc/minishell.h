@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:24:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/26 15:03:11 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:47:19 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include "dom/minishell_dom.h"
 # include "ben/minishell_ben.h"
+# include "macros.h"
 
 // ============================================================================
 
