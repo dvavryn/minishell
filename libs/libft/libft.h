@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:56:49 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/22 13:19:30 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 12:31:34 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strndup(const char *s, int n);
 
 void	*ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
@@ -74,6 +73,7 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 
 int		ft_printf(const char *conv, ...);
+void	ft_perror(const char *str);
 int		ft_printf_char(int c);
 int		ft_printf_hex(unsigned long n, const char format);
 int		ft_printf_number(int n);
