@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_perror.c                                        :+:      :+:    :+:   */
+/*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/26 12:04:22 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 16:02:16 by bschwarz         ###   ########.fr       */
+/*   Created: 2025/08/26 15:46:18 by bschwarz          #+#    #+#             */
+/*   Updated: 2025/08/26 15:55:26 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MACROS_H
+# define MACROS_H
 
-void	ft_perror(const char *str)
-{
-	write(2, str, ft_strlen(str));
-	write(2, "\n", 1);
-}
+# define MS "minishell: "
+# define E_SYNT "syntax error: "
+# define E_PARS "parsing error: "
+# define E_MAL "malloc failed "
+
+#endif
