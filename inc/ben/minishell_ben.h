@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/26 15:03:06 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:07:09 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ char	*read_quotes(char *input, ssize_t *i);
 void	add_token(t_token **token, t_token *new);
 t_token	*new_token(char *value, t_token_type type);
 t_token	*add_word_token(t_token *token, char *input, ssize_t *i);
-// char	*expand_token_value(const char *value);
 
 #endif

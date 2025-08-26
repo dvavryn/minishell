@@ -6,29 +6,11 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:05:20 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:06:52 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void	expand_token(t_token *token)
-// {
-// 	t_token	*curr;
-// 	char	*expanded;
-
-// 	curr = token;
-// 	while (curr)
-// 	{
-// 		if (curr->type == TOKEN_WORD)
-// 		{
-// 			// expanded = expand_token_value(curr->value);
-// 			free(curr->value);
-// 			curr->value = expanded;
-// 		}
-// 		curr = curr->next;
-// 	}
-// }
 
 t_token	*new_token(char *value, t_token_type type)
 {
@@ -82,6 +64,5 @@ t_token	*lex_input(char *input)
 			token = add_word_token(token, input, &i);
 		i++;
 	}
-	// expand_token(token);
 	return (token);
 }
