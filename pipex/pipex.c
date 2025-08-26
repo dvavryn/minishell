@@ -110,13 +110,6 @@ char	**get_path(char **envp, char *bin)
 	return (out);
 }
 
-
-
-// int	extract_data(int argc, char **argv, char **envp, )
-// {
-
-// }
-
 char	*get_access(char **path)
 {
 	ssize_t	i;
@@ -136,44 +129,62 @@ char	*get_access(char **path)
 
 int	get_path_type(char *bin)
 {
-	if (bin[0] == '.')
+	if (bin[0] == '.' || bin[0] == '~')
 		return (RELATIVE);
 	else if (bin[0] == '/')
 		return (ABSOLUTE);
 	return (SEARCH);
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	char	**path;
-	char	*executable;
-	int		path_type;
-	ssize_t	i;
 
-	if (!argv[1] || !argv[1][0])
-	{
-		write(2, "Missing executable\n", 19);
+
+int main(int argc, char **argv)
+{
+	if (argc != 2)
+		return(1);
+	char *out = expand_home(argv[1]);
+	if (!out)
 		return (1);
-	}
-	path_type = get_path_type(argv[1]);
-	if (path_type == RELATIVE)
-	{
-		//todo -- now;
-	}
-	else if (path_type == ABSOLUTE)
-	{
-		executable = ft_strdup(argv[1]);
-	}
-	else if (path_type == SEARCH)
-	{
-		if (argv[1])
-			path = get_path(envp, argv[1]);
-		if (!path)
-			return (1);
-		executable = get_access(path);
-		if (!executable)
-			return (1);
-	}
-	printf("The executable is: %s\n", executable);
-	free(executable);
+	printf("%s\n", out);
+	free(out);
 }
+
+char	*get_relative_path(char	*bin)
+{
+	char *out = NULL;
+	
+	return (out);
+}
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	char	**path;
+// 	char	*executable;
+// 	int		path_type;
+// 	ssize_t	i;
+
+// 	if (!argv[1] || !argv[1][0])
+// 	{
+// 		write(2, "Missing executable\n", 19);
+// 		return (1);
+// 	}
+// 	path_type = get_path_type(argv[1]);
+// 	if (path_type == RELATIVE)
+// 	{
+// 		executable = get_relative_path(argv[1]);
+// 	}
+// 	else if (path_type == ABSOLUTE)
+// 		executable = ft_strdup(argv[1]);
+// 	else if (path_type == SEARCH)
+// 	{
+// 		if (argv[1])
+// 			path = get_path(envp, argv[1]);
+// 		if (!path)
+// 			return (1);
+// 		executable = get_access(path);
+// 		if (!executable)
+// 			return (1);
+// 	}
+// 	printf("The executable is: %s\n", executable);
+// 	free(executable);
+// }
