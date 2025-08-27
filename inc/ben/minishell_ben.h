@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/26 15:07:09 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:28:02 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,28 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT,
 }	t_token_type;
 
+typedef enum e_token_quote
+{
+	QUOTE_NONE,
+	QUOTE_SINGLE,
+	QUOTE_DOUBLE
+}	t_token_quote;
+
 typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	t_token_quote	quote;
 	struct s_token	*next;
 }	t_token;
 
 t_token	*lex_input(char *str);
 void	free_tokens(t_token *token);
 void	print_tokens(t_token *token);
+// void	expand_token(t_token *token);
 char	*read_quotes(char *input, ssize_t *i);
 void	add_token(t_token **token, t_token *new);
-t_token	*new_token(char *value, t_token_type type);
+t_token	*new_token(char *value, int type, int quote);
 t_token	*add_word_token(t_token *token, char *input, ssize_t *i);
 
 #endif

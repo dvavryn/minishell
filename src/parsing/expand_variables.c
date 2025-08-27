@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 11:49:04 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 12:27:29 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:29:05 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static char	*get_var_name(const char *value, int *i)
 {
-	
 	
 }
 
