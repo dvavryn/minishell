@@ -1,1 +1,1 @@
-cc pipex.c get_path_type.c get_cmd.c get_relative_path.c get_path.c get_access.c test_permissions.c ft_split_join.c free_split.c shorten_path.c -I../libs/libft -L../libs/libft -lft -g
+cc pipex.c get_path_type.c get_cmd.c get_relative_path.c get_path.c get_access.c test_permissions.c ft_split_join.c free_split.c shorten_path.c -I../libs/libft -L../libs/libft -lft -g -o domexe
