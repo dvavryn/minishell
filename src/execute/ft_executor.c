@@ -63,19 +63,19 @@ int	bi_exit(void)
 int	check_builtin(char *bin, char **envp)
 {
 	if (!ft_strcmp(bin, "echo"))
-		return (bi_echo());
+		return (bi_echo(), 1);
 	if (!ft_strcmp(bin, "cd"))
-		return (bi_cd());
+		return (bi_cd(), 1);
 	if (!ft_strcmp(bin, "pwd"))
-		return (bi_pwd());
+		return (bi_pwd(), 1);
 	if (!ft_strcmp(bin, "export"))
-		return (bi_export());
+		return (bi_export()), 1;
 	if (!ft_strcmp(bin, "unset"))
-		return (bi_unset());
+		return (bi_unset(), 1);
 	if (!ft_strcmp(bin, "env"))
-		return (bi_env(envp));
+		return (bi_env(envp), 1);
 	if (!ft_strcmp(bin, "exit"))
-		return (bi_exit());
+		return (bi_exit(), 1);
 	return (0);
 }
 
@@ -93,8 +93,6 @@ void	ft_executor(t_token *tokens, char **envp)
 		else
 			printf("%s ", data.tokens->value);
 		data.tokens = data.tokens->next;
-		printf("\n");
 	}
-
 	(void)tokens;
 }
