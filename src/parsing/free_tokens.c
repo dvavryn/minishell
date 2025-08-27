@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:10:24 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 11:42:45 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:56:10 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,26 @@ void	print_tokens(t_token *token)
 {
 	char	*quote;
 
-	if (token)
+	if (!token)
+		return ;
+	while (token)
 	{
-		printf("\n");
-		while (token)
-		{
-			if (token->quote == 0)
-				quote = ft_strdup("NONE");
-			else if (token->quote == 1)	
-				quote = ft_strdup("SINGLE");
-			else if (token->quote == 2)
-				quote = ft_strdup("DOUBLE");
-			if (token->type == TOKEN_WORD)
-			printf("Token: %s Type: WORD Quote: %s\n", token->value, quote);
-			else if (token->type == TOKEN_REDIR_IN)
-			printf("Token: %s Type: RED_IN Quote: %s\n", token->value, quote);
-			else if (token->type == TOKEN_REDIR_OUT)
-			printf("Token: %s Type: RED_OUT Quote: %s\n", token->value, quote);		
-			else if (token->type == TOKEN_PIPE)
-			printf("Token: %s Type: PIPE Quote: %s\n", token->value, quote);
-			token = token->next;
-			free(quote);
-		}
-		printf("\n");
+		if (token->quote == 0)
+			quote = ft_strdup("NONE");
+		else if (token->quote == 1)	
+			quote = ft_strdup("SINGLE");
+		else if (token->quote == 2)
+			quote = ft_strdup("DOUBLE");
+		printf("\nToken:\t%s\n", token->value);
+		if (token->type == TOKEN_WORD)
+			printf("Type:\tWORD\nQuote:\t%s\n\n", quote);
+		else if (token->type == TOKEN_REDIR_IN)
+			printf("Type:\tRED_IN\nQuote:\t%s\n\n", quote);
+		else if (token->type == TOKEN_REDIR_OUT)
+			printf("Type:\tRED_OUT\nQuote:\t%s\n\n", quote);		
+		else if (token->type == TOKEN_PIPE)
+			printf("Type:\tPIPE\nQuote:\t%s\n\n", quote);
+		token = token->next;
+		free(quote);
 	}
 }
