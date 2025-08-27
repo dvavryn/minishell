@@ -87,5 +87,6 @@ void	ft_executor(t_token *tokens, char **envp)
 			printf("%s ", data.tokens->value);
 		data.tokens = data.tokens->next;
 	}
+	printf("\n");
 	(void)tokens;
 }
