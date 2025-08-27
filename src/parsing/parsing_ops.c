@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:58:56 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:46:17 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 
 	if (input[*i] == '\'' || input[*i] == '\"')
 	{
+		start = *i;
 		word = read_quotes(input, i);
 		if (!word)
 			return (free_tokens(token), NULL);
-		add_token(&token, new_token(word, TOKEN_WORD));
+		if (input[start] == '\'')
+			add_token(&token, new_token(word, TOKEN_WORD, QUOTE_SINGLE));
+		else if (input[start] == '\"')
+			add_token(&token, new_token(word, TOKEN_WORD, QUOTE_DOUBLE));
 		free(word);
 	}
 	else
@@ -31,7 +35,7 @@ t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 		while (input[*i] && !ft_isspace(input[*i]) && input[*i] != '|')
 			(*i)++;
 		word = ft_substr(input, start, (long)(*i) - start);
-		add_token(&token, new_token(word, TOKEN_WORD));
+		add_token(&token, new_token(word, TOKEN_WORD, 0));
 		free(word);
 	}
 	return (token);

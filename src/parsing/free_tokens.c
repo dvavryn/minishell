@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:10:24 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:27:48 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:42:45 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,29 @@ void	free_tokens(t_token *token)
 
 void	print_tokens(t_token *token)
 {
+	char	*quote;
+
 	if (token)
 	{
 		printf("\n");
 		while (token)
 		{
+			if (token->quote == 0)
+				quote = ft_strdup("NONE");
+			else if (token->quote == 1)	
+				quote = ft_strdup("SINGLE");
+			else if (token->quote == 2)
+				quote = ft_strdup("DOUBLE");
 			if (token->type == TOKEN_WORD)
-			printf("Token: %s Type: WORD\n", token->value);
+			printf("Token: %s Type: WORD Quote: %s\n", token->value, quote);
 			else if (token->type == TOKEN_REDIR_IN)
-			printf("Token: %s Type: RED_IN\n", token->value);
+			printf("Token: %s Type: RED_IN Quote: %s\n", token->value, quote);
 			else if (token->type == TOKEN_REDIR_OUT)
-			printf("Token: %s Type: RED_OUT\n", token->value);		
+			printf("Token: %s Type: RED_OUT Quote: %s\n", token->value, quote);		
 			else if (token->type == TOKEN_PIPE)
-			printf("Token: %s Type: PIPE\n", token->value);
+			printf("Token: %s Type: PIPE Quote: %s\n", token->value, quote);
 			token = token->next;
+			free(quote);
 		}
 		printf("\n");
 	}

@@ -6,13 +6,13 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:06:52 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:31:44 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_token(char *value, t_token_type type)
+t_token	*new_token(char *value, int type, int quote)
 {
 	t_token	*new;
 
@@ -20,6 +20,7 @@ t_token	*new_token(char *value, t_token_type type)
 	if (!new)
 		return (NULL);
 	new->value = ft_strdup(value);
+	new->quote = quote;
 	new->type = type;
 	new->next = NULL;
 	return (new);
@@ -55,11 +56,11 @@ t_token	*lex_input(char *input)
 		if (!input[i])
 			break ;
 		else if (input[i] == '|')
-			add_token(&token, new_token("|", TOKEN_PIPE));
+			add_token(&token, new_token("|", TOKEN_PIPE, 0));
 		else if (input[i] == '<')
-			add_token(&token, new_token("<", TOKEN_REDIR_IN));
+			add_token(&token, new_token("<", TOKEN_REDIR_IN, 0));
 		else if (input[i] == '>')
-			add_token(&token, new_token(">", TOKEN_REDIR_OUT));
+			add_token(&token, new_token(">", TOKEN_REDIR_OUT, 0));
 		else
 			token = add_word_token(token, input, &i);
 		i++;
