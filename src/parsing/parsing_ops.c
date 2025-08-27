@@ -6,11 +6,33 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 11:46:17 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:20:22 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*read_quotes(char *input, ssize_t *i)
+{
+	int		start;
+	char	quote;
+	char	*word;
+
+	quote = input[*i];
+	(*i)++;
+	start = *i;
+	while (input[*i] && input[*i] != quote)
+		(*i)++;
+	if (input[*i] != quote)
+	{
+		ft_perror(MS E_PARS"unclosed quotes");
+		return (NULL);
+	}
+	word = ft_strndup(&input[start], *i - start);
+	if (input[*i] == quote)
+		(*i)++;
+	return (word);
+}
 
 t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 {
@@ -39,26 +61,4 @@ t_token	*add_word_token(t_token *token, char *input, ssize_t *i)
 		free(word);
 	}
 	return (token);
-}
-
-char	*read_quotes(char *input, ssize_t *i)
-{
-	int		start;
-	char	quote;
-	char	*word;
-
-	quote = input[*i];
-	(*i)++;
-	start = *i;
-	while (input[*i] && input[*i] != quote)
-		(*i)++;
-	if (input[*i] != quote)
-	{
-		ft_perror(MS E_PARS"unclosed quotes");
-		return (NULL);
-	}
-	word = ft_strndup(&input[start], *i - start);
-	if (input[*i] == quote)
-		(*i)++;
-	return (word);
 }
