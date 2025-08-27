@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_permissions.c                                 :+:      :+:    :+:   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/26 21:04:17 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/26 21:04:17 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/08/27 12:09:12 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/08/27 12:09:12 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	test_permissions(char *exe)
+char	**get_cmd(int argc, char **argv)
 {
-	if (access(exe, F_OK))
+	char	**out;
+	ssize_t	i;
+
+	out = ft_calloc(argc, sizeof(char *));
+	if (!out)
+		return (NULL);
+	argv++;
+	i = -1;
+	while (argv[++i])
 	{
-		write(2, "no such file or directory: ", 28);
-		write(2, exe, ft_strlen(exe));
-		write(2, "\n", 1);
-		return (1);
+		out[i] = ft_strdup(argv[i]);
+		if (!out[i])
+		{
+			free_split(out);
+			return (NULL);
+		}
 	}
-	else if (access(exe, X_OK))
-	{
-		write(2, "Permission denied!\n", 20);
-		return (2);
-	}
-	return (0);
+	out[i] = NULL;
+	return (out);
 }
