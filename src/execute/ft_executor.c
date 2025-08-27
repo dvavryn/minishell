@@ -79,7 +79,7 @@ int	check_builtin(char *bin, char **envp)
 	return (0);
 }
 
-void	ft_executor(t_token *tokens, char *envp)
+void	ft_executor(t_token *tokens, char **envp)
 {
 	t_exe_data	data;
 
