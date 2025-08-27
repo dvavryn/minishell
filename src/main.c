@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@sudent.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 15:54:15 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 17:34:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 			data.token = lex_input(data.input);
 			if (data.token)
 			{
-				if (!ft_strcmp("exe", data.token->value))
+				if (ft_strcmp("db", data.token->value))
 				{
 					printf("going into execution mode!\n");
 					ft_executor(data.token->next, data.env);
