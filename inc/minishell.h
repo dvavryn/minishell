@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:24:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/26 15:47:19 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:39:27 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@
 # include <readline/history.h>
 
 // ============================================================================
+
+void	ft_executor(t_token *tokens);
 
 #endif

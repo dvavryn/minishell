@@ -1,0 +1,2 @@
+make re -C ../..
+../../minishell
