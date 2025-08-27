@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:24:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/27 14:51:20 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:06:10 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@
 
 void	ft_executor(t_token *tokens, char **envp);
 void	free_split(char **split);
+int ft_strcmp(const char *s1, const char *s2);
 
 #endif

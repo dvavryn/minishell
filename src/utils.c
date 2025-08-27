@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_split.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:05:08 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/27 14:51:30 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:06:05 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,9 @@ void	free_split(char **split)
 	while (split[++i])
 		free(split[i]);
 	free(split);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+	return(ft_strncmp(s1, s2, ft_strlen(s1)));
 }

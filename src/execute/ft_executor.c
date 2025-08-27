@@ -6,13 +6,6 @@ typedef struct s_exe_data
 	char	**envp;
 }	t_exe_data;
 
-int ft_strcmp(const char *s1, const char *s2)
-{
-	return(ft_strncmp(s1, s2, ft_strlen(s1)));
-}
-
-
-
 int	bi_echo(void)
 {
 	printf("builtin TODO\n");

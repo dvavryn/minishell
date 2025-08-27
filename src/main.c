@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 14:55:18 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:09:18 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	main(int argc, char **argv, char **envp)
 			data.token = lex_input(data.input);
 			if (data.token)
 			{
-				if (!ft_strncmp("exe", data.token->value, ft_strlen(data.token->value)))
+				if (ft_strcmp("exe", data.token->value))
 				{
 					printf("going into execution mode!\n");
-					ft_executor(data.token->next, envp);
+					ft_executor(data.token->next, data.env);
 				}
 				else
 					print_tokens(data.token);
