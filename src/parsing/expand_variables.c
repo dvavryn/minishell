@@ -6,11 +6,30 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 11:49:04 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 15:03:05 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 17:58:14 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_charjoin(char const *s1, char const c)
+{
+	char	*dest;
+	int		i;
+
+	if (!s1 || !c)
+		return (NULL);
+	dest = malloc((ft_strlen((char *)s1)
+				+ 2) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	while (s1[++i] != '\0')
+		dest[i] = s1[i];
+	dest[i] = c;
+	dest[++i] = '\0';
+	return (dest);
+}
 
 static char	*get_var_name(const char *value, ssize_t *i)
 {
@@ -47,7 +66,6 @@ static void	expand_token_value(t_token *token, char *value)
 {
 	ssize_t	i;
 	char	*tmp;
-	char	c;
 	char	*result;
 	
 	i = -1;
@@ -63,10 +81,7 @@ static void	expand_token_value(t_token *token, char *value)
 			i--;
 		}
 		else
-		{
-			c = value[i];
-			result = ft_strjoin(result, &c);
-		}
+			result = ft_charjoin(result, value[i]);
 	}
 	free(token->value);
 	token->value = result;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 15:11:01 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 17:50:10 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ t_token	*lex_input(char *input)
 			token = add_word_token(token, input, &i);
 		i++;
 	}
-	// expand_token(token); -- strcmp exe funktioniert nicht... -- values verändert???
+	expand_token(token); //-- strcmp exe funktioniert nicht... -- values verändert???
 	return (token);
 }
