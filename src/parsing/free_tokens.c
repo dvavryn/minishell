@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:10:24 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 12:56:10 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 13:56:28 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

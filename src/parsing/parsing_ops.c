@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 12:47:58 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 13:20:22 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:02:20 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static char	*read_quotes(char *input, ssize_t *i)
 		return (NULL);
 	}
 	word = ft_strndup(&input[start], *i - start);
-	if (input[*i] == quote)
-		(*i)++;
 	return (word);
 }
 
