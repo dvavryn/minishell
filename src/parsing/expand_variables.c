@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 11:49:04 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 14:53:27 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:03:05 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static char	*get_var_name(const char *value, ssize_t *i)
 		(*i)++;
 	tmp = ft_substr(value, start, *i - start);
 	if (!tmp)
-		return (ft_strdup(""));
-	result = getenv(tmp);
+		return (ft_strdup("")); //return NULL with check
+	result = getenv(tmp); //change to our envirement
 	free(tmp);
 	if (!result)
 		return (ft_strdup(""));
