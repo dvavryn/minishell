@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/26 15:34:09 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:37:07 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@ int	main(void)
 		{
 			add_history(input);
 			token = lex_input(input);
-			print_tokens(token);
+			if (!ft_strncmp("exe", token->value, ft_strlen(token->value)))
+			{
+				ft_executor(token->next);
+			}
+			else
+				print_tokens(token);
+			
 			free_tokens(token);
 		}
 	}
