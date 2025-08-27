@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:24:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/27 12:39:27 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/27 14:09:55 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@
 
 // ============================================================================
 
-void	ft_executor(t_token *tokens);
+void	ft_executor(t_token *tokens, char **envp);
 
 #endif
