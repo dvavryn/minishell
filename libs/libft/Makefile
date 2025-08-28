@@ -48,6 +48,7 @@ SRC_PRINT =		./print/ft_printf.c\
 
 SRC_STRING =	./string/ft_split.c\
 				./string/ft_strlcat.c\
+				./string/ft_strcmp.c\
 				./string/ft_strchr.c\
 				./string/ft_strlcpy.c\
 				./string/ft_strdup.c\
