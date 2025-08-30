@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:24:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/27 15:06:10 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/30 12:21:14 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-// ===========================  PERSONAL HEADER ===============================
-
-# include "dom/minishell_dom.h"
-# include "ben/minishell_ben.h"
-# include "macros.h"
-
-// ============================================================================
 
 // ============================== CORE HEADER =================================
 
@@ -40,10 +32,20 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+// ============================ UTILITY HEADER ================================
+
+# include "macros.h"
+# include "structs.h"
+
+// ===========================  PERSONAL HEADER ===============================
+
+# include "dom/minishell_dom.h"
+# include "ben/minishell_ben.h"
+
 // ============================================================================
 
 void	ft_executor(t_token *tokens, char **envp);
 void	free_split(char **split);
-int ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

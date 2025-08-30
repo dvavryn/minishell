@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/13 16:07:33 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 17:50:10 by bschwarz         ###   ########.fr       */
+/*   Created: 2025/08/30 10:38:28 by bschwarz          #+#    #+#             */
+/*   Updated: 2025/08/30 13:59:24 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,51 +20,50 @@ t_token	*new_token(char *value, int type, int quote)
 	if (!new)
 		return (NULL);
 	new->value = ft_strdup(value);
+	if (!new->value)
+	{
+		free(new);
+		return (NULL);
+	}
 	new->quote = quote;
 	new->type = type;
 	new->next = NULL;
 	return (new);
 }
 
-void	add_token(t_token **token, t_token *new)
+void	add_token(t_data *data, t_token *new)
 {
 	t_token	*tmp;
 
 	if (!new)
 		return ;
-	if (!*token)
+	if (!data->token)
 	{
-		*token = new;
+		data->token = new;
 		return ;
 	}
-	tmp = *token;
+	tmp = data->token;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 }
 
-t_token	*lex_input(char *input)
+void	lex_input(t_data *data)
 {
-	t_token	*token = NULL;
-	ssize_t	i;
-
-	i = 0;
-	while (input[i])
+	while (data->input[data->i])
 	{
-		while (ft_isspace(input[i]))
-			i++;
-		if (!input[i])
+		while (ft_isspace(data->input[data->i]))
+			data->i++;
+		if (!data->input[data->i])
 			break ;
-		else if (input[i] == '|')
-			add_token(&token, new_token("|", TOKEN_PIPE, 0));
-		else if (input[i] == '<')
-			add_token(&token, new_token("<", TOKEN_REDIR_IN, 0));
-		else if (input[i] == '>')
-			add_token(&token, new_token(">", TOKEN_REDIR_OUT, 0));
+		else if (data->input[data->i] == '|')
+		{
+			add_token(data, new_token("|", TOKEN_PIPE, 0));
+			data->i++;
+		}
+		else if (data->input[data->i] == '<' || data->input[data->i] == '>')
+			add_dir_token(data);
 		else
-			token = add_word_token(token, input, &i);
-		i++;
+			add_word_token(data);
 	}
-	expand_token(token); //-- strcmp exe funktioniert nicht... -- values verändert???
-	return (token);
 }

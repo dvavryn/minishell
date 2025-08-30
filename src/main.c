@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@sudent.42vienna.com>      +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/27 18:01:37 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/08/30 13:50:07 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct s_data
-{
-	char	**env;
-	t_token	*token;
-	char	*input;
-}	t_data;
 
 char **copy_env(char **envp)
 {
@@ -68,6 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 	
 	ft_bzero(&data, sizeof(t_data));
+	data.i = 0;
 	if (get_data(&data, envp))
 	{
 		ft_perror("fucking shit doesnt work! it crashed\n");
@@ -79,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!data.input)
 		{
 			printf("exit\n");
+			free_data(&data);
 			exit(0);
 		}
 		else if (*data.input == 0)
@@ -88,10 +83,11 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(data.input);
-			data.token = lex_input(data.input);
+			data.i = 0;
+			lex_input(&data);
 			if (data.token)
 			{
-				if (ft_strcmp("exe", data.token->value))
+				if (!ft_strcmp("exe", data.token->value))
 					ft_executor(data.token, data.env);
 				else
 				{
@@ -99,7 +95,10 @@ int	main(int argc, char **argv, char **envp)
 					print_tokens(data.token);
 				}
 				free_tokens(data.token);
+				data.token = NULL;
 			}
+			free(data.input);
+			data.input = NULL;
 		}
 	}
 }

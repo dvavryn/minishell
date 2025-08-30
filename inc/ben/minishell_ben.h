@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/27 14:13:50 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:43:18 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,13 @@
 
 # include "libft.h"
 
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-}	t_token_type;
-
-typedef enum e_token_quote
-{
-	QUOTE_NONE,
-	QUOTE_SINGLE,
-	QUOTE_DOUBLE
-}	t_token_quote;
-
-typedef struct s_token
-{
-	char			*value;
-	t_token_type	type;
-	t_token_quote	quote;
-	struct s_token	*next;
-}	t_token;
-
-t_token	*lex_input(char *str);
+void	lex_input(t_data *data);
 void	free_tokens(t_token *token);
-void	print_tokens(t_token *token);
-void	expand_token(t_token *token);
-void	add_token(t_token **token, t_token *new);
+void	add_dir_token(t_data *data);
+void	add_word_token(t_data *data);
+void	add_token_value(t_data *data, int type);
+void	add_token(t_data *data, t_token *new);
 t_token	*new_token(char *value, int type, int quote);
-t_token	*add_word_token(t_token *token, char *input, ssize_t *i);
+void	print_tokens(t_token *token);
 
 #endif
