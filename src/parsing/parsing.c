@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:38:28 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/30 13:59:24 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:31:39 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,5 @@ void	lex_input(t_data *data)
 		else
 			add_word_token(data);
 	}
+	expand_token(data->token);
 }
