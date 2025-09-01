@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 11:49:04 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/30 14:30:26 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 12:40:16 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static char	*get_var_name(const char *value, ssize_t *i)
 
 	if (value[*i] == '?')
 	{
-		(*i)++;	
+		(*i)++;
 		return (ft_strdup("some stuff"));
 	}
 	if (value[*i] == '$')
 	{
-		(*i)++;	
+		(*i)++;
 		return (ft_strdup("some other stuff"));
 	}
 	if (!ft_isalpha(value[*i]) && value[*i] != '_')
@@ -67,7 +67,7 @@ static void	expand_token_value(t_token *token, char *value)
 	ssize_t	i;
 	char	*tmp;
 	char	*result;
-	
+
 	i = -1;
 	result = ft_strdup("");
 	while (value[++(i)])
@@ -90,7 +90,7 @@ static void	expand_token_value(t_token *token, char *value)
 void	expand_token(t_token *token)
 {
 	t_token	*cur;
-		
+
 	if (!token)
 		return ;
 	cur = token;

@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/30 13:50:07 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 12:44:42 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **copy_env(char **envp)
+char	**copy_env(char **envp)
 {
-	char **out;
+	char	**out;
 	ssize_t	i;
+
 	i = -1;
 	while (envp[++i])
 		;
@@ -56,10 +57,10 @@ int	get_data(t_data *data, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data	data;
+
 	(void)argc;
 	(void)argv;
-	t_data	data;
-	
 	ft_bzero(&data, sizeof(t_data));
 	data.i = 0;
 	if (get_data(&data, envp))
