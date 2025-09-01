@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 16:43:44 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:59:03 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	main(int argc, char **argv, char **envp)
 				if (!ft_strcmp("exe", data.token->value))
 				{
 					ms_heredoc(&data);
-					if (ft_executor(&data))
-						printf("executor failed in main()\n");
+					// if (ft_executor(&data))
+					// 	printf("executor failed in main()\n");
 				}
 				else
 				{
