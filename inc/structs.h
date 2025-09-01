@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:45:56 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 14:35:53 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:46:19 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum e_token_quote
 typedef struct s_token
 {
 	char			*value;
+	int				heredoc_fd;
 	t_token_type	type;
 	t_token_quote	quote;
 	struct s_token	*next;
