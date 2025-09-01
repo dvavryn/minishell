@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 16:59:03 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/01 17:12:38 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,14 @@ int	main(int argc, char **argv, char **envp)
 			lex_input(&data);
 			if (data.token)
 			{
-				if (!ft_strcmp("exe", data.token->value))
+				if (ft_strcmp("debug", data.token->value))
 				{
 					ms_heredoc(&data);
-					// if (ft_executor(&data))
-					// 	printf("executor failed in main()\n");
 				}
 				else
 				{
 					printf("going into debug mode!\n");
-					print_tokens(data.token);
+					print_tokens(data.token->next);
 				}
 				free_tokens(data.token);
 				data.token = NULL;
