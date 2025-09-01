@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 14:45:13 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/01 14:50:57 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ int	main(int argc, char **argv, char **envp)
 			if (data.token)
 			{
 				if (!ft_strcmp("exe", data.token->value))
-					;
-					// ft_executor(data.token, data.env);
+				{
+					if (ft_executor(&data))
+						printf("executor failed in main()\n");
+				}
 				else
 				{
 					printf("going into debug mode!\n");

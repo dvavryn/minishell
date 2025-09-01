@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_dom.h                                    :+:      :+:    :+:   */
+/*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 19:25:47 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/01 14:50:13 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/09/01 14:48:43 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/09/01 14:50:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_DOM_H
-# define MINISHELL_DOM_H
+#include "minishell.h"
 
-int	ft_executor(t_data *data);
-
-#endif
+int	ft_executor(t_data *data)
+{
+	(void)data;
+	return (0);
+}
