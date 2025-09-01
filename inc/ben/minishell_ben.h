@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:26:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/08/30 15:16:27 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:43:22 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	add_token(t_data *data, t_token *new);
 t_token	*new_token(char *value, int type, int quote);
 void	print_tokens(t_token *token);
 void	expand_token(t_token *token);
+
+void	ms_heredoc(t_data *data);
 
 #endif
