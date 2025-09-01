@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:59:47 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/30 14:11:25 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:16:40 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	add_token_value(t_data *data, int type)
 {
 	char	*word;
 	ssize_t	start;
+	ssize_t	i;
 
 	while (ft_isspace(data->input[data->i]))
 		data->i++;
@@ -50,23 +51,16 @@ void	add_token_value(t_data *data, int type)
 		&& data->input[data->i] != '>' )
 		data->i++;
 	word = ft_substr(data->input, start, data->i - start);
-	add_token(data, new_token(word, type, 0));
-}
-
-static void	handle_input_redir(t_data *data)
-{
-	if (data->input[data->i + 1] == '<')
+	i = -1;
+	while (word[++i])
 	{
-		data->i += 2;
-		add_token_value(data, TOKEN_HEREDOC);
-		if (data->token)
-			clean_heredoc_token(data);
+		if (word[i] == '\'' || word[i] == '\"')
+		{
+			add_token(data, new_token(word, type, QUOTE_HD));
+			return ;
+		}
 	}
-	else
-	{
-		data->i++;
-		add_token_value(data, TOKEN_REDIR_IN);
-	}
+	add_token(data, new_token(word, type, QUOTE_NONE));
 }
 
 static void	handle_output_redir(t_data *data)
@@ -86,7 +80,20 @@ static void	handle_output_redir(t_data *data)
 void	add_dir_token(t_data *data)
 {
 	if (data->input[data->i] == '<')
-		handle_input_redir(data);
+	{
+		if (data->input[data->i + 1] == '<')
+		{
+			data->i += 2;
+			add_token_value(data, TOKEN_HEREDOC);
+			if (data->token)
+				clean_heredoc_token(data);
+		}
+		else
+		{
+			data->i++;
+			add_token_value(data, TOKEN_REDIR_IN);
+		}
+	}
 	else if (data->input[data->i] == '>')
 		handle_output_redir(data);
 }

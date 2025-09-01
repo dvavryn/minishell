@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 12:01:00 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/30 14:00:09 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:09:42 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	add_quote_token(t_data *data)
 	{
 		word = ft_substr(data->input, start, data->i - start);
 		if (quote == '\'')
-			add_token(data, new_token(word, TOKEN_WORD, 1));
+			add_token(data, new_token(word, TOKEN_WORD, QUOTE_SINGLE));
 		else if (quote == '\"')
-			add_token(data, new_token(word, TOKEN_WORD, 2));
+			add_token(data, new_token(word, TOKEN_WORD, QUOTE_DOUBLE));
 	}
 	else
 		ft_perror(MS E_PARS"unclosed quotes");

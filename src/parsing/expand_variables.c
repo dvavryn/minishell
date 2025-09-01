@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 11:49:04 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 12:40:16 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/01 14:21:16 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ static char	*get_var_name(const char *value, ssize_t *i)
 	char	*tmp;
 	char	*result;
 
-	if (value[*i] == '?')
+	if (value[*i] == '?' || value[*i] == '$')
 	{
 		(*i)++;
-		return (ft_strdup("some stuff"));
-	}
-	if (value[*i] == '$')
-	{
-		(*i)++;
-		return (ft_strdup("some other stuff"));
+		if (value[*i - 1] == '?')
+			return (ft_strdup("some stuff"));
+		if (value[*i - 1] == '$')
+			return (ft_strdup("some other stuff"));
 	}
 	if (!ft_isalpha(value[*i]) && value[*i] != '_')
 		return (ft_strdup("$"));
@@ -54,7 +52,7 @@ static char	*get_var_name(const char *value, ssize_t *i)
 		(*i)++;
 	tmp = ft_substr(value, start, *i - start);
 	if (!tmp)
-		return (ft_strdup("")); //return NULL with check
+		return (ft_strdup(""));
 	result = getenv(tmp); //change to our envirement
 	free(tmp);
 	if (!result)

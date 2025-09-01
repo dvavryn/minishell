@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:38:28 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/08/30 14:31:39 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:08:50 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	lex_input(t_data *data)
 			break ;
 		else if (data->input[data->i] == '|')
 		{
-			add_token(data, new_token("|", TOKEN_PIPE, 0));
+			add_token(data, new_token("|", TOKEN_PIPE, QUOTE_NONE));
 			data->i++;
 		}
 		else if (data->input[data->i] == '<' || data->input[data->i] == '>')

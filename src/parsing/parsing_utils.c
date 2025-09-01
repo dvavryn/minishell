@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:10:24 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 12:39:00 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/01 14:34:51 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,35 +31,56 @@ void	free_tokens(t_token *token)
 	}
 }
 
-// void	print_tokens(t_token *token)
-// {
-// 	char	*quote;
+static char	get_printing_quote(t_token *token)
+{
+	char	*quote;
 
-// 	if (!token)
-// 		return ;
-// 	while (token)
-// 	{
-// 		printf("\n= = = = = = = = = =\n");
-// 		if (token->quote == 0)
-// 			quote = ft_strdup("NONE");
-// 		else if (token->quote == 1)
-// 			quote = ft_strdup("SINGLE");
-// 		else if (token->quote == 2)
-// 			quote = ft_strdup("DOUBLE");
-// 		if (token->type == TOKEN_WORD)
-// 			printf("TYPE:\t WORD\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",token->value, quote);
-// 		else if (token->type == TOKEN_REDIR_IN)
-// 			printf("TYPE:\t RED_IN\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",token->value, quote);
-// 		else if (token->type == TOKEN_REDIR_OUT)
-// 			printf("TYPE:\t RED_OUT\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",token->value, quote);
-// 		else if (token->type == TOKEN_PIPE)
-// 			printf("TYPE:\t PIPE\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",token->value, quote);
-// 		else if (token->type == TOKEN_HEREDOC)
-// 			printf("TYPE:\t HEREDOC\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",token->value, quote);
-// 		else if (token->type == TOKEN_APPEND_OUT)
-// 			printf("TYPE:\t APPEND_OUT\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",token->value, quote);
-// 		printf("= = = = = = = = = =\n\n");
-// 		token = token->next;
-// 		free(quote);
-// 	}
-// }
+	if (token->quote == QUOTE_NONE)
+		quote = ft_strdup("NONE");
+	else if (token->quote == QUOTE_SINGLE)
+		quote = ft_strdup("SINGLE");
+	else if (token->quote == QUOTE_DOUBLE)
+		quote = ft_strdup("DOUBLE");
+	else if (token->quote == QUOTE_HD)
+		quote = ft_strdup("HD");
+	return (quote);
+}
+
+static char	get_printing_type(t_token *token)
+{
+	char	*type;
+
+	if (token->type == TOKEN_WORD)
+		type = ft_strdup("WORD");
+	else if (token->type == TOKEN_PIPE)
+		type = ft_strdup("PIPE");
+	else if (token->type == TOKEN_REDIR_IN)
+		type = ft_strdup("RED_IN");
+	else if (token->type == TOKEN_REDIR_OUT)
+		type = ft_strdup("RED_OUT");
+	else if (token->type == TOKEN_HEREDOC)
+		type = ft_strdup("HEREDOC");
+	else if (token->type == TOKEN_APPEND_OUT)
+		type = ft_strdup("APPEND_OUT");
+	return (type);
+}
+
+void	print_tokens(t_token *token)
+{
+	char	*quote;
+	char	*type;
+
+	if (!token)
+		return ;
+	while (token)
+	{
+		printf("\n= = = = = = = = = =\n");
+		quote = get_printing_quote(token);
+		type = get_printing_type(token);
+		printf("TYPE:\t %s\nVALUE:\t\"%s\"\nQUOTE:\t %s\n",
+			type, token->value, quote);
+		printf("= = = = = = = = = =\n\n");
+		token = token->next;
+		free(quote);
+	}
+}
