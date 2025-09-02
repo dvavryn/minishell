@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 15:21:27 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 20:00:05 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:43:21 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ms_heredoc_execute(t_token *heredoc)
 	int		fd;
 
 	end = heredoc->value;
-	fd = open("tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open("tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);  // change to open("..", O_TMPFILE | O_RDWR | O_CREAT, 0644); ??
 	if (fd == -1)
 		return (ft_perror(MS "error: create write"));
 	while (1)
