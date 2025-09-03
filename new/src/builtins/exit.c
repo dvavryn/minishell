@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:43:12 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 18:44:38 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/03 21:04:38 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	builtin_exit(t_data *data)
 {
-	t_token	*ptr;
 	int		ret;
 
 	ret = 0;
-	ptr = data->token;
 	if (data->token && data->token->type == TOKEN_WORD
 		&& !ft_strcmp(data->token->value, "exit"))
 	{

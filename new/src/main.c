@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 18:54:20 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/03 23:25:10 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	startup(&data, argc, argv, envp);
+
 	while (1)
 	{
 		if (prompt(&data))
