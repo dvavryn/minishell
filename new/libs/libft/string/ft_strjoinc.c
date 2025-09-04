@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   ft_strjoinc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 14:15:50 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/04 14:41:11 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/09/04 13:55:33 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/09/04 13:56:44 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-static void	expand_word(t_data *data, char *value)
+char	*ft_strjoinc(const char *str, int c)
 {
-	t_list	*list;
-	ssize_t	i;
+	char	*out;
+	size_t	i;
+	size_t	j;
 
-	
-	i = -1;
-	while (value[++i]);
+	if (!str || !c)
+		return (NULL);
+	i = ft_strlen(str);
+	out = (char *)malloc(i + 2);
+	if (!out)
+		return (NULL);
+	j = 0;
+	while (j < i)
 	{
-		if (value[i] == '$')
+		out[j] = str[j];
+		j++;
 	}
-	
-}
-
-void	expander(t_data *data)
-{
-	t_token	*ptr;
-
-	ptr = data->token;
-	while (ptr)
-	{
-		if (ptr->value && ft_strchr(ptr->value, '$') && ptr->type == TOKEN_WORD && ptr->quote != QUOTE_SINGLE)
-			printf("%s\n", ptr->value);
-		ptr = ptr->next;
-	}
+	out[j] = c;
+	out[j + 1] = 0;
+	return (out);
 }

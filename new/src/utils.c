@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:20 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 23:09:46 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/04 14:15:48 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_error(int err)
 		write(2, "malloc failed", 13);
 	write(2, "\n", 1);
 }
+
 void	ft_exit(t_data *data, int ret, int err)
 {
 	if (err != 0)

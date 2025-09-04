@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:28 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 23:26:55 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/04 12:46:56 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	**set_own(void)
 	if (!out)
 		return (NULL);
 	out[0] = ft_strdup("PATH=/"); //PWD=
-	out[1] = ft_strdup("SHLVL=/"); //SHLVL=
+	out[1] = ft_strdup("SHLVL=11"); //SHLVL=
 	out[2] = ft_strdup("PATH=/trololololo/:"); //PATH=
 	out[3] = ft_strdup("_=/"); //_=
 	if (!out[0] || !out[1] || !out[2] || !out[3])

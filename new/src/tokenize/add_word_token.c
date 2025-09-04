@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:14 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 22:50:53 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/04 14:24:12 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	add_word_token(t_data *data)
 	{
 		if (add_quote_token(data))
 			return (1);
+		data->i++;
 	}
 	else
 		add_token_value(data, TOKEN_WORD);

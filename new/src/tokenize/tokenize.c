@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:17 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 18:45:40 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/04 14:32:12 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	tokenize(t_data *data)
 		else
 		{
 			if (add_word_token(data))
-				ft_exit(data, MAL_ERR, 1);
+			{
+				write(2, "UNCLOSED QUOTES??\n", 18);
+				return (1);
+			}
 		}
 	}
 	return (0);
@@ -53,4 +56,5 @@ void	free_token(t_token	*token)
 		free(token);
 		token = ptr;
 	}
+	token = NULL;
 }

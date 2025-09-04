@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 23:25:10 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/04 14:33:19 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,19 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt(&data))
 		{
 			if (tokenize(&data))
+			{
 				free_token(data.token);
+				printf("fuck\n");
+			}
 			else
 			{
 				builtin_exit(&data);
 				expander(&data);
-				print_token(data.token);
+				// print_token(data.token);
 				// parsing();
 				// execution();
-			}
-			if (data.token)
 				free_token(data.token);
+			}
 			free(data.input);
 		}
 	}

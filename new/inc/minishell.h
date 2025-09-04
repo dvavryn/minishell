@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:34:49 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 18:53:58 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/04 13:01:16 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_data
 	size_t	i;
 	t_token	*token;
 	char	**envp;
+	int		last_return_value;
 }	t_data;
 
 // utils.c

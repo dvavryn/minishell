@@ -54,6 +54,7 @@ SRC_STRING =	./string/ft_split.c\
 				./string/ft_strdup.c\
 				./string/ft_striteri.c\
 				./string/ft_strjoin.c\
+				./string/ft_strjoinc.c\
 				./string/ft_strlen.c\
 				./string/ft_strmapi.c\
 				./string/ft_strncmp.c\
