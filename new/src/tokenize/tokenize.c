@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:35:17 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/04 14:32:12 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/05 14:42:25 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ int	tokenize(t_data *data)
 		if (!data->input[data->i])
 			break ;
 		else if (data->input[data->i] == '|')
+		{
 			add_pipe_token(data);
-		else if (data->input[data->i] == '<' || data->input[data->i] == '>')
+			data->i++;
+		}	
+		else if (data->input[data->i] == '<' || data->input[data->i] == '>') // unclosed quotes are not handeled
 			add_redir_token(data);
 		else
 		{
@@ -35,6 +38,7 @@ int	tokenize(t_data *data)
 			}
 		}
 	}
+	cleanup_token(data);
 	return (0);
 }
 

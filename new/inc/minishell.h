@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:34:49 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/04 13:01:16 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/05 15:49:28 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
+# include <errno.h>
 # include <dirent.h>
 # include <signal.h>
 # include <fcntl.h>
@@ -97,5 +98,8 @@ void	print_token(t_token *token);
 
 // expander/
 void	expander(t_data *data);
+
+// parser/
+int	parser(t_data *data);
 
 #endif

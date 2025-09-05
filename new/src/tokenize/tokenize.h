@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:41:10 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/03 14:24:23 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/05 13:29:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int		add_word_token(t_data *data);
 void	add_pipe_token(t_data *data);
 void	add_redir_token(t_data *data);
 void	add_token_value(t_data *data, int type);
+
+void	cleanup_token(t_data *data);
 
 #endif

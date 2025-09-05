@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/03 15:37:01 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/05 13:25:49 by dvavryn          ###   ########.fr       */
+/*   Created: 2025/09/05 14:19:22 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/09/05 14:30:18 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
-int	prompt(t_data *data)
+void	builtin_env(t_data *data)
 {
-	data->input = NULL;
-	data->input = readline("minishell > ");
-	if (!data->input)
-	{
-		printf("exit\n");
-		ft_exit(data, NO_ERR, 0);
-	}
-	else if (*data->input == 0)
-	{
-		free(data->input);
-		return (0);
-	}
-	// standard bash behaviour -- PC's on campus dont do this?!?!
-	if (!ft_isspace(*data->input))
-		add_history(data->input);
-	data->i = 0;
-	return (1);
+	ssize_t	i;
+
+	i = -1;
+	if (!data->envp)
+		return ;
+	while (data->envp[++i])
+		printf("%s\n", data->envp[i]);
 }
