@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/12 14:00:15 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/12 14:01:58 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	main(int argc, char **argv, char **envp)
 				{
 					ms_heredoc(&data);
 					// ... into execute mode; already needs filled data->cmd struct
+					// https://github.com/dvavryn/minishell/tree/dom/newminishell
+					// hier habe ist meine version... um gegenzuchecken
 					// execute(&data);
 				}
 				else
