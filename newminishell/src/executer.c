@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:57:18 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 12:34:34 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/12 15:14:59 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,50 +176,81 @@ void	get_all_args(t_data *data)
 	}
 }
 
+// void	executer(t_data *data)
+// {
+
+// 	if (!check_files(data))
+// 		return ;
+// 	if (!check_binaries(data))
+// 		return ;
+// 	get_all_args(data);
+	
+// 	t_cmd	*ptr;
+
+// 	ptr = data->cmd;
+// 	if (!ptr->next && !ft_strcmp("exit", ptr->cmd))
+// 		bi_exit(data, ptr->args);
+// 	// print_cmds(ptr);
+// 	while (ptr)
+// 	{
+// 		if (!ft_strcmp("echo", ptr->cmd))
+// 			data->ret = bi_echo(ptr);
+// 		else if (!ft_strcmp("cd", ptr->cmd))
+// 			data->ret = bi_cd(data, ptr);
+// 		else if (!ft_strcmp("pwd", ptr->cmd))
+// 			bi_pwd(data->env);
+// 		else if (!ft_strcmp("export", ptr->cmd))
+// 			data->ret = bi_export(data, ptr);
+// 		else if (!ft_strcmp("unset", ptr->cmd))
+// 			data->ret = bi_unset(data, ptr);
+// 		else if (!ft_strcmp("env", ptr->cmd))
+// 			bi_env(data);
+// 		else
+// 		{
+// 			int pid = fork();
+// 			if (pid == -1)
+// 				ft_exit(data, "fork");
+// 			if (!pid)
+// 			{
+// 				execve(ptr->cmd, ptr->args, data->env);
+// 				printf("failed\n");
+// 				exit(0);
+				
+// 			}
+// 			else
+// 				wait(NULL);
+// 		}
+// 		ptr = ptr->next;
+// 	}
+// }
+
 void	executer(t_data *data)
 {
-
-	if (!check_files(data))
-		return ;
-	if (!check_binaries(data))
-		return ;
-	get_all_args(data);
-	
 	t_cmd	*ptr;
 
 	ptr = data->cmd;
-	if (!ptr->next && !ft_strcmp("exit", ptr->cmd))
-		bi_exit(data, ptr->args);
-	// print_cmds(ptr);
 	while (ptr)
 	{
-		if (!ft_strcmp("echo", ptr->cmd))
-			data->ret = bi_echo(ptr);
-		else if (!ft_strcmp("cd", ptr->cmd))
-			data->ret = bi_cd(data, ptr);
-		else if (!ft_strcmp("pwd", ptr->cmd))
-			bi_pwd(data->env);
-		else if (!ft_strcmp("export", ptr->cmd))
-			data->ret = bi_export(data, ptr);
-		else if (!ft_strcmp("unset", ptr->cmd))
-			data->ret = bi_unset(data, ptr);
-		else if (!ft_strcmp("env", ptr->cmd))
-			bi_env(data);
-		else
+		int pipe1[2];
+		pipe(pipe1);
+		int pid;
+		pid = fork();
+		if (!pid)
 		{
-			int pid = fork();
-			if (pid == -1)
-				ft_exit(data, "fork");
-			if (!pid)
+			if (ptr->pipe_in)
 			{
-				execve(ptr->cmd, ptr->args, data->env);
-				printf("failed\n");
-				exit(0);
+				dup2(pipe1[0], STDIN_FILENO);
+				close(pipe1[0]);
+			}
+			if (ptr->redir_in)
+			{
+				
+				
 				
 			}
-			else
-				wait(NULL);
 		}
+		else
+			wait(NULL);		
 		ptr = ptr->next;
 	}
 }

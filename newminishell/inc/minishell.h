@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:21:10 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 13:26:20 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/12 15:08:00 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	bi_pwd(char **env);
 int		bi_export(t_data *data, t_cmd *cmd);
 int		bi_unset(t_data *data, t_cmd *cmd);
 int		bi_cd(t_data *data, t_cmd *cmd);
-// char	**add_split(char **arr1, char *str);
+char	**add_split(char **arr1, char *str);
 char	*ms_getenv(char **env, char *s);
 
 #endif
