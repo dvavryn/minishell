@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:05:32 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 17:12:38 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/12 14:00:15 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	main(int argc, char **argv, char **envp)
 				if (ft_strcmp("debug", data.token->value))
 				{
 					ms_heredoc(&data);
+					// ... into execute mode; already needs filled data->cmd struct
+					// execute(&data);
 				}
 				else
 				{
