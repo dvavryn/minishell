@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:47:25 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 12:47:25 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 22:20:06 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	free_all(t_data *data)
 		free_tokens(data->tokens);
 	if (data->cmd)
 		free_cmd(data->cmd);
+	if (data->env)
+		free_split(data->env);
 	data->input = NULL;
 	data->tokens = NULL;
 	data->cmd = NULL;

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:02:25 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 16:58:03 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 22:19:34 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**add_split(char **arr1, char *str)
 	char	**out;
 	size_t	size;
 
-	printf("here i am\n");
 	size = split_size(arr1) + 2;
 	out = NULL;
 	out = ft_calloc(size, sizeof(char *));

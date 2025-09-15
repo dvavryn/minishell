@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:22:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 21:12:33 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 23:25:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,52 +216,71 @@ char	*clean_hd(char *in)
 	return (out);
 }
 
-char	*expand_heredoc_sub(char **split)
+char	*expand_heredoc_sub_word(t_data *data, char *ptr, size_t *i)
 {
-	ssize_t	i;
+	char	*var;
+	char	c;
 	char	*out;
-	char	*buf;
 
-	i = -1;
-	out = ft_strdup("");
+	c = ptr[*i];
+	ptr[*i] = 0;
+	var = ft_strdup(&ptr[1]);
+	ptr[*i] = c;
+	if (!var)
+		return (NULL);
+	if (!ms_getenv(data->env, var))
+		out = ft_strdup("");
+	else
+		out = ft_strdup(ms_getenv(data->env, var));
+	free(var);
 	if (!out)
-		return (free_split(split), NULL);
-	while (split[++i])
-	{
-		buf = out;
-		out = ft_strjoin(out, split[i]);
-		free(buf);
-		if (!out)
-			return (free_split(split), NULL);
-	}
+		return (NULL);
 	return (out);
 }
 
 char	*expand_heredoc(t_data *data, char *input)
 {
-	ssize_t	i;
-	char	**split;
 	char	*out;
+	char	*buf[2];
+	char	*ptr;
+	size_t	i;
 
-	split = ft_split(input, ' ');
-	if (!split)
-		return (NULL);
-	i = -1;
-	while (split[++i])
+	i = 0;
+	ptr = input;
+	out = ft_strdup("");
+	while (*ptr)
 	{
-		if (ft_strchr(split[i], '$'))
+		i = 0;
+		while (ptr[i] && ptr[i] != '$')
+			i++;
+		buf[0] = ft_substr(ptr, 0, i);
+		if (!buf[0])
+			return (free(out), NULL);
+		buf[1] = out;
+		out = ft_strjoin(out, buf[0]);
+		free(buf[0]);
+		free(buf[1]);
+		if (!out)
+			return (NULL);
+		ptr += i;
+		if (*ptr == '$')
 		{
-			out = ms_getenv(data->env, ft_strchr(split[i], '$') + 1);
+			i = 1;
+			while (ptr[i] && ft_isalnum(ptr[i]))
+				i++;
+			buf[0] = expand_heredoc_sub_word(data, ptr, &i);
+			if (!buf[0])
+				return (free(out), NULL);
+			buf[1] = out;
+			out = ft_strjoin(out, buf[0]);
+			free(buf[0]);
+			free(buf[1]);
 			if (!out)
-				out = ft_strdup("");
-			else
-				out = ft_strdup(out);
-			if (!out)
-				return (free_split(split), NULL);
-			split[i] = out;
+				return (NULL);
+			ptr += i;
 		}
 	}
-	return (expand_heredoc_sub(split));
+	return (out);
 }
 
 char	*ft_strjoin_endl(char *s1, char *s2)
@@ -280,11 +299,12 @@ char	*ft_strjoin_endl(char *s1, char *s2)
 	i = -1;
 	while (s2[++i])
 		out[++j] = s2[i];
-	out[j + 2] = '\n';
+	out[++j] = '\n';
+	out[++j] = 0;
 	return (out);
 }
 
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
+// not leak free yet
 char	*get_heredoc_input(t_data *data, char *lim)
 {
 	char	*buf;
@@ -320,11 +340,10 @@ char	*get_heredoc_input(t_data *data, char *lim)
 			return (free(clean_lim), NULL);
 	}
 	if (!ft_strchr(lim, '\'') && !ft_strchr(lim, '\"'))
-	{
-		// TODOTODOTODOTODOTODOTODOTODO:     --------> TODO
-		// out = expand_heredoc(data, out);
-	}
+		out = expand_heredoc(data, out);
 	free(clean_lim);
+	if (!out)
+		return (NULL);
 	return (out);
 }
 
@@ -332,7 +351,7 @@ ssize_t	write_to_heredoc(int fd, char *input)
 {
 	ssize_t	i;
 
-	i = write(fd, input, ft_strlen(input) - 1);
+	i = write(fd, input, ft_strlen(input));
 	free(input);
 	if (i == -1)
 		close(fd);
@@ -441,6 +460,98 @@ void	get_cmd(t_data *data)
 	}
 }
 
+char	*cleanup_args_sub3(char *s, size_t *i)
+{
+	size_t	j;
+	char	*out;
+
+	j = *i;
+	while (s[*i] && s[*i] != '\'' && s[*i] != '\"')
+		(*i)++;
+	out = ft_substr(s, j, *i - j);
+	if (!out)
+		return (NULL);
+	return (out);
+}
+
+char	*cleanup_args_sub2(char *s, size_t *i)
+{
+	size_t	j;
+	char	c;
+	char	*out;
+
+	c = s[(*i)++];
+	j = *i;
+	while (s[*i] && s[*i] != c)
+		(*i)++;
+	if (s[*i] == c)
+	{
+		out = ft_substr(s, j, *i - j);
+		(*i)++;
+	}
+	else
+	{
+		out = ft_substr(s, j - 1, ft_strlen(s) - j - 1);
+		*i = ft_strlen(s);
+	}
+	if (!out)
+		return (NULL);
+	return (out);
+}
+
+char	*cleanup_args_sub(char *s)
+{
+	size_t	i;
+	char	*out;
+	char	*buf[2];
+
+	i = 0;
+	out = ft_strdup("");
+	if (!out)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] == '\'' || s[i] == '\"')
+			buf[0] = cleanup_args_sub2(s, &i);
+		else
+			buf[0] = cleanup_args_sub3(s, &i);
+		if (!buf[0])
+			return (free(out), NULL);
+		buf[1] = out;
+		out = ft_strjoin(out, buf[0]);
+		free(buf[0]);
+		free(buf[1]);
+		if (!out)
+			return (NULL);
+	}
+	return (out);
+}
+
+void	cleanup_args(t_data *data)
+{
+	t_cmd	*ptr;
+	ssize_t	i;
+	char	*buf;
+
+	ptr = data->cmd;
+	while (ptr)
+	{
+		if (ptr->args)
+		{
+			i = -1;
+			while (ptr->args[++i])
+			{
+				buf = cleanup_args_sub(ptr->args[i]);
+				if (!buf)
+					ft_exit(data, "malloc");
+				free(ptr->args[i]);
+				ptr->args[i] = buf;
+			}
+		}
+		ptr = ptr->next;
+	}
+}
+
 int	parser(t_data *data)
 {
 	if (!check_validity(data))
@@ -449,5 +560,6 @@ int	parser(t_data *data)
 		return (0);
 	}
 	get_cmd(data);
+	cleanup_args(data);
 	return (1);
 }

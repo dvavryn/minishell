@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 11:58:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 20:43:01 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 23:23:11 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int	check_binaries(t_data *data)
 			if (!ptr->cmd[i])
 				return (cmd_not_found(ptr->cmd));
 		}
-		if (ptr->cmd && !isbuiltin(ptr->cmd))
+		// if (ptr->cmd && !isbuiltin(ptr->cmd))
+		if (ptr->cmd)
 			if (!get_path(data, ptr))
 				return (0);
 		ptr = ptr->next;
@@ -299,12 +300,21 @@ void	my_execve(t_data *data, t_cmd *cmd, int pipes[2][2], size_t	i)
 		my_execve_close(pipes, i);
 }
 
+void	executer_init_pipes(int pipes[2][2])
+{
+	pipes[0][0] = -1;
+	pipes[0][1] = -1;
+	pipes[1][0] = -1;
+	pipes[1][1] = -1;
+}
+
 void	executer(t_data *data)
 {
 	t_cmd	*ptr;
 	int		pipes[2][2];
 	size_t	i;
 
+	executer_init_pipes(pipes);
 	if (!check_files(data))
 		return ;
 	if (!check_binaries(data))
@@ -314,7 +324,8 @@ void	executer(t_data *data)
 	i = 0;
 	while (ptr)
 	{
-		my_execve(data, ptr, pipes, i);
+		if (ptr->cmd)
+			my_execve(data, ptr, pipes, i);
 		ptr = ptr->next;
 		i++;
 	}
