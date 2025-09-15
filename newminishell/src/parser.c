@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:22:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 20:11:29 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 21:12:33 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,13 @@ char	**split_copy(char **arr)
 	return (out);
 }
 
+void	split_join_sub(t_data *data, t_cmd **cmd, char *value)
+{
+	(*cmd)->args = ft_split(value, '\0');
+	if (!(*cmd)->args)
+		ft_exit(data, "malloc");
+}
+
 void	split_join(t_data *data, t_cmd *cmd, char *value)
 {
 	char	**out;
@@ -133,11 +140,7 @@ void	split_join(t_data *data, t_cmd *cmd, char *value)
 	size_t	i;
 
 	if (!cmd->args)
-	{
-		cmd->args = ft_split(value, '\0');
-		if (!cmd->args)
-			ft_exit(data, "malloc");
-	}
+		split_join_sub(data, &cmd, value);
 	else
 	{
 		buf = ft_strdup(value);
@@ -213,12 +216,32 @@ char	*clean_hd(char *in)
 	return (out);
 }
 
+char	*expand_heredoc_sub(char **split)
+{
+	ssize_t	i;
+	char	*out;
+	char	*buf;
+
+	i = -1;
+	out = ft_strdup("");
+	if (!out)
+		return (free_split(split), NULL);
+	while (split[++i])
+	{
+		buf = out;
+		out = ft_strjoin(out, split[i]);
+		free(buf);
+		if (!out)
+			return (free_split(split), NULL);
+	}
+	return (out);
+}
+
 char	*expand_heredoc(t_data *data, char *input)
 {
 	ssize_t	i;
 	char	**split;
 	char	*out;
-	char	*buf;
 
 	split = ft_split(input, ' ');
 	if (!split)
@@ -238,20 +261,7 @@ char	*expand_heredoc(t_data *data, char *input)
 			split[i] = out;
 		}
 	}
-	i = -1;
-	out = ft_strdup("");
-	if (!out)
-		return (free_split(split), NULL);
-	while (split[++i])
-	{
-		buf = out;
-		out = ft_strjoin(out, split[i]);
-		free(buf);
-		if (!out)
-			return (free_split(split), NULL);
-	}
-	// printf("%s\n", out);
-	return (out);
+	return (expand_heredoc_sub(split));
 }
 
 char	*ft_strjoin_endl(char *s1, char *s2)
@@ -274,18 +284,6 @@ char	*ft_strjoin_endl(char *s1, char *s2)
 	return (out);
 }
 
-
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
-// 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
 // 	THIS SHIT DOESNT WORK YET... SO OK ALL BUT EXPANSION!!!!!!!!!!!!!
 char	*get_heredoc_input(t_data *data, char *lim)
 {
@@ -323,9 +321,9 @@ char	*get_heredoc_input(t_data *data, char *lim)
 	}
 	if (!ft_strchr(lim, '\'') && !ft_strchr(lim, '\"'))
 	{
-		
-	}
+		// TODOTODOTODOTODOTODOTODOTODO:     --------> TODO
 		// out = expand_heredoc(data, out);
+	}
 	free(clean_lim);
 	return (out);
 }
@@ -352,23 +350,69 @@ int	get_heredoc(t_data *data, char **lim)
 		return (-1);
 	fd = open(name, O_CREAT | O_WRONLY, 0600);
 	if (fd == -1)
-		perror("open");
+		return (perror("open"), -1);
 	input = get_heredoc_input(data, *lim);
 	if (!input)
-	{
-		close(fd);
-		unlink(name);
-		free(name);
-		return (-1);
-	}
+		return (close(fd), unlink(name), free(name), -1);
 	if (write_to_heredoc(fd, input) == -1)
-	{
-		unlink(*lim);
-		return (-1);
-	}
+		return (unlink(*lim), -1);
 	free(*lim);
 	*lim = name;
 	return (fd);
+}
+
+void	add_cmd_pipe(t_data *data, t_cmd **cmd)
+{
+	add_cmd(data);
+	(*cmd)->pipe_out = 1;
+	*cmd = (*cmd)->next;
+	(*cmd)->pipe_in = 1;
+}
+
+void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
+{
+	if (!(*cmd)->cmd)
+	{
+		(*cmd)->cmd = ft_strdup(ptr->value);
+		if (!(*cmd)->cmd)
+			ft_exit(data, "malloc");
+	}
+	else
+		split_join(data, *cmd, ptr->value);
+}
+
+void	add_cmd_redir_in(t_data *data, t_token *ptr, t_cmd **cmd)
+{
+	if ((*cmd)->redir_in > 0)
+		close((*cmd)->fd_in);
+	if (ptr->value[0] != ptr->value[1])
+		(*cmd)->redir_in = R_IN;
+	else
+		(*cmd)->redir_in = R_HEREDOC;
+	if ((*cmd)->file_in)
+		free((*cmd)->file_in);
+	(*cmd)->file_in = ft_strdup(ptr->next->value);
+	if (!(*cmd)->file_in)
+		ft_exit(data, "malloc");
+	if ((*cmd)->redir_in == R_HEREDOC)
+	{
+		(*cmd)->fd_in = get_heredoc(data, &(*cmd)->file_in);
+		if ((*cmd)->fd_in == -1)
+			ft_exit(data, "malloc");
+	}
+}
+
+void	add_cmd_redir_out(t_data *data, t_token *ptr, t_cmd **cmd)
+{
+	if (ptr->value[0] != ptr->value[1])
+		(*cmd)->redir_out = R_OUT;
+	else
+		(*cmd)->redir_out = R_APPEND;
+	if ((*cmd)->file_out)
+		free((*cmd)->file_out);
+	(*cmd)->file_out = ft_strdup(ptr->next->value);
+	if (!(*cmd)->file_out)
+		ft_exit(data, "malloc");
 }
 
 void	get_cmd(t_data *data)
@@ -382,59 +426,17 @@ void	get_cmd(t_data *data)
 	while (ptr)
 	{
 		if (ptr->type == TOKEN_PIPE)
-		{
-			add_cmd(data);
-			cmd->pipe_out = 1;
-			cmd = cmd->next;
-			cmd->pipe_in = 1;
-		}
+			add_cmd_pipe(data, &cmd);
 		else if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
 		{
 			if (!ft_strcmp(ptr->value, "<") || !ft_strcmp(ptr->value, "<<"))
-			{
-				if (cmd->redir_in > 0)
-					close(cmd->fd_in);
-				if (ptr->value[0] != ptr->value[1])
-					cmd->redir_in = R_IN;
-				else
-					cmd->redir_in = R_HEREDOC;
-				if (cmd->file_in)
-					free(cmd->file_in);
-				cmd->file_in = ft_strdup(ptr->next->value);
-				if (!cmd->file_in)
-					ft_exit(data, "malloc");
-				if (cmd->redir_in == R_HEREDOC)
-				{
-					cmd->fd_in = get_heredoc(data, &cmd->file_in);
-					if (cmd->fd_in == -1)
-						ft_exit(data, "malloc");
-				}
-			}
+				add_cmd_redir_in(data, ptr, &cmd);
 			else
-			{
-				if (ptr->value[0] != ptr->value[1])
-					cmd->redir_out = R_OUT;
-				else
-					cmd->redir_out = R_APPEND;
-				if (cmd->file_out)
-					free(cmd->file_out);
-				cmd->file_out = ft_strdup(ptr->next->value);
-				if (!cmd->file_out)
-					ft_exit(data, "malloc");
-			}
+				add_cmd_redir_out(data, ptr, &cmd);
 			ptr = ptr->next;
 		}
 		else
-		{
-			if (!cmd->cmd)
-			{
-				cmd->cmd = ft_strdup(ptr->value);
-				if (!cmd->cmd)
-					ft_exit(data, "malloc");
-			}
-			else
-				split_join(data, cmd, ptr->value);
-		}
+			add_cmd_word(data, ptr, &cmd);
 		ptr = ptr->next;
 	}
 }

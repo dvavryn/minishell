@@ -6,19 +6,17 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:12:49 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 11:57:46 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 20:17:01 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	bi_export(t_data *data, t_cmd *cmd)
 {
 	char	**buf;
 	size_t	i;
 
-	// printf("here");
 	if (!cmd->args || !cmd->args[0] || !cmd->args[1])
 		return (printf("todo: print!\n"), 0);
 	i = 0;

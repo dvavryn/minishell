@@ -6,11 +6,195 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 11:58:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 17:05:13 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 20:43:01 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_path_sub2(char **arr, char *s)
+{
+	ssize_t	i;
+	char	*out;
+
+	i = -1;
+	while (arr[++i])
+	{
+		if (!access(arr[i], F_OK | X_OK))
+		{
+			out = ft_strdup(arr[i]);
+			break ;
+		}
+	}
+	if (!arr[i])
+		out = ft_strdup(s);
+	free_split(arr);
+	if (!out)
+		return (NULL);
+	return (out);
+}
+
+char	*get_path_sub(t_data *data, char *s)
+{
+	char	**arr;
+	char	*real;
+	char	*buf;
+	size_t	i;
+
+	(void)data;
+	real = ft_strjoin("/", s);
+	if (!real)
+		return (NULL);
+	if (!ms_getenv(data->env, "PATH"))
+		return (ft_strdup(s));
+	arr = ft_split(ms_getenv(data->env, "PATH"), ':');
+	if (!arr)
+		return (free(real), NULL);
+	i = -1;
+	while (arr[++i])
+	{
+		buf = ft_strjoin(arr[i], real);
+		if (!buf)
+			return (free_split(arr), free(real), NULL);
+		free(arr[i]);
+		arr[i] = buf;
+	}
+	free(real);
+	return (get_path_sub2(arr, s));
+}
+
+int	get_path(t_data *data, t_cmd *cmd)
+{
+	char	*ptr;
+	char	*path;
+
+	if (!cmd->cmd)
+		return (1);
+	ptr = cmd->cmd;
+	if (ft_strchr(ptr, '/'))
+		path = ft_strdup(ptr);
+	else
+		path = get_path_sub(data, ptr);
+	if (!path)
+		ft_exit(data, "malloc");
+	cmd->cmd = path;
+	free(ptr);
+	if (access(cmd->cmd, F_OK | X_OK))
+	{
+		perror(cmd->cmd);
+		data->ret = 127;
+		return (0);
+	}
+	return (1);
+}
+
+int	cmd_not_found(char *s)
+{
+	write(STDERR_FILENO, s, ft_strlen(s));
+	write(STDERR_FILENO, ": command not found\n", 20);
+	return (0);
+}
+
+int	check_binaries(t_data *data)
+{
+	t_cmd	*ptr;
+	int		i;
+
+	ptr = data->cmd;
+	while (ptr)
+	{
+		if (ptr->cmd)
+		{
+			i = 0;
+			while (ptr->cmd[i] && !ft_isalnum(ptr->cmd[i]))
+				i++;
+			if (!ptr->cmd[i])
+				return (cmd_not_found(ptr->cmd));
+		}
+		if (ptr->cmd && !isbuiltin(ptr->cmd))
+			if (!get_path(data, ptr))
+				return (0);
+		ptr = ptr->next;
+	}
+	return (1);
+}
+
+int	check_files(t_data *data)
+{
+	t_cmd	*ptr;
+	int		fd;
+
+	ptr = data->cmd;
+	while (ptr)
+	{
+		if (ptr->redir_in)
+			if (access(ptr->file_in, F_OK | R_OK))
+				return (perror(ptr->file_in), 0);
+		if (ptr->redir_out)
+		{
+			if (access(ptr->file_out, F_OK))
+			{
+				fd = open(ptr->file_out, O_CREAT, 0666);
+				if (fd == -1)
+					return (perror(ptr->file_out), 0);
+				close(fd);
+			}
+			if (access(ptr->file_out, F_OK | W_OK))
+				return (perror(ptr->file_out), 0);
+		}
+		ptr = ptr->next;
+	}
+	return (1);
+}
+
+void	get_all_args_sub(t_cmd *cmd)
+{
+	char	**out;
+	ssize_t	i;
+
+	i = 0;
+	while (cmd->args[++i])
+		;
+	out = ft_calloc(i + 2, sizeof(char *));
+	if (!out)
+	{
+		free_split(cmd->args);
+		return ;
+	}
+	out[0] = ft_strdup(cmd->cmd);
+	i = -1;
+	while (cmd->args[++i] && out)
+	{
+		out[i + 1] = ft_strdup(cmd->args[i]);
+		if (!out[i + 1])
+		{
+			free_split_rev(out, i + 1);
+			out = NULL;
+		}
+	}
+	free_split(cmd->args);
+	cmd->args = out;
+}
+
+void	get_all_args(t_data *data)
+{
+	t_cmd	*ptr;
+
+	ptr = data->cmd;
+	while (ptr)
+	{
+		if (ptr->cmd)
+		{
+			if (!ptr->args)
+				ptr->args = ft_split(ptr->cmd, '\0');
+			else
+				get_all_args_sub(ptr);
+			if (!ptr->args)
+				ft_exit(data, "malloc");
+		}
+		ptr = ptr->next;
+	}
+}
 
 int	wait_childs(t_data *data)
 {
@@ -81,6 +265,15 @@ size_t	get_count_cmds(t_cmd *cmd)
 	return (out);
 }
 
+void	my_execve_close(int pipes[2][2], size_t i)
+{
+	if (i > 0)
+	{
+		close(pipes[(i + 1) % 2][0]);
+		close(pipes[(i + 1) % 2][1]);
+	}
+}
+
 void	my_execve(t_data *data, t_cmd *cmd, int pipes[2][2], size_t	i)
 {
 	int				pid;
@@ -103,13 +296,7 @@ void	my_execve(t_data *data, t_cmd *cmd, int pipes[2][2], size_t	i)
 		ft_exit(data, "execve");
 	}
 	else
-	{
-		if (i > 0)
-		{
-			close(pipes[(i + 1) % 2][0]);
-			close(pipes[(i + 1) % 2][1]);
-		}
-	}
+		my_execve_close(pipes, i);
 }
 
 void	executer(t_data *data)
