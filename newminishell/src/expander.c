@@ -6,32 +6,33 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:16:39 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/09 17:33:13 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 16:59:11 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+// TODOTODOTODOTODOTODOTODO
+
 void	expand_str(t_data *data, char **s)
 {
 	(void)data;
 	(void)s;
-		// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
-	// TODOTODOTODOTODOTODOTODO
 }
 
 void	expand(t_data *data, t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:21:10 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 15:08:00 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 16:58:51 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char			*cmd;		// first TOKEN_WORD
-	char			**args;		// every other TOKEN_WORD before the next special character, | < > << >>
+	char			**args;		// every other TOKEN_WORD before the next
+								// special character, | < > << >>
 	int				pipe_in;	// every command besides the first one
 	int				pipe_out;	// if there is a next command;
 	char			*file_in;	// infile filename, if if R_HEREDOC limiter
@@ -107,5 +108,7 @@ int		bi_unset(t_data *data, t_cmd *cmd);
 int		bi_cd(t_data *data, t_cmd *cmd);
 char	**add_split(char **arr1, char *str);
 char	*ms_getenv(char **env, char *s);
-
+void	get_all_args(t_data *data);
+int		check_files(t_data *data);
+int		check_binaries(t_data *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:02:25 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 13:26:17 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 16:58:03 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static size_t	split_size(char **arr)
 	return (i);
 }
 
-char **add_split(char **arr1, char *str)
+char	**add_split(char **arr1, char *str)
 {
 	size_t	i;
-	char **out;
+	char	**out;
 	size_t	size;
-	
+
 	printf("here i am\n");
 	size = split_size(arr1) + 2;
 	out = NULL;

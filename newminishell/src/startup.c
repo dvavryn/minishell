@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:47:47 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 13:31:48 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 17:00:30 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ms_getcwd(void)
 
 static char	**empty_env(void)
 {
-	char **out;
+	char	**out;
 
 	out = ft_calloc(4, sizeof(char *));
 	if (!out)

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:12:49 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 12:12:47 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 17:07:36 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 int	bi_cd(t_data *data, t_cmd *cmd)
 {
-	char *curpath;
-	int ret;
+	char	*curpath;
+	int		ret;
 
+	(void)curpath;
 	if (!cmd->args[1])
 	{
 		if (!ms_getenv(data->env, "HOME"))
-			return (ft_putendl_fd("minishell: cd: HOME is unset", STDERR_FILENO), 1);	// step 1
+			return (ft_putendl_fd("minishell: cd: HOME is unset",
+					STDERR_FILENO), 1);
 		else
 			ret = chdir(ms_getenv(data->env, "HOME"));
 	}
 	else
 	{
 		if (cmd->args[1][0] == '/')
-			ret = chdir(cmd->args[1]);		// step 3
-		if (!ft_strncmp(cmd->args[1], ".", 1) || !ft_strncmp(cmd->args[1], "..", 2))
+			ret = chdir(cmd->args[1]);
+		if (!ft_strncmp(cmd->args[1], ".", 1)
+			|| !ft_strncmp(cmd->args[1], "..", 2))
 		{
-			
 		}
-			// ret = chdir(cmd->args[1][0]);		// step 4
 	}
 	if (ret == -1)
 		perror("minishell: cd");

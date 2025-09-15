@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:47:25 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/11 13:14:53 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 12:47:25 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_exit(t_data *data, char *error)
 		write(2, "minishell: error: fork failed\n", 31);
 	if (!ft_strcmp("open", error))
 		write(2, "minishell: error: open failed\n", 30);
+	if (!ft_strcmp("pipe", error))
+		write(2, "minishell: error: pipe failed\n", 31);
 	free_all(data);
 	exit(1);
 }

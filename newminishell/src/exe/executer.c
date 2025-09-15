@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:57:18 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/12 15:14:59 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 17:03:14 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char	*get_path_sub(t_data *data, char *s)
 	char	*real;
 	char	*buf;
 	size_t	i;
-	(void)data;
 
+	(void)data;
 	real = ft_strjoin("/", s);
 	if (!real)
 		return (NULL);
@@ -57,8 +57,8 @@ char	*get_path_sub(t_data *data, char *s)
 
 void	get_path(t_data *data, t_cmd *cmd)
 {
-	char *ptr;
-	char *path;
+	char	*ptr;
+	char	*path;
 
 	if (!cmd->cmd)
 		return ;
@@ -76,10 +76,23 @@ void	get_path(t_data *data, t_cmd *cmd)
 int	check_binaries(t_data *data)
 {
 	t_cmd	*ptr;
+	int		i;
 
 	ptr = data->cmd;
 	while (ptr)
 	{
+		if (ptr->cmd)
+		{
+			i = 0;
+			while (ptr->cmd[i] && !ft_isalnum(ptr->cmd[i]))
+				i++;
+			if (!ptr->cmd[i])
+			{
+				write(STDERR_FILENO, ptr->cmd, ft_strlen(ptr->cmd));
+				write(STDERR_FILENO, ": command not found\n", 20);
+				return (0);
+			}
+		}
 		if (ptr->cmd && !isbuiltin(ptr->cmd))
 		{
 			get_path(data, ptr);
@@ -101,7 +114,7 @@ int	check_files(t_data *data)
 	int		fd;
 
 	ptr = data->cmd;
-	while(ptr)
+	while (ptr)
 	{
 		if (ptr->redir_in)
 			if (access(ptr->file_in, F_OK | R_OK))
@@ -132,8 +145,8 @@ void	get_all_args_sub(t_cmd *cmd)
 	char	**out;
 	ssize_t	i;
 
-	i = -1;
-	while (cmd->args[++i]);
+	i = 0;
+	while (cmd->args[++i])
 		;
 	out = ft_calloc(i + 2, sizeof(char *));
 	if (!out)
@@ -159,7 +172,7 @@ void	get_all_args_sub(t_cmd *cmd)
 void	get_all_args(t_data *data)
 {
 	t_cmd	*ptr;
-	
+
 	ptr = data->cmd;
 	while (ptr)
 	{
@@ -178,15 +191,7 @@ void	get_all_args(t_data *data)
 
 // void	executer(t_data *data)
 // {
-
-// 	if (!check_files(data))
-// 		return ;
-// 	if (!check_binaries(data))
-// 		return ;
-// 	get_all_args(data);
-	
 // 	t_cmd	*ptr;
-
 // 	ptr = data->cmd;
 // 	if (!ptr->next && !ft_strcmp("exit", ptr->cmd))
 // 		bi_exit(data, ptr->args);
@@ -215,7 +220,6 @@ void	get_all_args(t_data *data)
 // 				execve(ptr->cmd, ptr->args, data->env);
 // 				printf("failed\n");
 // 				exit(0);
-				
 // 			}
 // 			else
 // 				wait(NULL);
@@ -223,34 +227,3 @@ void	get_all_args(t_data *data)
 // 		ptr = ptr->next;
 // 	}
 // }
-
-void	executer(t_data *data)
-{
-	t_cmd	*ptr;
-
-	ptr = data->cmd;
-	while (ptr)
-	{
-		int pipe1[2];
-		pipe(pipe1);
-		int pid;
-		pid = fork();
-		if (!pid)
-		{
-			if (ptr->pipe_in)
-			{
-				dup2(pipe1[0], STDIN_FILENO);
-				close(pipe1[0]);
-			}
-			if (ptr->redir_in)
-			{
-				
-				
-				
-			}
-		}
-		else
-			wait(NULL);		
-		ptr = ptr->next;
-	}
-}

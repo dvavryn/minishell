@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:12:49 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/11 17:04:53 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 11:57:46 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,3 @@ int	bi_export(t_data *data, t_cmd *cmd)
 	}
 	return (0);
 }
-
-
-// int bi_export(t_data *data, t_cmd *cmd, int ft)
-// {
-// 	data->env = realloc(data->env, sizeof(data->env) + sizeof(char *));
-	
-// 	size_t	i;
-// 	while (data->env[i])
-// 		i++;
-// 	data->env[i] = strdup(cmd->args[1]);
-// }

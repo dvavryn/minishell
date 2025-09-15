@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:51:13 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/06 22:00:23 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 15:18:08 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	add_token_word(t_data *data)
 		type = TOKEN_TO_EXPAND;
 	else
 		type = TOKEN_WORD;
-	add_token(data, data->i - start, &data->input[start], type);
+	if (data->i - start != 0)
+		add_token(data, data->i - start, &data->input[start], type);
 }
 
 void	tokenize(t_data *data)
