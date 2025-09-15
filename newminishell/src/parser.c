@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:22:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 17:09:19 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/15 20:11:29 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,9 @@ char	*get_heredoc_input(t_data *data, char *lim)
 			return (free(clean_lim), NULL);
 	}
 	if (!ft_strchr(lim, '\'') && !ft_strchr(lim, '\"'))
-		;
+	{
+		
+	}
 		// out = expand_heredoc(data, out);
 	free(clean_lim);
 	return (out);
