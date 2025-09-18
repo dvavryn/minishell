@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:59:47 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 14:16:40 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:04:03 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	add_token_value(t_data *data, int type)
 		&& data->input[data->i] != '>' )
 		data->i++;
 	word = ft_substr(data->input, start, data->i - start);
+	if (!word)
+		ft_exit(data, "token");
 	i = -1;
 	while (word[++i])
 	{

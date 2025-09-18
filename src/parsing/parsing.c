@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:38:28 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/01 14:08:50 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:07:07 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ t_token	*new_token(char *value, int type, int quote)
 		return (NULL);
 	new->value = ft_strdup(value);
 	if (!new->value)
-	{
-		free(new);
-		return (NULL);
-	}
+		return (free(new), NULL);
 	new->quote = quote;
 	new->type = type;
 	new->next = NULL;
@@ -36,7 +33,7 @@ void	add_token(t_data *data, t_token *new)
 	t_token	*tmp;
 
 	if (!new)
-		return ;
+		ft_exit(data, "token");
 	if (!data->token)
 	{
 		data->token = new;

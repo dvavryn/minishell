@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:24:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 13:11:35 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 14:00:47 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@
 void	free_split(char **split);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_exit(t_data *data, char *error);
+void	free_all(t_data *data);
 
 #endif

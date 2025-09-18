@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 13:10:46 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 13:12:48 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 13:52:13 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,24 @@ void	free_all(t_data *data)
 	data->export_list = NULL;
 }
 
+void	free_tokens(t_token *token)
+{
+	t_token	*tmp;
 
+	if (!token)
+		return ;
+	while (token)
+	{
+		tmp = token->next;
+		if (token->value)
+		{
+			free(token->value);
+			token->value = NULL;
+		}
+		free(token);
+		token = tmp;
+	}
+}
 
 void	ft_exit(t_data *data, char *error)
 {
@@ -43,6 +60,8 @@ void	ft_exit(t_data *data, char *error)
 		write(2, "minishell: error: open failed\n", 30);
 	if (!ft_strcmp("pipe", error))
 		write(2, "minishell: error: pipe failed\n", 31);
+	if (!ft_strcmp("token", error))
+		write(2, "minishell: error: tokenize failed\n", 35);
 	free_all(data);
 	exit(1);
 }
