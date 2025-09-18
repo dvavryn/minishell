@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:22:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 12:54:11 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 14:39:45 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ char	*expand_heredoc(t_data *data, char *input)
 	i = 0;
 	ptr = input;
 	out = ft_strdup("");
+	if (!out)
+		return (NULL);
 	while (*ptr)
 	{
 		i = 0;
@@ -374,7 +376,7 @@ int	get_heredoc(t_data *data, char **lim)
 	if (!input)
 		return (close(fd), unlink(name), free(name), -1);
 	if (write_to_heredoc(fd, input) == -1)
-		return (unlink(*lim), -1);
+		return (unlink(name), -1);
 	free(*lim);
 	*lim = name;
 	return (fd);
