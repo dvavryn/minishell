@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:12:49 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 17:45:02 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 17:51:45 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,29 @@ int	bi_export(t_data *data, t_cmd *cmd)
 	i = 0;
 	while (cmd->args[++i])
 	{
-		if (cmd->args[i] && ft_strchr(cmd->args[i], '='))
+		if (ft_strchr(cmd->args[i], '='))
 		{
-			// if (!env_exist(data->env))
-			// 	data->env = add_env(data, cmd->args[i]);
-			// else
-			// 	data->env = replace_env(data, cmd->args[i]);				
-			// if (!data->env)
-			// 	ft_exit(data, "malloc");
+			if (/*env var exists*/) ;
+				// replace env
+			else ;
+				// add_env
+				
+			if (/*export var*/) ;
+				// replace export
+			else ;
+				// add_export
+		}
+		else
+		{
+			if (/*env var exists*/) ;
+				// 
+			else
+				//
+				
+			if (/*export var exists*/) ;
+				//
+			else
+				//
 		}
 	}
 	return (0);
