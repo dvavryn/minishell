@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 11:58:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/18 13:05:19 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 17:10:11 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,9 +331,9 @@ void	executer(t_data *data)
 	{
 		if (ptr->cmd)
 		{
-			if (isbuiltin(ptr->cmd))
-				handle_builtin(data, ptr, );
-			else
+			// if (isbuiltin(ptr->cmd))
+			// 	handle_builtin(data, ptr, );
+			// else
 				my_execve(data, ptr, pipes, i);
 		}
 		ptr = ptr->next;
