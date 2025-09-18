@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 10:45:56 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/12 13:55:50 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 13:12:23 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	char	**env;
+	char	**export_list;
 	char	*input;
 	t_token	*token;
 	t_cmd	*cmd;
