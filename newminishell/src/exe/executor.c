@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 11:58:26 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 23:23:11 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 13:05:19 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,6 +308,11 @@ void	executer_init_pipes(int pipes[2][2])
 	pipes[1][1] = -1;
 }
 
+void handle_builtin()
+{
+	
+}
+
 void	executer(t_data *data)
 {
 	t_cmd	*ptr;
@@ -325,7 +330,12 @@ void	executer(t_data *data)
 	while (ptr)
 	{
 		if (ptr->cmd)
-			my_execve(data, ptr, pipes, i);
+		{
+			if (isbuiltin(ptr->cmd))
+				handle_builtin(data, ptr, );
+			else
+				my_execve(data, ptr, pipes, i);
+		}
 		ptr = ptr->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:57:53 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/15 17:00:01 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/18 12:35:39 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,3 @@ char	*ms_getenv(char **env, char *s)
 	}
 	return (NULL);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	char *out;
-// 	out = ft_strdup(ms_getenv(envp, "PATH"));
-// 	if (!out)
-// 		return (1);
-// 	printf("%s\n", out);
-// 	free(out);
-// 	return (0);
-// }
