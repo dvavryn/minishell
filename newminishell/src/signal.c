@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalex-ku <lalex-ku@42sp.org.br>            +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/22 17:32:45 by lalex-ku          #+#    #+#             */
-/*   Updated: 2022/06/22 17:32:50 by lalex-ku         ###   ########.fr       */
+/*   Created: 2025/09/23 15:15:27 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/09/23 15:17:05 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "minishell.h"
 
-int	main(int argc, char const *argv[])
+void	sigmini(int sig)
 {
-	int	pid;
-
-	pid = fork();
-	open("infile", O_RDONLY);
-	while (1)
+	if (sig == SIGINT)
 	{
-		printf("Helloo miniHELL %i\n", pid);
-		sleep(1);
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	return (0);
+	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	sigignore(int sig)
+{
+	(void)sig;
 }
