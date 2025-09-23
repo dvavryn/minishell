@@ -1,0 +1,893 @@
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                                                                                             
+ ██    ██ █ ██    █ █ █████ █   █ █████ █     █       ██████ █████ █████ ██████ █████ █████  
+ ███  ███ █ ███   █ █ █     █   █ █     █     █         ██   █     █       ██   █     █   ██ 
+ █ ████ █ █ █ ██  █ █ █████ █████ ████  █     █         ██   ████  █████   ██   ████  █████  
+ █  ██  █ █ █  ██ █ █     █ █   █ █     █     █         ██   █         █   ██   █     █   ██ 
+ █      █ █ █   ███ █ █████ █   █ █████ █████ █████     ██   █████ █████   ██   █████ █   ██ 
+                                                                                             
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                                                                                              
+———————————— builtins
+Test   1: ❌ echo hello world 
+mini exit code = $?
+bash exit code = 0
+Test   2: ❌ echo "hello world" 
+mini exit code = $?
+bash exit code = 0
+Test   3: ❌ echo 'hello world' 
+mini exit code = $?
+bash exit code = 0
+Test   4: ❌ echo hello'world' 
+mini exit code = $?
+bash exit code = 0
+Test   5: ❌ echo hello""world 
+mini exit code = $?
+bash exit code = 0
+Test   6: ❌ echo '' 
+mini exit code = $?
+bash exit code = 0
+Test   7: ❌ echo "$PWD" 
+mini output = ($PWD)
+bash output = (/home/dvavryn/Documents/minishell/newminishell/minishell_tester)
+mini exit code = $?
+bash exit code = 0
+Test   8: ❌ echo '$PWD' 
+mini exit code = $?
+bash exit code = 0
+Test   9: ❌ echo "aspas ->'" 
+mini exit code = $?
+bash exit code = 0
+Test  10: ❌ echo "aspas -> ' " 
+mini exit code = $?
+bash exit code = 0
+Test  11: ❌ echo 'aspas ->"' 
+mini exit code = $?
+bash exit code = 0
+Test  12: ❌ echo 'aspas -> " ' 
+mini exit code = $?
+bash exit code = 0
+Test  13: ❌ echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<" 
+mini exit code = $?
+bash exit code = 0
+Test  14: ❌ echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<' 
+mini exit code = $?
+bash exit code = 0
+Test  15: ❌ echo "exit_code ->$? user ->$USER home -> $HOME" 
+mini output = (exit_code ->$? user ->$USER home -> $HOME)
+bash output = (exit_code ->0 user ->dvavryn home -> /home/dvavryn)
+mini exit code = $?
+bash exit code = 0
+Test  16: ❌ echo 'exit_code ->$? user ->$USER home -> $HOME' 
+mini exit code = $?
+bash exit code = 0
+Test  17: ❌ echo "$" 
+mini exit code = $?
+bash exit code = 0
+Test  18: ❌ echo '$' 
+mini exit code = $?
+bash exit code = 0
+Test  19: ❌ echo $ 
+mini exit code = $?
+bash exit code = 0
+Test  20: ❌ echo $? 
+mini output = ($?)
+bash output = (0)
+mini exit code = $?
+bash exit code = 0
+Test  21: ❌ echo $?HELLO 
+mini output = ($?HELLO)
+bash output = (0HELLO)
+mini exit code = $?
+bash exit code = 0
+Test  22: ❌ pwd 
+mini exit code = $?
+bash exit code = 0
+Test  23: ❌ pwd oi 
+mini exit code = $?
+bash exit code = 0
+mini error = ( ignoring non-option arguments)
+bash error = ()
+Test  24: ❌ export hello 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  25: ❌ export HELLO=123 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  26: ❌ export A- 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( not a valid identifier)
+Test  27: ❌ export HELLO=123 A 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  28: ❌ export HELLO="123 A-" 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  29: ❌ export hello world 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  30: ❌ export HELLO-=123 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( not a valid identifier)
+Test  31: ❌ export = 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( not a valid identifier)
+Test  32: ❌ export 123 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( not a valid identifier)
+Test  33: ❌ unset 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  34: ❌ unset HELLO 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  35: ❌ unset HELLO1 HELLO2 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  36: ❌ unset HOME 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  37: ❌ unset PATH 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  38: ❌ unset SHELL 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  39: ❌ cd $PWD 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  40: ❌ cd $PWD hi 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( too many arguments)
+Test  41: ❌ cd 123123 
+mini exit code = $?
+bash exit code = 1
+Test  42: ❌ exit 123 
+mini exit code = $?
+bash exit code = 123
+mini error = ( No such file or directory)
+bash error = ()
+Test  43: ❌ exit 298 
+mini exit code = $?
+bash exit code = 42
+mini error = ( No such file or directory)
+bash error = ()
+Test  44: ❌ exit +100 
+mini exit code = $?
+bash exit code = 100
+mini error = ( No such file or directory)
+bash error = ()
+Test  45: ❌ exit "+100" 
+mini exit code = $?
+bash exit code = 100
+mini error = ( No such file or directory)
+bash error = ()
+Test  46: ❌ exit +"100" 
+mini exit code = $?
+bash exit code = 100
+mini error = ( No such file or directory)
+bash error = ()
+Test  47: ❌ exit -100 
+mini exit code = $?
+bash exit code = 156
+mini error = ( No such file or directory)
+bash error = ()
+Test  48: ❌ exit "-100" 
+mini exit code = $?
+bash exit code = 156
+mini error = ( No such file or directory)
+bash error = ()
+Test  49: ❌ exit -"100" 
+mini exit code = $?
+bash exit code = 156
+mini error = ( No such file or directory)
+bash error = ()
+Test  50: ❌ exit hello 
+mini exit code = $?
+bash exit code = 2
+mini error = ( No such file or directory)
+bash error = ( numeric argument required)
+Test  51: ❌ exit 42 world 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( too many arguments)
+Test  52: ❌  
+mini exit code = $?
+bash exit code = 0
+———————————— pipes
+Test  53: ❌ env | sort | grep -v SHLVL | grep -v ^_ 
+mini exit code = $?
+bash exit code = 0
+Test  54: ❌ cat ./test_files/infile_big | grep oi 
+mini exit code = $?
+bash exit code = 0
+Test  55: ❌ cat minishell.h | grep ");"$ 
+mini exit code = $?
+bash exit code = 1
+Test  56: ❌ export GHOST=123 | env | grep GHOST 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ()
+———————————— redirects
+Test  57: ❌ grep hi <./test_files/infile 
+mini exit code = $?
+bash exit code = 0
+Test  58: ❌ grep hi "<infile" <         ./test_files/infile 
+mini exit code = $?
+bash exit code = 2
+Test  59: ❌ echo hi < ./test_files/infile bye bye 
+mini exit code = $?
+bash exit code = 0
+Test  60: ❌ grep hi <./test_files/infile_big <./test_files/infile 
+mini exit code = $?
+bash exit code = 0
+Test  61: ❌ echo <"./test_files/infile" "bonjour       42" 
+mini output = ()
+bash output = (bonjour 42)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  62: ❌ cat <"./test_files/file name with spaces" 
+mini output = ()
+bash output = (😈 😈 😈 This will break your minishell 😈 😈 😈)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  63: ❌ cat <./test_files/infile_big ./test_files/infile 
+mini exit code = $?
+bash exit code = 0
+Test  64: ❌ cat <"1""2""3""4""5" 
+mini exit code = $?
+bash exit code = 1
+Test  65: ❌ echo <"./test_files/infile" <missing <"./test_files/infile" 
+mini exit code = $?
+bash exit code = 1
+Test  66: ❌ echo <missing <"./test_files/infile" <missing 
+mini exit code = $?
+bash exit code = 1
+Test  67: ❌ cat <"./test_files/infile" 
+mini output = ()
+bash output = (hi hello world 42)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  68: ❌ echo <"./test_files/infile_big" | cat <"./test_files/infile" 
+mini output = ()
+bash output = (hi hello world 42)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  69: ❌ echo <"./test_files/infile_big" | cat "./test_files/infile" 
+mini output = ()
+bash output = (hi hello world 42)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  70: ❌ echo <"./test_files/infile_big" | echo <"./test_files/infile" 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  71: ❌ echo hi | cat <"./test_files/infile" 
+mini output = ()
+bash output = (hi hello world 42)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  72: ❌ echo hi | cat "./test_files/infile" 
+mini exit code = $?
+bash exit code = 0
+Test  73: ❌ cat <"./test_files/infile" | echo hi 
+mini output = ()
+bash output = (hi)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ( Broken pipe)
+Test  74: ❌ cat <"./test_files/infile" | grep hello 
+mini output = ()
+bash output = (hello)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  75: ❌ cat <"./test_files/infile_big" | echo hi 
+mini output = ()
+bash output = (hi)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ( Broken pipe)
+Test  76: ❌ cat <missing 
+mini exit code = $?
+bash exit code = 1
+Test  77: ❌ cat <missing | cat 
+mini exit code = $?
+bash exit code = 0
+Test  78: ❌ cat <missing | echo oi 
+mini output = ()
+bash output = (oi)
+mini exit code = $?
+bash exit code = 0
+Test  79: ❌ cat <missing | cat <"./test_files/infile" 
+mini output = ()
+bash output = (hi hello world 42)
+mini exit code = $?
+bash exit code = 0
+Test  80: ❌ echo <123 <456 hi | echo 42 
+mini output = ()
+bash output = (42)
+mini exit code = $?
+bash exit code = 0
+Test  81: ❌ ls >./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 0
+Test  82: ❌ ls >         ./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 0
+Test  83: ❌ echo hi >         ./outfiles/outfile01 bye 
+mini exit code = $?
+bash exit code = 0
+Test  84: ❌ ls >./outfiles/outfile01 >./outfiles/outfile02 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+bash outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+mini exit code = $?
+bash exit code = 0
+Test  85: ❌ ls >./outfiles/outfile01 >./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+Test  86: ❌ ls >"./outfiles/outfile with spaces" 
+Only in ./bash_outfiles: outfile with spaces
+mini outfiles:
+bash outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  87: ❌ ls >"./outfiles/outfile""1""2""3""4""5" 
+Only in ./bash_outfiles: outfile12345
+mini outfiles:
+bash outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  88: ❌ ls >"./outfiles/outfile01" >./test_files/invalid_permission >"./outfiles/outfile02" 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( Permission denied)
+Test  89: ❌ ls >./test_files/invalid_permission >"./outfiles/outfile01" >./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 1
+Test  90: ❌ cat <"./test_files/infile" >"./outfiles/outfile01" 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+hi
+hello
+world
+42
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test  91: ❌ echo hi >./outfiles/outfile01 | echo bye 
+mini exit code = $?
+bash exit code = 0
+Test  92: ❌ echo hi >./outfiles/outfile01 >./outfiles/outfile02 | echo bye 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+hi
+bash outfiles:
+hi
+mini exit code = $?
+bash exit code = 0
+Test  93: ❌ echo hi | echo >./outfiles/outfile01 bye 
+mini exit code = $?
+bash exit code = 0
+Test  94: ❌ echo hi | echo bye >./outfiles/outfile01 >./outfiles/outfile02 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bye
+bash outfiles:
+bye
+mini exit code = $?
+bash exit code = 0
+Test  95: ❌ echo hi >./outfiles/outfile01 | echo bye >./outfiles/outfile02 
+mini exit code = $?
+bash exit code = 0
+Test  96: ❌ echo hi >./outfiles/outfile01 >./test_files/invalid_permission | echo bye 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini output = ()
+bash output = (bye)
+mini exit code = $?
+bash exit code = 0
+Test  97: ❌ echo hi >./test_files/invalid_permission | echo bye 
+mini output = ()
+bash output = (bye)
+mini exit code = $?
+bash exit code = 0
+Test  98: ❌ echo hi >./test_files/invalid_permission >./outfiles/outfile01 | echo bye 
+Only in ./mini_outfiles: outfile01
+mini outfiles:
+hi
+bash outfiles:
+mini exit code = $?
+bash exit code = 0
+mini error = ()
+bash error = ( Permission denied)
+Test  99: ❌ echo hi | echo bye >./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 1
+Test 100: ❌ echo hi | >./outfiles/outfile01 echo bye >./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+Test 101: ❌ echo hi | echo bye >./test_files/invalid_permission >./outfiles/outfile01 
+Only in ./mini_outfiles: outfile01
+mini outfiles:
+bye
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+mini error = ()
+bash error = ( Permission denied)
+Test 102: ❌ cat <"./test_files/infile" >./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( Permission denied)
+Test 103: ❌ cat >./test_files/invalid_permission <"./test_files/infile" 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( Permission denied)
+Test 104: ❌ cat <missing >./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 1
+Test 105: ❌ cat >./outfiles/outfile01 <missing 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+Test 106: ❌ cat <missing >./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 1
+Test 107: ❌ cat >./test_files/invalid_permission <missing 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( Permission denied)
+Test 108: ❌ cat >./outfiles/outfile01 <missing >./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+Test 109: ❌ ls >>./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 0
+Test 110: ❌ ls >>      ./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 0
+Test 111: ❌ ls >>./outfiles/outfile01 >./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 0
+Test 112: ❌ ls >./outfiles/outfile01 >>./outfiles/outfile01 
+mini exit code = $?
+bash exit code = 0
+Test 113: ❌ ls >./outfiles/outfile01 >>./outfiles/outfile01 >./outfiles/outfile02 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+bash outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+mini exit code = $?
+bash exit code = 0
+Test 114: ❌ ls >>./outfiles/outfile01 >>./outfiles/outfile02 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+bash outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+mini exit code = $?
+bash exit code = 0
+Test 115: ❌ ls >>./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 1
+Test 116: ❌ ls >>./test_files/invalid_permission >>./outfiles/outfile01 
+Only in ./mini_outfiles: outfile01
+mini outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+mini error = ()
+bash error = ( Permission denied)
+Test 117: ❌ ls >>./outfiles/outfile01 >>./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+Test 118: ❌ ls >./outfiles/outfile01 >>./test_files/invalid_permission >>./outfiles/outfile02 
+Only in ./bash_outfiles: outfile01
+Only in ./mini_outfiles: outfile02
+mini outfiles:
+bash_outfiles
+bash.supp
+bonus
+bonus_bonus
+builtins
+extras
+local.supp
+loop.out
+manual_tests
+mini_outfiles
+os_specific
+outfiles
+pipes
+README.md
+redirects
+syntax
+tester
+test_files
+wildcards
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+mini error = ()
+bash error = ( Permission denied)
+Test 119: ❌ ls <missing >>./test_files/invalid_permission >>./outfiles/outfile02 
+mini exit code = $?
+bash exit code = 1
+Test 120: ❌ ls >>./test_files/invalid_permission >>./outfiles/outfile02 <missing 
+mini exit code = $?
+bash exit code = 1
+mini error = ( No such file or directory)
+bash error = ( Permission denied)
+Test 121: ❌ echo hi >>./outfiles/outfile01 | echo bye 
+mini exit code = $?
+bash exit code = 0
+Test 122: ❌ echo hi >>./outfiles/outfile01 >>./outfiles/outfile02 | echo bye 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+hi
+bash outfiles:
+hi
+mini exit code = $?
+bash exit code = 0
+Test 123: ❌ echo hi | echo >>./outfiles/outfile01 bye 
+mini exit code = $?
+bash exit code = 0
+Test 124: ❌ echo hi | echo bye >>./outfiles/outfile01 >>./outfiles/outfile02 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bye
+bash outfiles:
+bye
+mini exit code = $?
+bash exit code = 0
+Test 125: ❌ echo hi >>./outfiles/outfile01 | echo bye >>./outfiles/outfile02 
+mini exit code = $?
+bash exit code = 0
+Test 126: ❌ echo hi >>./test_files/invalid_permission | echo bye 
+mini output = ()
+bash output = (bye)
+mini exit code = $?
+bash exit code = 0
+Test 127: ❌ echo hi >>./test_files/invalid_permission >./outfiles/outfile01 | echo bye 
+Only in ./mini_outfiles: outfile01
+mini outfiles:
+hi
+bash outfiles:
+mini exit code = $?
+bash exit code = 0
+mini error = ()
+bash error = ( Permission denied)
+Test 128: ❌ echo hi | echo bye >>./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 1
+Test 129: ❌ echo hi | echo >>./outfiles/outfile01 bye >./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+bash outfiles:
+mini exit code = $?
+bash exit code = 1
+Test 130: ❌ cat <minishell.h>./outfiles/outfile 
+mini exit code = $?
+bash exit code = 1
+Test 131: ❌ cat <minishell.h|ls 
+mini output = ()
+bash output = (bash_outfiles bash.supp bonus bonus_bonus builtins extras local.supp loop.out manual_tests mini_outfiles os_specific outfiles pipes README.md redirects syntax tester test_files wildcards)
+mini exit code = $?
+bash exit code = 0
+———————————— extras
+Test 132: ❌  
+mini exit code = $?
+bash exit code = 0
+Test 133: ❌ $PWD 
+mini exit code = $?
+bash exit code = 126
+mini error = ( No such file or directory)
+bash error = ( Is a directory)
+Test 134: ❌ $EMPTY 
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test 135: ❌ $EMPTY echo hi 
+mini output = ()
+bash output = (hi)
+mini exit code = $?
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+Test 136: ❌ ./test_files/invalid_permission 
+mini exit code = $?
+bash exit code = 126
+Test 137: ❌ ./missing.out 
+mini exit code = $?
+bash exit code = 127
+Test 138: ❌ missing.out 
+mini exit code = $?
+bash exit code = 127
+mini error = ( No such file or directory)
+bash error = ( command not found)
+Test 139: ❌ "aaa" 
+mini exit code = $?
+bash exit code = 127
+mini error = ( No such file or directory)
+bash error = ( command not found)
+Test 140: ❌ test_files 
+mini exit code = $?
+bash exit code = 127
+mini error = ()
+bash error = ( command not found)
+Test 141: ❌ ./test_files 
+mini exit code = $?
+bash exit code = 126
+mini error = ()
+bash error = ( Is a directory)
+Test 142: ❌ /test_files 
+mini exit code = $?
+bash exit code = 127
+Test 143: ❌ minishell.h 
+mini exit code = $?
+bash exit code = 127
+mini error = ( No such file or directory)
+bash error = ( command not found)
+Test 144: ❌ $ 
+mini exit code = $?
+bash exit code = 127
+Test 145: ❌ $? 
+mini exit code = $?
+bash exit code = 127
+Test 146: ❌ README.md 
+mini exit code = $?
+bash exit code = 127
+mini error = ( Permission denied)
+bash error = ( command not found)
+/146
+😭 😭 😭
