@@ -1,1 +1,0 @@
-cc exe.c -I../inc -I../libs/libft -L../libs/libft -lft
