@@ -1,8 +1,9 @@
 # Makefile for Minishell Project
 
 # Compiler and flags
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CC = gcc
+CFLAGS = -Wall -Wextra -Wunused -g 
+# -fsanitize=address
 DEBUG_FLAGS = -g
 INCLUDES = -I./inc -I./libs/libft
 
@@ -15,9 +16,10 @@ NAME = minishell
 # Directories
 SRC_DIR = ./src
 OBJ_DIR = ./objs
-LIBFT_DIR = ./libs/libft
+LIBFT_DIR = ./libft
 
 # Source files
+
 SRCS := $(shell find $(SRC_DIR) -name "*.c")
 OBJS := $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
 
