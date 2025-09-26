@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 13:22:52 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 16:54:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 typedef struct s_data		t_data;
 typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
-
+typedef struct s_expand		t_expand;
 typedef enum e_token_type	t_token_type;
 typedef enum e_redir_type	t_redir_type;
 
@@ -95,6 +95,16 @@ struct s_cmd
 	char	*file_out;
 	int		redir_out;
 	t_cmd	*next;
+};
+
+struct s_expand
+{
+	char	*out;
+	char	*buf1;
+	char	*buf2;
+	char	*ptr;
+	size_t	i;
+	int		flag;
 };
 
 // prototypes
