@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:47:50 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/26 12:27:39 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/26 12:45:11 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	ms_perror(const char *str, ...)
 		else
 			write(STDERR_FILENO, &str[i], 1);
 	}
+	write(STDERR_FILENO, "\n", 1);
 	va_end(args);
 }
