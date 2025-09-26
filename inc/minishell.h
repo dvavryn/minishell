@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 17:17:07 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:06:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	split_join(t_data *data, t_cmd *cmd, char *value);
 char	*ft_strjoin_endl(char *s1, char *s2);
 char	*ms_getenv(char **env, char *s);
 char	**split_copy(char **arr);
+void	ms_perror(const char *str, ...);
 
 // free
 void	free_all(t_data *data);
