@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 12:33:49 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:00:39 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_heredoc_input(t_data *data, char *lim)
 		if (!buf)
 		{
 			printf("minishell: warning: here-document at line %ld "
-				"delimited by end-of-file (wanted `%s`)\n", data->line, lim); // change wrong 
+				"delimited by end-of-file (wanted `%s`)\n", data->line, lim);
 			break ;
 		}
 		if (!ft_strcmp(buf, clean_lim))
