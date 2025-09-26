@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:22:14 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 16:23:26 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:36:48 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	add_cmd(t_data *data)
 	{
 		data->cmd = new_cmd();
 		if (!data->cmd)
-			ft_exit(data, "malloc");
+			ft_exit(data, "memory allocation");
 	}
 	else
 	{
@@ -39,7 +39,7 @@ void	add_cmd(t_data *data)
 			ptr = ptr->next;
 		ptr->next = new_cmd();
 		if (!ptr->next)
-			ft_exit(data, "malloc");
+			ft_exit(data, "memory allocation");
 		ptr->next->next = NULL;
 	}
 }

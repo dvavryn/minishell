@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:47:50 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/26 12:15:33 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:27:39 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ms_perror_digit(int d)
 static ssize_t	ms_perror_prefix(const char *str)
 {
 	if (*str && *str + 1 && str[0] == 'M' && str[1] == 'S')
-		return (ms_perror_string("minishell: error: ", 's'), 2);
+		return (ms_perror_string("minishell: error:", 's'), 2);
 	return (0);
 }
 

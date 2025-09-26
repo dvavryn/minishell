@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   startup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:07:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 15:21:57 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:40:50 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,5 @@ void	startup(t_data *data, int argc, char **argv, char **envp)
 	ft_bzero(data, sizeof(t_data));
 	data->env = copy_env(envp);
 	if (!data->env)
-		ft_exit(data, "malloc");
+		ft_exit(data, "memory allocation");
 }

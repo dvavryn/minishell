@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:33:14 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 15:34:21 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:38:43 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	add_token(t_data *data, ssize_t len, char *value, int type)
 	{
 		data->tokens = new_token(len, value, type);
 		if (!data->tokens)
-			ft_exit(data, "malloc");
+			ft_exit(data, "memory allocation");
 	}
 	else
 	{
@@ -46,7 +46,7 @@ static void	add_token(t_data *data, ssize_t len, char *value, int type)
 			ptr = ptr->next;
 		ptr->next = new_token(len, value, type);
 		if (!ptr->next)
-			ft_exit(data, "malloc");
+			ft_exit(data, "memory allocation");
 	}
 }
 

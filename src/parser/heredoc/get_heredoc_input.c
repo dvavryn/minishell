@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 17:24:07 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:33:49 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_heredoc_input(t_data *data, char *lim)
 
 	clean_lim = clean_hd(lim);
 	if (!clean_lim)
-		ft_exit(data, "malloc");
+		ft_exit(data, "memory allocation");
 	out = ft_strdup("");
 	if (!out)
 		return (NULL);

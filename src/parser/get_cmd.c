@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 16:34:33 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:37:29 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 	{
 		(*cmd)->cmd = ft_strdup(ptr->value);
 		if (!(*cmd)->cmd)
-			ft_exit(data, "malloc");
+			ft_exit(data, "memory allocation");
 	}
 	else
 		split_join(data, *cmd, ptr->value);
@@ -34,11 +34,11 @@ static void	add_cmd_redir_in(t_data *data, t_token *ptr, t_cmd **cmd)
 		free((*cmd)->file_in);
 	(*cmd)->file_in = ft_strdup(ptr->next->value);
 	if (!(*cmd)->file_in)
-		ft_exit(data, "malloc");
+		ft_exit(data, "memory allocation");
 	if ((*cmd)->redir_in == R_HEREDOC)
 	{
 		if (!get_heredoc(data, &(*cmd)->file_in))
-			ft_exit(data, "malloc");
+			ft_exit(data, "memory allocation");
 	}
 }
 
@@ -52,7 +52,7 @@ static void	add_cmd_redir_out(t_data *data, t_token *ptr, t_cmd **cmd)
 		free((*cmd)->file_out);
 	(*cmd)->file_out = ft_strdup(ptr->next->value);
 	if (!(*cmd)->file_out)
-		ft_exit(data, "malloc");
+		ft_exit(data, "memory allocation");
 }
 
 static void	add_cmd_pipe(t_data *data, t_cmd **cmd)

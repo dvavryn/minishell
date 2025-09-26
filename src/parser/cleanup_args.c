@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_args.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:11:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 17:11:38 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 12:37:04 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	cleanup_args(t_data *data)
 			{
 				buf = cleanup_args_sub(ptr->args[i]);
 				if (!buf)
-					ft_exit(data, "malloc");
+					ft_exit(data, "memory allocation");
 				free(ptr->args[i]);
 				ptr->args[i] = buf;
 			}
