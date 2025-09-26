@@ -6,138 +6,91 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 15:16:19 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 15:58:07 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_var(t_data *data, char *s, size_t *pos)
+static char	*expand_var(t_data *data, char *ptr, size_t *i)
 {
-	char	*out;
-	char	*tmp;
 	char	*var;
-	size_t	i;
+	char	c;
+	char	*out;
 
-	i = 0;
-	while (s[++i] && ft_isalnum(s[i]))
-		;
-	tmp = ft_strndup(s, i);
-	if (!tmp)
-		return (NULL);
-	var = ms_getenv(data->env, tmp + 1);
+	c = ptr[*i];
+	ptr[*i] = 0;
+	var = ft_strdup(&ptr[1]);
+	ptr[*i] = c;
 	if (!var)
+		return (NULL);
+	if (!ms_getenv(data->env, var))
 		out = ft_strdup("");
 	else
-		out = ft_strdup(var);
-	free(tmp);
+		out = ft_strdup(ms_getenv(data->env, var));
+	free(var);
 	if (!out)
 		return (NULL);
-	*pos += i; 
 	return (out);
 }
 
-static char	*expand_double(t_data *data, char *ptr, size_t *i)
+static char	*expand_word(t_data *data, char *input)
 {
 	char	*out;
-	char	*buf;
-	char	*tmp;
-	size_t	j;
-	
-	out = ft_strdup("");
-	if (!out)
-		return (NULL);
-	tmp = ptr;
-	while (*tmp && *tmp != '"')
-	{
-		j = 0;
-		while (tmp[j] && tmp[j] != '"' && tmp[j] != '$')
-			j++;
-		buf = out;
-		out = ft_strjoin(out, expand_var(data, tmp, &j));
-		free(out);
-		if (!out)
-			return (NULL);
-		tmp += j;
-		*i += j;
-	}
-	return (out);
-}
-
-static void	skip_single(char *ptr, size_t *i)
-{
-	while (ptr[*i] && ptr[*i] != '\'')
-		(*i)++;
-}
-
-static int	expand_word(t_data * data, t_token *token)
-{
+	char	*buf[2];
 	char	*ptr;
-	char	*out;
-	char	*buf;
 	size_t	i;
-
-	ptr = token->value;
+	
+	ptr = input;
 	out = ft_strdup("");
 	if (!out)
-		return (0);
+		return (NULL);
 	while (*ptr)
 	{
 		i = 0;
-		while (ptr[i] && ptr[i] != '\'' && ptr[i] != '"' && ptr[i] != '$')
+		while (ptr[i] && ptr[i] != '$' && ptr[i] == '"' && ptr[i] != '\'')
 			i++;
-		out = ft_strjoin(out, ft_strndup(ptr, i));
+		if (ptr[i] == '\'')
+		{
+			i++;
+			while (ptr[i])
+				i++;
+			i++;
+		}
+		buf[0] = ft_substr(ptr, 0, i);
+		if (!buf[0])
+			return (free(out), NULL);
+		buf[1] = out;
+		out = ft_strjoin(out, buf[0]);
+		free(buf[0]);
+		free(buf[1]);
 		if (!out)
-			return (0);
-		if (!ptr)	// ????????????
-			break ;	// ????????????
+			return (NULL);
 		ptr += i;
-		i = 1;
-		if (ptr[i - 1] == '\'')
+		if (*ptr == '$')
 		{
-			skip_single(ptr, &i);
-			buf = out;
-			out = ft_strjoin(out, ft_strndup(ptr, i));
-			free(buf);
+			i = 1;
+			while (ptr[i] && ft_isalnum(ptr[i]))
+				i++;
+			buf[0] = expand_var(data, ptr, &i);
+			if (!buf[0])
+				return (free(out), NULL);
+			buf[1] = out;
+			out = ft_strjoin(out, buf[0]);
+			free(buf[0]);
+			free(buf[1]);
 			if (!out)
-				return (0);
+				return (NULL);
+			ptr += i;
 		}
-		else if (ptr[i - 1] == '"')
-		{
-			buf = out;
-			out = ft_strjoin(out, "\"");
-			free(buf);
-			if (!out)
-				return (0);
-			buf = out;
-			out = ft_strjoin(out, expand_double(data, ptr, &i));
-			free(buf);
-			if (!out)
-				return (0);
-			buf = out;
-			out = ft_strjoin(out, "\"");
-			free(buf);
-			if (!out)
-				return (0);
-		}
-		else if (ptr[i - 1] == '$')
-		{
-			buf = out;
-			out = expand_var(data, ptr, &i);
-			free(buf);
-			if (!out)
-				return (0);
-		}
-		ptr += i;
 	}
-	free(token->value);	// ??????
-	token->value = out;	// ??????
-	return (1);
+	return (out);
 }
 
 void	expander(t_data *data)
 {
 	t_token *ptr;
+	char	*buf;
 
 	ptr = data->tokens;
 	while (ptr)
@@ -147,12 +100,15 @@ void	expander(t_data *data)
 			ptr = ptr->next;
 		else if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_PIPE)
 			;
-		else
+		else if (ft_strchr(ptr->value, '$'))
 		{
-			if (expand_word(data, ptr)
-				&& (ft_strchr(ptr->value, '"') || ft_strchr(ptr->value, '$')))
+			buf = expand_word(data, ptr->value);
+			if (!buf)
 				ft_exit(data, "malloc");
+			free(ptr->value);
+			ptr->value = buf;
 		}
 		ptr = ptr->next;
+		
 	}
 }

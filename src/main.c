@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 15:18:47 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 15:42:24 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	main(int argc, char **argv, char **envp)
 				expander(&data);
 				printf("\n");
 				print_tokens(data.tokens);
-				// if (parser(&data))
-				// {
+				if (parser(&data))
+				{
 				// 	// print_cmds(data.cmd);
 				// 	// executer(&data);
 				// 	free_cmd(data.cmd);
 				// 	data.cmd = NULL;
-				// }
+				}
 			}
 			free_tokens(data.tokens);
 			data.tokens = NULL;

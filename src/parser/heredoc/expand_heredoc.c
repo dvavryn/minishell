@@ -6,13 +6,13 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:48:29 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 16:53:59 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 15:55:32 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_heredoc_sub_word(t_data *data, char *ptr, size_t *i)
+static char	*expand_heredoc_sub(t_data *data, char *ptr, size_t *i)
 {
 	char	*var;
 	char	c;
@@ -65,7 +65,7 @@ char	*expand_heredoc(t_data *data, char *input)
 			i = 1;
 			while (ptr[i] && ft_isalnum(ptr[i]))
 				i++;
-			buf[0] = expand_heredoc_sub_word(data, ptr, &i);
+			buf[0] = expand_heredoc_sub(data, ptr, &i);
 			if (!buf[0])
 				return (free(out), NULL);
 			buf[1] = out;
