@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 11:49:04 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/18 14:10:51 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/26 12:56:44 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static char	*ft_charjoin(char const *s1, char const c)
 
 	if (!s1 || !c)
 		return (NULL);
-	dest = malloc((ft_strlen((char *)s1)
-				+ 2) * sizeof(char));
+	dest = malloc(ft_strlen((char *)s1) + 2);
 	if (!dest)
 		return (NULL);
 	i = -1;
