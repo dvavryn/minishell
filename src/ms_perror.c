@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:47:50 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/26 11:58:15 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/26 12:04:45 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	ms_perror_string(char *str, char c)
 {
 	if (!str)
 		return ;
-	write(2, str, ft_strlen(str));
+	write(STDERR_FILENO, str, ft_strlen(str));
 	if (c == 'f')
-		write(2, " failed", 8);
+		write(STDERR_FILENO, " failed", 8);
 }
 
 static void	ms_perror_digit(int d)
@@ -30,7 +30,7 @@ static void	ms_perror_digit(int d)
 		return ;
 	d = -1;
 	while (digit[++d])
-		write(2, &digit[d], 1);
+		write(STDERR_FILENO, &digit[d], 1);
 	free(digit);
 }
 
@@ -60,9 +60,11 @@ void	ms_perror(const char *str, ...)
 				ms_perror_string(va_arg(args, char *), str[i]);
 			else if (str[i] == 'd')
 				ms_perror_digit(va_arg(args, int));
+			else if (str[i] == '%')
+				write(STDERR_FILENO, '%', 1);
 		}
 		else
-			write(2, &str[i], 1);
+			write(STDERR_FILENO, &str[i], 1);
 	}
 	va_end(args);
 }
