@@ -6,13 +6,13 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 14:59:10 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/26 15:16:19 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_var(t_data *data, char *s)
+static char	*expand_var(t_data *data, char *s, size_t *pos)
 {
 	char	*out;
 	char	*tmp;
@@ -33,6 +33,7 @@ static char	*expand_var(t_data *data, char *s)
 	free(tmp);
 	if (!out)
 		return (NULL);
+	*pos += i; 
 	return (out);
 }
 
@@ -53,7 +54,7 @@ static char	*expand_double(t_data *data, char *ptr, size_t *i)
 		while (tmp[j] && tmp[j] != '"' && tmp[j] != '$')
 			j++;
 		buf = out;
-		out = ft_strjoin(out, expand_var(data, tmp));
+		out = ft_strjoin(out, expand_var(data, tmp, &j));
 		free(out);
 		if (!out)
 			return (NULL);
@@ -93,19 +94,36 @@ static int	expand_word(t_data * data, t_token *token)
 		ptr += i;
 		i = 1;
 		if (ptr[i - 1] == '\'')
+		{
 			skip_single(ptr, &i);
+			buf = out;
+			out = ft_strjoin(out, ft_strndup(ptr, i));
+			free(buf);
+			if (!out)
+				return (0);
+		}
 		else if (ptr[i - 1] == '"')
 		{
+			buf = out;
+			out = ft_strjoin(out, "\"");
+			free(buf);
+			if (!out)
+				return (0);
 			buf = out;
 			out = ft_strjoin(out, expand_double(data, ptr, &i));
 			free(buf);
 			if (!out)
-				return (0);			
+				return (0);
+			buf = out;
+			out = ft_strjoin(out, "\"");
+			free(buf);
+			if (!out)
+				return (0);
 		}
 		else if (ptr[i - 1] == '$')
 		{
 			buf = out;
-			out = expand_var(data, ptr);
+			out = expand_var(data, ptr, &i);
 			free(buf);
 			if (!out)
 				return (0);
@@ -124,13 +142,13 @@ void	expander(t_data *data)
 	ptr = data->tokens;
 	while (ptr)
 	{
+		
 		if (ptr->type == TOKEN_HEREDOC)
 			ptr = ptr->next;
 		else if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_PIPE)
 			;
 		else
 		{
-			printf("here");
 			if (expand_word(data, ptr)
 				&& (ft_strchr(ptr->value, '"') || ft_strchr(ptr->value, '$')))
 				ft_exit(data, "malloc");
