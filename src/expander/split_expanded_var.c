@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/27 17:23:54 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:03:51 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,18 @@ static t_token	*create_extended_token(t_data *data, char *value, int type)
 	return (new);
 }
 
-static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **curr)
+static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **ptr)
 {
-	t_token	*new;
+	t_token	*new_tokens;
 	t_token	*last_new;
-	t_token	*next;
+	t_token *next;
+	t_token	*token;
 	char	*value;
 	ssize_t	i;
 	ssize_t	start;
 
-	value = (*curr)->value;
-	new = NULL;
+	value = (*ptr)->value;
+	new_tokens = NULL;
 	last_new = NULL;
 	i = -1;
 	while (value[++i])
@@ -44,22 +45,49 @@ static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **curr)
 		{
 			while (value[++i] && value[i] != '\"')
 				;
-			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
+			token = create_extended_token(data, ft_strndup(&value[start], i - start), TOKEN_WORD);
 		}
 		else if (value[i] == '\'')
 		{
 			while (value[++i] && value[i] != '\'')
 				;
-			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
+			token = create_extended_token(data, ft_strndup(&value[start], i - start), TOKEN_WORD);
 		}
 		else if (value[i] != ' ' && value[i] != '\t')
 		{
 			while (value[i] && value[i] != ' ' && value[i] != '\t')
 				i++;
-			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
+			token = create_extended_token(data, ft_strndup(&value[start], i - start), TOKEN_WORD);
+			i--;
 		}
-		ptr = ptr->next;
+		else
+			continue;
+		if (!new_tokens)
+			new_tokens = token;
+		else
+			last_new->next = token;
+		last_new = token;
 	}
+	next = (*ptr)->next;
+	free((*ptr)->value);
+	free(*ptr);
+	if (new_tokens)
+	{
+		if (*prev)
+			(*prev)->next = new_tokens;
+		else
+			data->tokens = new_tokens;
+		last_new->next = next;
+		*ptr = new_tokens;
+	}
+	else
+	{
+		if (*prev)
+			(*prev)->next = next;
+		else
+			data->tokens = next;
+		*ptr = next;
+	}	
 }
 
 void	expanded_tokens(t_data *data)
@@ -77,6 +105,6 @@ void	expanded_tokens(t_data *data)
 			split_expanded_tokens(data, &prev, &ptr);
 		else
 			prev = ptr;
-		ptr = next;
+		ptr = ptr->next;
 	}
 }
