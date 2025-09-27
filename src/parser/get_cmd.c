@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 17:41:03 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 17:44:05 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 		split_join(data, *cmd, ptr->value);
 }
 
+t_redir *new_redir(t_token *token)
+{
+	t_redir	*out;
+
+	out = ft_calloc(1, sizeof(t_redir));
+	if (!out)
+		return (NULL);
+	if (!ft_strcmp(token->value, "<<"))
+		get_heredoc();
+}
+
 static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
 {
 	t_redir	*ptr;
@@ -39,7 +50,7 @@ static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
 		ptr = (*cmd)->redirs;
 		while (ptr->next)
 			ptr = ptr->next;
-		ptr->next = new_redit();
+		ptr->next = new_redir();
 		if (!ptr->next)
 			ft_exit(data, "malloc");
 	}
