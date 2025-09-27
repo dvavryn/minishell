@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 17:44:05 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 18:26:25 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 		split_join(data, *cmd, ptr->value);
 }
 
-t_redir *new_redir(t_token *token)
+t_redir *new_redir(t_data *data, t_token *token)
 {
 	t_redir	*out;
 
@@ -32,7 +32,17 @@ t_redir *new_redir(t_token *token)
 	if (!out)
 		return (NULL);
 	if (!ft_strcmp(token->value, "<<"))
-		get_heredoc();
+	{
+		get_heredoc(data, token->next->value);
+		out->filename = ft_strdup(token->next->value);
+		if (!out->filename)
+			return (free(out), NULL);
+		out->type = R_OUT;
+	}
+	else if (!ft_strcmp(data, token->value))
+	{
+		out->filename = ft_strdup(token->next->value);
+	}
 }
 
 static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
