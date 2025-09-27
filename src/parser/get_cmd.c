@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 18:26:25 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 18:32:10 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ t_redir *new_redir(t_data *data, t_token *token)
 	if (!out)
 		return (NULL);
 	if (!ft_strcmp(token->value, "<<"))
-	{
 		get_heredoc(data, token->next->value);
-		out->filename = ft_strdup(token->next->value);
-		if (!out->filename)
-			return (free(out), NULL);
+	out->filename = ft_strdup(token->next->value);
+	if (!out->filename)
+		return (free(out), NULL);
+	if (!ft_strchr(token->value, '<'))
+		out->type = R_IN;
+	else if (!ft_strcmp(token->value, ">"))
 		out->type = R_OUT;
-	}
-	else if (!ft_strcmp(data, token->value))
-	{
-		out->filename = ft_strdup(token->next->value);
-	}
+	else if (!ft_strcmp(token->value, ">>"))
+		out->type = R_APPEND;
+	return (out);
 }
 
 static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
@@ -51,7 +51,7 @@ static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
 
 	if (!(*cmd)->redirs)
 	{
-		(*cmd)->redirs = new_redir();
+		(*cmd)->redirs = new_redir(data, token);
 		if (!(*cmd)->redirs)
 			ft_exit(data, "malloc");
 	}
@@ -60,11 +60,10 @@ static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
 		ptr = (*cmd)->redirs;
 		while (ptr->next)
 			ptr = ptr->next;
-		ptr->next = new_redir();
+		ptr->next = new_redir(data, token);
 		if (!ptr->next)
 			ft_exit(data, "malloc");
 	}
-	
 }
 
 static void	add_cmd_pipe(t_data *data, t_cmd **cmd)
