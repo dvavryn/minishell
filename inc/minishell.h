@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 16:54:37 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 16:44:36 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	cleanup_args(t_data *data);
 
 // expander
 void	expander(t_data *data);
-
+void	expanded_tokens(t_data *data);
 
 // utils
 void	split_join(t_data *data, t_cmd *cmd, char *value);
