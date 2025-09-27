@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/27 18:03:51 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:27:42 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	expanded_tokens(t_data *data)
 	while (ptr)
 	{
 		next = ptr->next;
-		if (ptr->type == TOKEN_TO_EXPAND)
+		if (ptr->type != TOKEN_HEREDOC && ptr->type != TOKEN_REDIR && ptr->type != TOKEN_PIPE)
 			split_expanded_tokens(data, &prev, &ptr);
 		else
 			prev = ptr;
