@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 16:44:36 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:32:32 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data		t_data;
 typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
 typedef struct s_expand		t_expand;
+typedef struct s_redir		t_redir;
 typedef enum e_token_type	t_token_type;
 typedef enum e_redir_type	t_redir_type;
 
@@ -84,16 +85,20 @@ struct s_token
 	t_token	*next;
 };
 
+struct s_redir
+{
+	char	*filename;
+	int		type;	
+	t_redir	*next;
+};
+
 struct s_cmd
 {
 	char	*cmd;
 	char	**args;
 	int		pipe_in;
 	int		pipe_out;
-	char	*file_in;
-	int		redir_in;
-	char	*file_out;
-	int		redir_out;
+	t_redir *redirs;
 	t_cmd	*next;
 };
 
@@ -137,7 +142,7 @@ void	cleanup_args(t_data *data);
 
 // expander
 void	expander(t_data *data);
-void	expanded_tokens(t_data *data);
+// void	expanded_tokens(t_data *data);
 
 // utils
 void	split_join(t_data *data, t_cmd *cmd, char *value);

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 13:21:39 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 17:41:03 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,26 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 		split_join(data, *cmd, ptr->value);
 }
 
-static void	add_cmd_redir_in(t_data *data, t_token *ptr, t_cmd **cmd)
+static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
 {
-	if (ptr->value[0] != ptr->value[1])
-		(*cmd)->redir_in = R_IN;
-	else
-		(*cmd)->redir_in = R_HEREDOC;
-	if ((*cmd)->file_in)
-		free((*cmd)->file_in);
-	(*cmd)->file_in = ft_strdup(ptr->next->value);
-	if (!(*cmd)->file_in)
-		ft_exit(data, "memory allocation");
-	if ((*cmd)->redir_in == R_HEREDOC)
-	{
-		if (!get_heredoc(data, &(*cmd)->file_in))
-			ft_exit(data, "memory allocation");
-	}
-}
+	t_redir	*ptr;
 
-static void	add_cmd_redir_out(t_data *data, t_token *ptr, t_cmd **cmd)
-{
-	if (ptr->value[0] != ptr->value[1])
-		(*cmd)->redir_out = R_OUT;
+	if (!(*cmd)->redirs)
+	{
+		(*cmd)->redirs = new_redir();
+		if (!(*cmd)->redirs)
+			ft_exit(data, "malloc");
+	}
 	else
-		(*cmd)->redir_out = R_APPEND;
-	if ((*cmd)->file_out)
-		free((*cmd)->file_out);
-	(*cmd)->file_out = ft_strdup(ptr->next->value);
-	if (!(*cmd)->file_out)
-		ft_exit(data, "memory allocation");
+	{
+		ptr = (*cmd)->redirs;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = new_redit();
+		if (!ptr->next)
+			ft_exit(data, "malloc");
+	}
+	
 }
 
 static void	add_cmd_pipe(t_data *data, t_cmd **cmd)
@@ -77,10 +68,7 @@ void	get_cmd(t_data *data)
 			add_cmd_pipe(data, &cmd);
 		else if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
 		{
-			if (!ft_strcmp(ptr->value, "<") || !ft_strcmp(ptr->value, "<<"))
-				add_cmd_redir_in(data, ptr, &cmd);
-			else
-				add_cmd_redir_out(data, ptr, &cmd);
+			add_cmd_redir(data, ptr, &cmd);
 			ptr = ptr->next;
 		}
 		else

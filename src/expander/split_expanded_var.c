@@ -1,82 +1,82 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_expanded_var.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/27 17:23:54 by bschwarz         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   split_expanded_var.c                               :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
+// /*   Updated: 2025/09/27 17:23:54 by bschwarz         ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 
-static t_token	*create_extended_token(t_data *data, char *value, int type)
-{
-	t_token	*new;
+// static t_token	*create_extended_token(t_data *data, char *value, int type)
+// {
+// 	t_token	*new;
 
-	new = ft_calloc(1, sizeof(t_token));
-	if (!new)
-		ft_exit(data, "malloc");
-	new->value = value;
-	new->type = type;
-	return (new);
-}
+// 	new = ft_calloc(1, sizeof(t_token));
+// 	if (!new)
+// 		ft_exit(data, "malloc");
+// 	new->value = value;
+// 	new->type = type;
+// 	return (new);
+// }
 
-static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **curr)
-{
-	t_token	*new;
-	t_token	*last_new;
-	t_token	*next;
-	char	*value;
-	ssize_t	i;
-	ssize_t	start;
+// static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **curr)
+// {
+// 	t_token	*new;
+// 	t_token	*last_new;
+// 	t_token	*next;
+// 	char	*value;
+// 	ssize_t	i;
+// 	ssize_t	start;
 
-	value = (*curr)->value;
-	new = NULL;
-	last_new = NULL;
-	i = -1;
-	while (value[++i])
-	{
-		start = i;
-		if (value[i] == '\"')
-		{
-			while (value[++i] && value[i] != '\"')
-				;
-			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
-		}
-		else if (value[i] == '\'')
-		{
-			while (value[++i] && value[i] != '\'')
-				;
-			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
-		}
-		else if (value[i] != ' ' && value[i] != '\t')
-		{
-			while (value[i] && value[i] != ' ' && value[i] != '\t')
-				i++;
-			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
-		}
-		ptr = ptr->next;
-	}
-}
+// 	value = (*curr)->value;
+// 	new = NULL;
+// 	last_new = NULL;
+// 	i = -1;
+// 	while (value[++i])
+// 	{
+// 		start = i;
+// 		if (value[i] == '\"')
+// 		{
+// 			while (value[++i] && value[i] != '\"')
+// 				;
+// 			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
+// 		}
+// 		else if (value[i] == '\'')
+// 		{
+// 			while (value[++i] && value[i] != '\'')
+// 				;
+// 			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
+// 		}
+// 		else if (value[i] != ' ' && value[i] != '\t')
+// 		{
+// 			while (value[i] && value[i] != ' ' && value[i] != '\t')
+// 				i++;
+// 			token = create_extended_token(data, ptr, ft_strndup(&value[start], i - start TOKEN_WORD));
+// 		}
+// 		ptr = ptr->next;
+// 	}
+// }
 
-void	expanded_tokens(t_data *data)
-{
-	t_token	*ptr;
-	t_token	*prev;
-	t_token	*next;
+// void	expanded_tokens(t_data *data)
+// {
+// 	t_token	*ptr;
+// 	t_token	*prev;
+// 	t_token	*next;
 
-	prev = NULL;
-	ptr = data->tokens;
-	while (ptr)
-	{
-		next = ptr->next;
-		if (ptr->type == TOKEN_TO_EXPAND)
-			split_expanded_tokens(data, &prev, &ptr);
-		else
-			prev = ptr;
-		ptr = next;
-	}
-}
+// 	prev = NULL;
+// 	ptr = data->tokens;
+// 	while (ptr)
+// 	{
+// 		next = ptr->next;
+// 		if (ptr->type == TOKEN_TO_EXPAND)
+// 			split_expanded_tokens(data, &prev, &ptr);
+// 		else
+// 			prev = ptr;
+// 		ptr = next;
+// 	}
+// }

@@ -20,7 +20,8 @@ LIBFT_DIR = ./libs/libft
 # Source files
 SRCS := $(shell find $(SRC_DIR) -name "*.c")
 OBJS := $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRCS:.c=.o))
-
+HEAD := \
+		inc/minishell.h
 # Libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
@@ -36,7 +37,7 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "$(GREEN)✅ $(NAME) compiled successfully!$(NC)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEAD)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
