@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 12:56:16 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 13:09:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ static int	expander_sub(t_data *data, t_expand *exp)
 		exp->i = 1;
 		while (exp->ptr[exp->i] && ft_isalnum(exp->ptr[exp->i]))
 			exp->i++;
-		exp->buf1 = expand_var(data, exp->ptr, &exp->i);
+		if (exp->i == 1 && exp->ptr[exp->i] == '?')
+		{
+			exp->i++;
+			exp->buf1 = ft_itoa(data->ret);
+		}
+		else
+			exp->buf1 = expand_var(data, exp->ptr, &exp->i);
 		if (!exp->buf1)
 			return (free(exp->out), 0);
 		exp->buf2 = exp->out;
@@ -151,10 +157,7 @@ void	expander(t_data *data)
 			;
 		else if (ft_strchr(ptr->value, '$'))
 		{
-			if (ft_strncmp("$?", ptr->value, 2))
-				buf = ft_itoa(data->ret);
-			else
-				buf = expand_word(data, ptr->value);
+			buf = expand_word(data, ptr->value);
 			if (!buf)
 				ft_exit(data, "malloc");
 			free(ptr->value);

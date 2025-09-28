@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 12:46:51 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 13:11:29 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,9 @@ void	cleanup_args(t_data *data);
 // expander
 void	expander(t_data *data);
 // void	expanded_tokens(t_data *data);
+
+// executer
+int		executer(t_data *data);
 
 // utils
 char	*ft_strjoin_endl(char *s1, char *s2);
