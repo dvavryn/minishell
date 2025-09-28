@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 17:32:32 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 12:46:51 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int		get_heredoc(t_data *data, char **lim);
 char	*get_heredoc_name(void);
 char	*get_heredoc_input(t_data *data, char *lim);
 char	*clean_hd(char *in);
+void	cmd_split_join(t_data *data, t_cmd *cmd, char *value);
 char	*expand_heredoc(t_data *data, char *input);
 void	cleanup_args(t_data *data);
 
@@ -145,7 +146,6 @@ void	expander(t_data *data);
 // void	expanded_tokens(t_data *data);
 
 // utils
-void	split_join(t_data *data, t_cmd *cmd, char *value);
 char	*ft_strjoin_endl(char *s1, char *s2);
 char	*ms_getenv(char **env, char *s);
 char	**split_copy(char **arr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 16:49:22 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/28 12:56:16 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,10 @@ void	expander(t_data *data)
 			;
 		else if (ft_strchr(ptr->value, '$'))
 		{
-			buf = expand_word(data, ptr->value);
+			if (ft_strncmp("$?", ptr->value, 2))
+				buf = ft_itoa(data->ret);
+			else
+				buf = expand_word(data, ptr->value);
 			if (!buf)
 				ft_exit(data, "malloc");
 			free(ptr->value);

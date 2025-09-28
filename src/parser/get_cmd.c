@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 20:03:36 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 12:46:23 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 		if (!(*cmd)->cmd)
 			ft_exit(data, "memory allocation");
 	}
-	else
-		split_join(data, *cmd, ptr->value);
+	cmd_split_join(data, *cmd, ptr->value);
 }
 
 t_redir *new_redir(t_data *data, t_token *token)
