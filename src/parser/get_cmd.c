@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 18:32:10 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 20:03:36 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ t_redir *new_redir(t_data *data, t_token *token)
 	if (!out)
 		return (NULL);
 	if (!ft_strcmp(token->value, "<<"))
-		get_heredoc(data, token->next->value);
+		get_heredoc(data, &token->next->value);
 	out->filename = ft_strdup(token->next->value);
 	if (!out->filename)
 		return (free(out), NULL);
-	if (!ft_strchr(token->value, '<'))
+	if (!ft_strcmp(token->value, "<") || !ft_strcmp(token->value, "<<"))
 		out->type = R_IN;
 	else if (!ft_strcmp(token->value, ">"))
 		out->type = R_OUT;

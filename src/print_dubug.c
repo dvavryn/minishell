@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:36:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 17:01:31 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/27 20:00:58 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,56 @@ void	print_tokens(t_token *tokens)
 	}
 }
 
-void	print_cmds(t_cmd *ptr)
-{
-	t_cmd	*cmd;
-	size_t	i;
-	ssize_t	j;
+// void	print_cmds(t_cmd *ptr)
+// {
+// 	t_cmd	*cmd;
+// 	size_t	i;
+// 	ssize_t	j;
 
-	cmd = ptr;
-	i = 0;
-	while (cmd)
-	{
-		printf("CMD [#%zu]\n", i);
-		if (cmd->pipe_in)
-			printf("\tPIPE-IN: YES\n");
-		else
-			printf("\tPIPE-IN: NO\n");
-		if (cmd->redir_in == R_IN)
-			printf("\tREDIR-IN: %s\n", cmd->file_in);
-		else if (cmd->redir_in == R_HEREDOC)
-			printf("\tREDIR-IN: HD %s\n", cmd->file_in);
-		else
-			printf("\tREDIR-IN: NO\n");
-		printf("\tCMD: %s\n", cmd->cmd);
-		j = -1;
-		printf("\tARGS: ");
-		if (cmd->args)
-		{
-			while (cmd->args[++j])
-				printf("[%s] ", cmd->args[j]);
-			printf("\n");
-		}
-		else
-			printf("none\n");
-		if (cmd->redir_out == R_OUT)
-			printf("\tREDIR-OUT: %s\n", cmd->file_out);
-		else if (cmd->redir_out == R_APPEND)
-			printf("\tREDIR-OUT: APPEND %s\n", cmd->file_out);
-		else
-			printf("\tREDIR-OUT: NO\n");
-		if (cmd->pipe_out)
-			printf("\tPIPE-OUT: YES\n");
-		else
-			printf("\tPIPE-OUT: NO\n");
-		cmd = cmd->next;
-		i++;
-	}
-}
+// 	cmd = ptr;
+// 	i = 0;
+// 	while (cmd)
+// 	{
+// 		printf("CMD [#%zu]\n", i);
+// 		if (cmd->pipe_in)
+// 			printf("\tPIPE-IN: YES\n");
+// 		else
+// 			printf("\tPIPE-IN: NO\n");
+// 		if (cmd->redirs)
+// 		{
+// 			t_redir *ptr;
+// 			ptr = cmd->redirs;
+// 			while (ptr->next)
+// 			{
+// 				if (ptr->type == R_IN)
+// 					printf("\tREDIR-IN:  %s\n", ptr->filename);
+// 				else if (ptr->type == R_HEREDOC)
+// 					printf("\tREDIR-HD:  %s\n", ptr->filename);
+// 				else if (ptr->type == R_OUT)
+// 					printf("\tREDIR-OUT: %s\n", ptr->filename);
+// 				else if (ptr->type == R_APPEND)
+// 					printf("\tREDIR-APP: %s\n", ptr->filename);
+// 				ptr = ptr->next;
+// 			}
+// 		}
+// 		else
+// 			printf("\tREDIRS: NO\n");
+// 		printf("\tCMD: %s\n", cmd->cmd);
+// 		j = -1;
+// 		printf("\tARGS: ");
+// 		if (cmd->args)
+// 		{
+// 			while (cmd->args[++j])
+// 				printf("[%s] ", cmd->args[j]);
+// 			printf("\n");
+// 		}
+// 		else
+// 			printf("none\n");
+// 		if (cmd->pipe_out)
+// 			printf("\tPIPE-OUT: YES\n");
+// 		else
+// 			printf("\tPIPE-OUT: NO\n");
+// 		cmd = cmd->next;
+// 		i++;
+// 	}
+// }
