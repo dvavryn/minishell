@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 13:11:29 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 15:17:00 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ struct s_expand
 
 // prototypes
 // general
-void	sighandler(int sig);
 void	startup(t_data *data, int argc, char **argv, char **envp);
 int		prompt(t_data *data);
 void	ft_exit(t_data *data, char *error);
@@ -155,6 +154,11 @@ char	**split_copy(char **arr);
 void	ms_perror(const char *str, ...);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(const char *s, size_t n);
+
+// signals
+void	sig_interactive(void);
+void	sig_execute_parent(void);
+void	sig_execute_child(void);
 
 // free
 void	free_all(t_data *data);

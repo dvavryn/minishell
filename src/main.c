@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 13:10:58 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 15:13:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	startup(&data, argc, argv, envp);
 	while (1)
 	{
+		sig_interactive();
 		if (prompt(&data))
 		{
 			tokenize(&data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   startup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:07:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 12:40:50 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/28 15:13:25 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void	startup(t_data *data, int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, SIG_IGN);
 	ft_bzero(data, sizeof(t_data));
 	data->env = copy_env(envp);
 	if (!data->env)

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:08:34 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 15:16:23 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/28 15:17:11 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,21 @@ void	sighandler(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+void	sig_interactive(void)
+{
+	signal(SIGINT, sighandler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	sig_execute_parent()
+{
+	signal(SIGINT, SIG_IGN);
+}
+
+void	sig_execute_child()
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
