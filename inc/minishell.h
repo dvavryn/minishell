@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 16:44:36 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/09/28 13:59:27 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ char	**split_copy(char **arr);
 void	ms_perror(const char *str, ...);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(const char *s, size_t n);
+t_token	*ms_lstlast(t_token *lst);
 
 // free
 void	free_all(t_data *data);
