@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 15:17:00 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/29 16:19:51 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
+# include "../libs/libft/libft.h"
 
 // typedefs
 typedef struct s_data		t_data;
@@ -146,6 +146,7 @@ void	expander(t_data *data);
 
 // executer
 int		executer(t_data *data);
+char *get_path(t_data *data, t_cmd *cmd);
 
 // utils
 char	*ft_strjoin_endl(char *s1, char *s2);

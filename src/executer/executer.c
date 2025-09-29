@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 16:34:00 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/29 16:22:31 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,56 +58,6 @@ int isbuiltin(char *s)
 		return (0);
 }
 
-// {
-// 		if (exec.cmd_count == 1 && !data->cmd->cmd)
-// 	{
-// 		t_redir *ptr;
-// 		exec.redir_in = -1;
-// 		exec.redir_out = -1;
-// 		ptr = data->cmd->redirs;
-// 		while (ptr)
-// 		{
-// 			if (ptr->type == R_IN)
-// 			{
-// 				if (exec.redir_in != -1)
-// 					close(exec.redir_in);
-// 				exec.redir_in = open(ptr->filename, O_RDONLY);
-// 				if (exec.redir_in == -1)
-// 				{
-// 					perror(ptr->filename);
-// 					data->ret = -1; //change
-// 					return (0);
-// 				}
-// 			}
-// 			else if (ptr->type == R_OUT)
-// 			{
-// 				if (exec.redir_out != -1)
-// 					close(exec.redir_out);
-// 				exec.redir_out = open(ptr->filename, O_RDONLY | O_CREAT | O_TRUNC, 0600);
-// 				if (exec.redir_out == -1)
-// 				{
-// 					perror(ptr->filename);
-// 					data->ret = -1; //change
-// 					return (0);
-// 				}
-// 			}
-// 			else if (ptr->type == R_APPEND)
-// 			{
-// 				if (exec.redir_out != -1)
-// 					close(exec.redir_out);
-// 				exec.redir_out = open(ptr->filename, O_RDONLY | O_CREAT | O_APPEND, 0600);
-// 				if (exec.redir_out == -1)
-// 				{
-// 					perror(ptr->filename);
-// 					data->ret = -1; //change
-// 					return (0);
-// 				}
-// 			}
-// 			ptr = ptr->next;	
-// 		}
-// 	}
-// }
-
 int	single_builtin()
 {
 	printf("todo\n");
@@ -144,7 +94,8 @@ void	executer_child_pipes(t_data *data, t_cmd *cmd, t_exec *exec)
 
 	ret = 0;
 	close(exec->pipe[1][1]);
-	if ((exec->curr && dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
+	printf("%zu\n", exec->curr);
+	if ((exec->curr != 0 && dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
 		|| (cmd->next && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1)
 		|| (exec->redir_in != -1 && dup2(exec->pipe[0][1], STDIN_FILENO == -1))
 		|| (exec->redir_out != -1 && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1))
@@ -157,20 +108,22 @@ void	executer_child_pipes(t_data *data, t_cmd *cmd, t_exec *exec)
 		ft_exit(data, "dup2");
 }
 
-void	get_exec_path(char **s)
-{
-	char *cmd;
-
-	cmd = *s;
-	
-}
-
 int executer_child(t_data *data, t_cmd *cmd, t_exec *exec)
 {
 	sig_execute_child();
 	executer_child_open(data, cmd, exec);
 	executer_child_pipes(data, cmd, exec);
-	get_exec_path(&cmd->args[0]);
+	if (ft_strchr(cmd->args[0], '/'))
+		get_path(data, cmd);
+	if (cmd->args[0] && execve(cmd->args[0], cmd->args, data->env) == -1)
+	{
+		perror(cmd->cmd);
+		free_all(data);
+		exit(3); //???????????
+	}
+	free_all(data);
+	exit(0);
+	
 	return (0);
 }
 
@@ -208,6 +161,7 @@ int	executer_fork(t_data *data, t_exec *exec)
 		data->ret = WEXITSTATUS(exec->status);
 	else if (WIFSIGNALED(exec->status))
 		g_signal = WTERMSIG(exec->status);
+	// mysighandler(WTERMSIG(exec->status));
 	return (0);
 }
 
