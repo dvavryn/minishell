@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/29 16:22:31 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/30 12:14:05 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,48 @@ void	executer_child_pipes(t_data *data, t_cmd *cmd, t_exec *exec)
 
 	ret = 0;
 	close(exec->pipe[1][1]);
-	printf("%zu\n", exec->curr);
-	if ((exec->curr != 0 && dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
-		|| (cmd->next && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1)
-		|| (exec->redir_in != -1 && dup2(exec->pipe[0][1], STDIN_FILENO == -1))
-		|| (exec->redir_out != -1 && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1))
-		ret = 1;
+	if (exec->curr < 0)
+	{
+		if (dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
+		{
+			ret = 1;
+		}
+	}
+	if (cmd->next)
+	{
+		if (dup2(exec->pipe[1][0], STDOUT_FILENO) == -1)
+		{
+			ret = 1;
+		}
+	}
+	if (exec->redir_in)
+	{
+		if (dup2(exec->redir_in, STDIN_FILENO) == -1)
+		{
+			ret = 1;
+		}
+	}
+	if (exec->redir_out)
+	{
+		if (dup2(exec->redir_out, STDOUT_FILENO))
+		{
+			ret = 1;
+		}
+	}
+	// if ((exec->curr != 0 && dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
+	// 	|| (cmd->next && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1)
+	// 	|| (exec->redir_in != -1 && dup2(exec->pipe[0][1], STDIN_FILENO == -1))
+	// 	|| (exec->redir_out != -1 && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1))
+	// 	ret = 1;
 	close(exec->pipe[0][1]);
 	close(exec->pipe[1][0]);
 	close(exec->redir_in);
 	close(exec->redir_out);
 	if (ret)
+	{
+		printf("ret: %d", ret);
 		ft_exit(data, "dup2");
+	}
 }
 
 int executer_child(t_data *data, t_cmd *cmd, t_exec *exec)
