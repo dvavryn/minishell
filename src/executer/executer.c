@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/30 12:14:05 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/09/30 12:36:17 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,44 +93,28 @@ void	executer_child_pipes(t_data *data, t_cmd *cmd, t_exec *exec)
 	int ret;
 
 	ret = 0;
-	close(exec->pipe[1][1]);
+	if (exec->pipe[1][1] != -1)
+		close(exec->pipe[1][1]);
 	if (exec->curr < 0)
-	{
 		if (dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
-		{
 			ret = 1;
-		}
-	}
 	if (cmd->next)
-	{
 		if (dup2(exec->pipe[1][0], STDOUT_FILENO) == -1)
-		{
 			ret = 1;
-		}
-	}
 	if (exec->redir_in)
-	{
 		if (dup2(exec->redir_in, STDIN_FILENO) == -1)
-		{
 			ret = 1;
-		}
-	}
 	if (exec->redir_out)
-	{
 		if (dup2(exec->redir_out, STDOUT_FILENO))
-		{
 			ret = 1;
-		}
-	}
-	// if ((exec->curr != 0 && dup2(exec->pipe[0][1], STDIN_FILENO) == -1)
-	// 	|| (cmd->next && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1)
-	// 	|| (exec->redir_in != -1 && dup2(exec->pipe[0][1], STDIN_FILENO == -1))
-	// 	|| (exec->redir_out != -1 && dup2(exec->pipe[1][0], STDOUT_FILENO) == -1))
-	// 	ret = 1;
-	close(exec->pipe[0][1]);
-	close(exec->pipe[1][0]);
-	close(exec->redir_in);
-	close(exec->redir_out);
+	if (exec->pipe[0][1] != -1)
+		close(exec->pipe[0][1]);
+	if (exec->pipe[1][0] != -1)
+		close(exec->pipe[1][0]);
+	if (exec->redir_in != -1)
+		close(exec->redir_in);
+	if (exec->redir_out != -1)
+		close(exec->redir_out);
 	if (ret)
 	{
 		printf("ret: %d", ret);
@@ -140,11 +124,21 @@ void	executer_child_pipes(t_data *data, t_cmd *cmd, t_exec *exec)
 
 int executer_child(t_data *data, t_cmd *cmd, t_exec *exec)
 {
+	char *buf;
+
 	sig_execute_child();
 	executer_child_open(data, cmd, exec);
 	executer_child_pipes(data, cmd, exec);
 	if (ft_strchr(cmd->args[0], '/'))
-		get_path(data, cmd);
+	{
+		buf = get_path(data, cmd);
+		if (buf)
+		{
+			printf("%s\n", buf);
+			free(cmd->args[0]);
+			cmd->args[0] = buf;
+		}	
+	}
 	if (cmd->args[0] && execve(cmd->args[0], cmd->args, data->env) == -1)
 	{
 		perror(cmd->cmd);
@@ -159,8 +153,10 @@ int executer_child(t_data *data, t_cmd *cmd, t_exec *exec)
 
 int executer_parent(t_data *data, t_cmd *cmd, t_exec *exec)
 {
-	close(exec->pipe[0][1]);
-	close(exec->pipe[1][0]);
+	if (exec->pipe[0][1] != -1)
+		close(exec->pipe[0][1]);
+	if (exec->pipe[1][0] != -1)
+		close(exec->pipe[1][0]);
 	(void)cmd;
 	(void)data;
 	exec->pipe[0][1] = exec->pipe[1][1];
@@ -185,8 +181,12 @@ int	executer_fork(t_data *data, t_exec *exec)
 			executer_parent(data, ptr, exec);
 		ptr = ptr->next;
 	}
-	while (waitpid(-1, &exec->status, 0))
-		;
+	ptr = data->cmd;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		waitpid(-1, &exec->status, 0);		
+	}
 	if (WIFEXITED(exec->status))
 		data->ret = WEXITSTATUS(exec->status);
 	else if (WIFSIGNALED(exec->status))
