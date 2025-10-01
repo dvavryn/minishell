@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/01 13:48:47 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/01 16:19:53 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ static void	waiting(t_data *data, t_exec *exec)
 
 static void	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec)
 {
-	(void)data;
-	(void)cmd;
 	(void)exec;
+	if (cmd->args && cmd->args[0] && !ft_strcmp(cmd->cmd, "exit"))
+		bi_exit(data, cmd->args);
+	printf("todo\n");
 	return ;
 }
 
@@ -44,7 +45,7 @@ int	executer(t_data *data)
 	t_exec	exec;
 
 	init_exec(data, &exec);
-	if (exec.cmd_count == 1 && isbuiltin(data->cmd->args[0]))
+	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0])
 		single_builtin(data, data->cmd, &exec);
 	else
 	{
