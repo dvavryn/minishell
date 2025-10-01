@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:36:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 12:33:00 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:52:16 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_cmds(t_cmd *cmd)
 	t_cmd	*ptr;
 	size_t	i;
 	ssize_t	j;
-	
+
 	ptr = cmd;
 	i = 0;
 	while (ptr)

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:15:14 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/27 19:54:14 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:50:59 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_redir(t_redir *redir)
 {
-	t_redir *ptr;
+	t_redir	*ptr;
 
 	while (redir)
 	{

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 12:46:23 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:49:33 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 	cmd_split_join(data, *cmd, ptr->value);
 }
 
-t_redir *new_redir(t_data *data, t_token *token)
+t_redir	*new_redir(t_data *data, t_token *token)
 {
 	t_redir	*out;
 

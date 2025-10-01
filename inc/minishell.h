@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/29 16:19:51 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:20:13 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
 typedef struct s_expand		t_expand;
 typedef struct s_redir		t_redir;
+typedef struct s_exec		t_exec;
 typedef enum e_token_type	t_token_type;
 typedef enum e_redir_type	t_redir_type;
 
@@ -112,6 +113,19 @@ struct s_expand
 	int		flag;
 };
 
+struct s_exec
+{
+	int		pid;
+	int		pipe[2][2];
+	int		redir_in;
+	int		redir_out;
+	int		status;
+	int		ret;
+	size_t	curr;
+	size_t	cmd_count;
+};
+
+
 // prototypes
 // general
 void	startup(t_data *data, int argc, char **argv, char **envp);
@@ -146,7 +160,11 @@ void	expander(t_data *data);
 
 // executer
 int		executer(t_data *data);
-char *get_path(t_data *data, t_cmd *cmd);
+char	*get_path(t_data *data, t_cmd *cmd);
+int		isbuiltin(char *s);
+void	init_exec(t_data *data, t_exec *exec);
+void	pipeline(t_data *data, t_cmd *cmd, t_exec *exec);
+int		open_files(t_redir *red, t_exec *ex);
 
 // utils
 char	*ft_strjoin_endl(char *s1, char *s2);
