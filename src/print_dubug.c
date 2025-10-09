@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:36:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/01 13:52:16 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/07 16:46:32 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	print_cmds(t_cmd *cmd)
 		if (!ptr->cmd)
 			printf("\tCMD:      NONE\n");
 		else
-			printf("\tCMD:      %s\n", ptr->cmd);
+			printf("\tCMD:      \"%s\"\n", ptr->cmd);
 		j = -1;
 		if (ptr->args)
 		{
 			printf("\tARGS:    ");
 			while (ptr->args[++j])
-				printf(" [%s]", ptr->args[j]);
+				printf(" [\"%s\"]", ptr->args[j]);
 			printf("\n");
 		}
 		else
