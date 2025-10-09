@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:07:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 15:13:25 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:58:45 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	**copy_env(char **envp)
 	if (!envp || !*envp)
 		return (empty_env());
 	if (!envp)
-		exit(3); // to change
+		return (NULL);
 	i = 0;
 	while (envp[i] && envp[i] != NULL)
 		i++;
@@ -69,8 +69,20 @@ static char	**copy_env(char **envp)
 			return (free_split_rev(out, i), NULL);
 		i++;
 	}
+	out = add_to_env(&out);
+	if (!out)
+		return (NULL);
 	return (out);
 }
+
+void	add_shlvl(char ***env)
+{
+	char **out
+	if (!ms_getenv(*env))
+	out = add_shlvl();
+	
+}
+
 
 void	startup(t_data *data, int argc, char **argv, char **envp)
 {
