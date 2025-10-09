@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:57:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/01 16:21:59 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:45:09 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	pipeline_child(t_data *data, t_cmd *cmd, t_exec *exec)
 {
 	char	*buf;
 
-	if (cmd->args && cmd->args[0] && !ft_strchr(cmd->args[0], '/'))
+	if (cmd->args && cmd->args[0] && !ft_strchr(cmd->args[0], '/')
+		&& ms_getenv(data->env, "PATH"))
 	{
 		buf = get_path(data, cmd);
 		if (!buf)
