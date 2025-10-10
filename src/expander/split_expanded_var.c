@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/10/10 12:45:48 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 12:54:17 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ static t_token	*split_tokens(t_data *data, char *value, ssize_t *i)
 	t_token	*token;
 
 	token = NULL;
+	if (value[*i] == ' ' || value[*i] == '\t')
+		(*i)++;
+	if (!value[*i])
+		return (NULL);
 	if (value[*i] == '"' || value[*i] == '\'')
 		token = handle_quotes(data, value, i);
-	else if (value[*i] != ' ' && value[*i] != '\t')
-		token = handle_word(data, value, i);
 	else
-		(*i)++;
+		token = handle_word(data, value, i);
 	return (token);
 }
 
@@ -128,19 +130,17 @@ void	expanded_tokens(t_data *data)
 {
 	t_token	*ptr;
 	t_token	*prev;
-	t_token	*next;
 
 	prev = NULL;
 	ptr = data->tokens;
 	while (ptr)
 	{
-		next = ptr->next;
 		if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
 		{
 			prev = ptr;	
 			ptr = ptr->next;
 		}
-		if (ptr->type != TOKEN_PIPE)
+		if (ptr->expanded == 1)
 			split_expanded_tokens(data, &prev, &ptr);
 		else
 			prev = ptr;
