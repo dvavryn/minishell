@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 13:41:57 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 15:23:08 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ static void	waiting(t_data *data, t_exec *exec)
 // 	printf("todo\n");
 // 	return ;
 // }
+int	bi_echo(t_data *data, char **args);
 
 int	executer(t_data *data)				// handle SIGPIPE echo hello | <test.c cat
 {
 	t_exec	exec;
 
 	init_exec(data, &exec);
+	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0] && !ft_strcmp(data->cmd->args[0], "echo"))
+		bi_echo(data, data->cmd->args);
 	// if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0])
 	// 	single_builtin(data, data->cmd, &exec);
-	// else
+	else
 	{
 		sig_execute_parent();
 		pipeline(data, data->cmd, &exec);
