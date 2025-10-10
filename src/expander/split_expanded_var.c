@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/09/28 13:58:46 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/10 12:26:14 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,45 @@ static t_token	*create_ext(t_data *data, char *value, int type)
 	return (new);
 }
 
-static t_token	*split_tokens(t_data *data, char *value, ssize_t *i)
+static t_token	*handle_quotes(t_data *data, char *value, ssize_t *i)
 {
 	ssize_t	start;
-	t_token	*token;
+	char	quote;
+
+	quote = value[*i];
+	start = *i;
+	(*i)++;
+	while (value[*i] && value[*i] != quote)
+		(*i)++;
+	if (value[*i] == quote)
+		(*i)++;
+	return (create_ext(data, ft_strndup(&value[start], *i - start), 0));
+}
+
+static t_token	*handle_word(t_data *data, char *value, ssize_t *i)
+{
+	ssize_t	start;
 
 	start = *i;
+	while (value[*i] && value[*i] != ' ' && value[*i] != '\t' 
+		&& value[*i] != '"' && value[*i] != '\'')
+		(*i)++;
+	if (*i - start == 0)
+		return (NULL);
+	return (create_ext(data, ft_strndup(&value[start], *i - start), 0));
+}
+
+static t_token	*split_tokens(t_data *data, char *value, ssize_t *i)
+{
+	t_token	*token;
+
 	token = NULL;
-	if (value[*i] == '"')
-	{
-		while (value[++(*i)] && value[*i] != '"')
-			;
-		token = create_ext(data, ft_strndup(&value[start], *i - start), 0);
-	}
-	else if (value[*i] == '\'')
-	{
-		while (value[++(*i)] && value[*i] != '\'')
-			;
-		token = create_ext(data, ft_strndup(&value[start], *i - start), 0);
-	}
+	if (value[*i] == '"' || value[*i] == '\'')
+		token = handle_quotes(data, value, i);
 	else if (value[*i] != ' ' && value[*i] != '\t')
-	{
-		while (value[*i] && value[*i] != ' ' && value[*i] != '\t')
-			(*i)++;
-		token = create_ext(data, ft_strndup(&value[start], *i - start), 0);
-	}
+		token = handle_word(data, value, i);
+	else
+		(*i)++;
 	return (token);
 }
 
@@ -71,7 +85,7 @@ static void	add_to_list(t_data *data, t_token *new_tokens,
 			data->tokens = new_tokens;
 		tmp = ms_lstlast(new_tokens);
 		tmp->next = next;
-		*ptr = new_tokens;
+		*ptr = tmp;
 	}
 	else
 	{
@@ -92,12 +106,11 @@ static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **ptr)
 
 	new_tokens = NULL;
 	last_new = NULL;
-	i = -1;
+	i = 0;
 	if (!(*ptr)->value || (*ptr)->value[0] == '\0')
 		return ;
-	while ((*ptr)->value[++i])
+	while ((*ptr)->value[i])
 	{
-		token = NULL;
 		token = split_tokens(data, (*ptr)->value, &i);
 		if (token)
 		{
@@ -106,7 +119,6 @@ static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **ptr)
 			else
 				last_new->next = token;
 			last_new = token;
-			i--;
 		}
 	}
 	add_to_list(data, new_tokens, ptr, prev);
@@ -123,10 +135,17 @@ void	expanded_tokens(t_data *data)
 	while (ptr)
 	{
 		next = ptr->next;
-		if (ptr->type == TOKEN_TO_EXPAND)
+		if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
+		{
+			prev = ptr;	
+			ptr = ptr->next;
+			continue;
+		}
+		if (ptr->type != TOKEN_PIPE)
 			split_expanded_tokens(data, &prev, &ptr);
 		else
 			prev = ptr;
-		ptr = ptr->next;
+		if (ptr)
+			ptr = ptr->next;
 	}
 }
