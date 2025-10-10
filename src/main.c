@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 12:57:24 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 12:58:01 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 			{
 				expander(&data);
 				// expanded_tokens(&data);
-				// print_tokens(data.tokens);
 				if (parser(&data))
 				{
 					executer(&data);
