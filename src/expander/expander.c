@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 13:30:53 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 15:16:47 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	expand_word_skip(char *ptr, int flag)
 		if (ptr[i] == '\'')
 		{
 			i++;
-			while (ptr[i])
+			while (ptr[i] && ptr[i] != '\'')
 				i++;
 			i++;
 		}
