@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_join.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:23:59 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 12:32:53 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/10 13:13:15 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	split_join(t_data *data, t_cmd *cmd, char *value)
 		while (out[i])
 			i++;
 		out[i] = buf;
+		free_split(cmd->args);
 		cmd->args = out;
 	}
 }
