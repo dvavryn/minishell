@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 13:59:27 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/10 12:45:19 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ struct s_token
 {
 	char	*value;
 	int		type;
+	int		expanded;
 	t_token	*next;
 };
 

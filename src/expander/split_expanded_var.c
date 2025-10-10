@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/10/10 12:26:14 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/10 12:45:48 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void	expanded_tokens(t_data *data)
 		{
 			prev = ptr;	
 			ptr = ptr->next;
-			continue;
 		}
 		if (ptr->type != TOKEN_PIPE)
 			split_expanded_tokens(data, &prev, &ptr);
