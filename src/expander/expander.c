@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 13:09:41 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 13:30:53 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void	expander(t_data *data)
 			if (!buf)
 				ft_exit(data, "malloc");
 			free(ptr->value);
+			ptr->expanded = 1;
 			ptr->value = buf;
 		}
 		ptr = ptr->next;

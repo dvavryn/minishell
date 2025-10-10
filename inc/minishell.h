@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/01 13:20:13 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 13:31:50 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ struct s_token
 {
 	char	*value;
 	int		type;
+	int		expanded;
 	t_token	*next;
 };
 
@@ -156,7 +157,7 @@ void	cleanup_args(t_data *data);
 
 // expander
 void	expander(t_data *data);
-// void	expanded_tokens(t_data *data);
+void	expanded_tokens(t_data *data);
 
 // executer
 int		executer(t_data *data);
@@ -173,6 +174,7 @@ char	**split_copy(char **arr);
 void	ms_perror(const char *str, ...);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(const char *s, size_t n);
+t_token	*ms_lstlast(t_token *lst);
 
 // signals
 void	sig_interactive(void);

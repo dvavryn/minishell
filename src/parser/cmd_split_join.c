@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:23:59 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/28 12:47:02 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 13:26:25 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	cmd_split_join(t_data *data, t_cmd *cmd, char *value)
 		while (out[i])
 			i++;
 		out[i] = buf;
+		free_split(cmd->args);
 		cmd->args = out;
 	}
 }
