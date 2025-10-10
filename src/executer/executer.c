@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 15:23:08 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 15:51:46 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,19 @@ int	executer(t_data *data)				// handle SIGPIPE echo hello | <test.c cat
 
 	init_exec(data, &exec);
 	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0] && !ft_strcmp(data->cmd->args[0], "echo"))
+	{
+		int	safeout = dup(STDOUT_FILENO);
+		int fd = open(data->cmd->redirs->filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		
 		bi_echo(data, data->cmd->args);
-	// if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0])
-	// 	single_builtin(data, data->cmd, &exec);
+		
+		dup2(safeout, STDOUT_FILENO);
+		close(safeout);
+	}
+	// // if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0] && isbuiltin(data->cmd->args[0]))
+	// // 	single_builtin(data, data->cmd, &exec);
 	else
 	{
 		sig_execute_parent();
