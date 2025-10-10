@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:12:21 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 13:21:39 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/01 13:49:33 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,49 @@ static void	add_cmd_word(t_data *data, t_token *ptr, t_cmd **cmd)
 		if (!(*cmd)->cmd)
 			ft_exit(data, "memory allocation");
 	}
-	else
-		split_join(data, *cmd, ptr->value);
+	cmd_split_join(data, *cmd, ptr->value);
 }
 
-static void	add_cmd_redir_in(t_data *data, t_token *ptr, t_cmd **cmd)
+t_redir	*new_redir(t_data *data, t_token *token)
 {
-	if (ptr->value[0] != ptr->value[1])
-		(*cmd)->redir_in = R_IN;
-	else
-		(*cmd)->redir_in = R_HEREDOC;
-	if ((*cmd)->file_in)
-		free((*cmd)->file_in);
-	(*cmd)->file_in = ft_strdup(ptr->next->value);
-	if (!(*cmd)->file_in)
-		ft_exit(data, "memory allocation");
-	if ((*cmd)->redir_in == R_HEREDOC)
+	t_redir	*out;
+
+	out = ft_calloc(1, sizeof(t_redir));
+	if (!out)
+		return (NULL);
+	if (!ft_strcmp(token->value, "<<"))
+		get_heredoc(data, &token->next->value);
+	out->filename = ft_strdup(token->next->value);
+	if (!out->filename)
+		return (free(out), NULL);
+	if (!ft_strcmp(token->value, "<") || !ft_strcmp(token->value, "<<"))
+		out->type = R_IN;
+	else if (!ft_strcmp(token->value, ">"))
+		out->type = R_OUT;
+	else if (!ft_strcmp(token->value, ">>"))
+		out->type = R_APPEND;
+	return (out);
+}
+
+static void	add_cmd_redir(t_data *data, t_token *token, t_cmd **cmd)
+{
+	t_redir	*ptr;
+
+	if (!(*cmd)->redirs)
 	{
-		if (!get_heredoc(data, &(*cmd)->file_in))
-			ft_exit(data, "memory allocation");
+		(*cmd)->redirs = new_redir(data, token);
+		if (!(*cmd)->redirs)
+			ft_exit(data, "malloc");
 	}
-}
-
-static void	add_cmd_redir_out(t_data *data, t_token *ptr, t_cmd **cmd)
-{
-	if (ptr->value[0] != ptr->value[1])
-		(*cmd)->redir_out = R_OUT;
 	else
-		(*cmd)->redir_out = R_APPEND;
-	if ((*cmd)->file_out)
-		free((*cmd)->file_out);
-	(*cmd)->file_out = ft_strdup(ptr->next->value);
-	if (!(*cmd)->file_out)
-		ft_exit(data, "memory allocation");
+	{
+		ptr = (*cmd)->redirs;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = new_redir(data, token);
+		if (!ptr->next)
+			ft_exit(data, "malloc");
+	}
 }
 
 static void	add_cmd_pipe(t_data *data, t_cmd **cmd)
@@ -77,10 +87,7 @@ void	get_cmd(t_data *data)
 			add_cmd_pipe(data, &cmd);
 		else if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
 		{
-			if (!ft_strcmp(ptr->value, "<") || !ft_strcmp(ptr->value, "<<"))
-				add_cmd_redir_in(data, ptr, &cmd);
-			else
-				add_cmd_redir_out(data, ptr, &cmd);
+			add_cmd_redir(data, ptr, &cmd);
 			ptr = ptr->next;
 		}
 		else

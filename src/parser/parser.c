@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:03:33 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 12:28:25 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:51:12 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	check_validity(t_data *data)
 				|| ptr->type == TOKEN_REDIR) && !isclosed(ptr->value))
 			return (ms_perror("MS parser: unclosed quotes"), 0);
 		if (ptr->type != TOKEN_QUOTE && (ft_strchr(ptr->value, '\\')
-				|| ft_strchr(ptr->value, ';') /* '&' '||' '&&' * ( ) [ ] { } /)) */ ))
+				|| ft_strchr(ptr->value, ';')
+				/* '&' '||' '&&' * ( ) [ ] { } /)) */ ))
 			return (ms_perror("MS syntax: cannot be interpreted"), 0);
 		if ((ptr->type == TOKEN_PIPE && !ptr->next)
 			|| ((ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)

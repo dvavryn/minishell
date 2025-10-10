@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 12:45:19 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/10 13:31:50 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@
 # include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
+# include "../libs/libft/libft.h"
 
 // typedefs
 typedef struct s_data		t_data;
 typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
 typedef struct s_expand		t_expand;
+typedef struct s_redir		t_redir;
+typedef struct s_exec		t_exec;
 typedef enum e_token_type	t_token_type;
 typedef enum e_redir_type	t_redir_type;
 
@@ -85,16 +87,20 @@ struct s_token
 	t_token	*next;
 };
 
+struct s_redir
+{
+	char	*filename;
+	int		type;	
+	t_redir	*next;
+};
+
 struct s_cmd
 {
 	char	*cmd;
 	char	**args;
 	int		pipe_in;
 	int		pipe_out;
-	char	*file_in;
-	int		redir_in;
-	char	*file_out;
-	int		redir_out;
+	t_redir *redirs;
 	t_cmd	*next;
 };
 
@@ -108,9 +114,21 @@ struct s_expand
 	int		flag;
 };
 
+struct s_exec
+{
+	int		pid;
+	int		pipe[2][2];
+	int		redir_in;
+	int		redir_out;
+	int		status;
+	int		ret;
+	size_t	curr;
+	size_t	cmd_count;
+};
+
+
 // prototypes
 // general
-void	sighandler(int sig);
 void	startup(t_data *data, int argc, char **argv, char **envp);
 int		prompt(t_data *data);
 void	ft_exit(t_data *data, char *error);
@@ -133,6 +151,7 @@ int		get_heredoc(t_data *data, char **lim);
 char	*get_heredoc_name(void);
 char	*get_heredoc_input(t_data *data, char *lim);
 char	*clean_hd(char *in);
+void	cmd_split_join(t_data *data, t_cmd *cmd, char *value);
 char	*expand_heredoc(t_data *data, char *input);
 void	cleanup_args(t_data *data);
 
@@ -140,8 +159,15 @@ void	cleanup_args(t_data *data);
 void	expander(t_data *data);
 void	expanded_tokens(t_data *data);
 
+// executer
+int		executer(t_data *data);
+char	*get_path(t_data *data, t_cmd *cmd);
+int		isbuiltin(char *s);
+void	init_exec(t_data *data, t_exec *exec);
+void	pipeline(t_data *data, t_cmd *cmd, t_exec *exec);
+int		open_files(t_redir *red, t_exec *ex);
+
 // utils
-void	split_join(t_data *data, t_cmd *cmd, char *value);
 char	*ft_strjoin_endl(char *s1, char *s2);
 char	*ms_getenv(char **env, char *s);
 char	**split_copy(char **arr);
@@ -149,6 +175,11 @@ void	ms_perror(const char *str, ...);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(const char *s, size_t n);
 t_token	*ms_lstlast(t_token *lst);
+
+// signals
+void	sig_interactive(void);
+void	sig_execute_parent(void);
+void	sig_execute_child(void);
 
 // free
 void	free_all(t_data *data);
