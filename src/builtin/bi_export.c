@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:47:55 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 18:59:42 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:08:15 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag)
 {
-	printf("exportlist\n");
 	if (!export_list)
 		return (1);
 	while (export_list[++i])
@@ -62,6 +61,8 @@ void	replace_env(t_data *data, char *arg, size_t i)
 	size_t	k;
 	char	*tmp;
 
+	if (!ft_strchr(arg, '='))
+		return ;
 	j = -1;
 	while (data->env[++j])
 	{
