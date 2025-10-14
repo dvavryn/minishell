@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/26 17:00:39 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:00:26 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_flag = 0;
+
+void	heredoc_signal(int sig)
+{
+	(void)sig;
+	g_flag = 1;
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_done = 0;
+}
 
 // not leak free yet
 char	*get_heredoc_input(t_data *data, char *lim)
@@ -20,6 +31,7 @@ char	*get_heredoc_input(t_data *data, char *lim)
 	char	*out;
 	char	*clean_lim;
 
+	signal(SIGINT, heredoc_signal);
 	clean_lim = clean_hd(lim);
 	if (!clean_lim)
 		ft_exit(data, "memory allocation");
@@ -34,6 +46,12 @@ char	*get_heredoc_input(t_data *data, char *lim)
 			printf("minishell: warning: here-document at line %ld "
 				"delimited by end-of-file (wanted `%s`)\n", data->line, lim);
 			break ;
+		}
+		if (g_flag == 1)
+		{
+			g_flag = 0;
+			free(buf);
+			break;
 		}
 		if (!ft_strcmp(buf, clean_lim))
 		{
