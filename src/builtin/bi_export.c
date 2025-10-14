@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:47:55 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 19:08:15 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/14 19:15:58 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag)
 			while (export_list[i][++j])
 			{
 				ft_putchar_fd(export_list[i][j], STDOUT_FILENO);
-				if (export_list[i][j] == '=' && !flag)
+				if (!flag && export_list[i][j] == '=')
 				{
 					flag = 1;
 					ft_putchar_fd('"', STDOUT_FILENO);
@@ -35,6 +35,7 @@ static int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag)
 		}
 		else
 			ft_putendl_fd(export_list[i], STDOUT_FILENO);
+		flag = 0;
 	}
 	return (0);
 }
@@ -101,6 +102,17 @@ void	add_env(t_data *data, char *arg)
 	data->env = out;
 }
 
+int	isexported(char **env, char *arg)
+{
+	ssize_t	i;
+
+	i = -1;
+	while (env[++i])
+		if (!ft_strncmp(env[i], arg, ft_strlen(arg)))
+			return (1);
+	return (0);
+}
+
 int	bi_export(t_data *data, t_cmd *cmd)
 {
 	size_t	i;
@@ -109,7 +121,7 @@ int	bi_export(t_data *data, t_cmd *cmd)
 	int		flag;
 
 	if (!cmd->args[1])
-		return (print_exportlist(data->export_list, -1, -1, 0), 0);
+		return (print_exportlist(data->env, -1, -1, 0), 0);
 	i = 0;
 	while (cmd->args[++i])
 	{
@@ -119,7 +131,7 @@ int	bi_export(t_data *data, t_cmd *cmd)
 		tmp = ft_substr(cmd->args[i], 0, j);
 		if (!tmp)
 			ft_exit(data, "malloc");
-		flag = (!ms_getenv(data->env, tmp)) * 1;
+		flag = (!ms_getenv(data->env, tmp) || isexported(data->env, tmp)) * 1;
 		free(tmp);
 		if (!flag)
 			replace_env(data, cmd->args[i], j);
