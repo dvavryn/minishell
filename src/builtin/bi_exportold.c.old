@@ -1,0 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bi_exportold.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 15:47:55 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/10/14 18:29:25 by dvavryn          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+// #include "minishell.h"
+
+
+
+//  int bi_export(t_data *data, t_cmd *cmd)
+//  {
+//  	size_t	count;
+//  	size_t	i;
+//  	size_t	j;
+//  	size_t	k;
+//  	size_t	l;
+//  	char *ptr;
+//  	char *tmp;
+//  	char *aa;
+//  	char *bb;
+//  	char *new;
+//  	char **out;
+//  	count = 1;
+//  	while (cmd->args[count])
+//  	{
+//  		i = 0;
+//  		j = 0;
+//  		while (cmd->args[count][j] && cmd->args[count][j] != '=')
+//  			j++;
+//  		tmp = ft_substr(cmd->args[count], 0, j);
+//  		if (!tmp)
+//  			ft_exit(data, "malloc");
+//  		if (ms_getenv(data->env, tmp))
+//  		{
+			while (data->env[i])
+			{
+				if (!ft_strncmp(data->env[i], cmd->args[count], j))
+				{
+					ptr = data->env[i];
+					break ;
+				}
+				i++;
+			}
+			k = 0;
+			if (cmd->args[count][j + 1] == '"')
+				k = 1;
+			aa = ft_substr(cmd->args[count], 0, j);
+			bb = ft_substr(cmd->args[count], j + k, ft_strlen(&cmd->args[count][j + k]) - k);
+			if (!aa)
+			{
+				free(tmp);	
+				ft_exit(data, "malloc");
+			}
+			if (!bb)
+			{
+				free(tmp);
+				free(aa);
+				ft_exit(data, "malloc");
+			}
+			new = ft_strjoin(aa, bb);
+			free(aa);
+			free(bb);
+			if (!new)
+				return (free(tmp), ft_exit(data, "malloc"), 1);
+			free(data->env[i]);
+			data->env[i] = new;		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+		//  }
+		//  else
+		//  {
+			l = 0;
+			while (data->env[l])
+				l++;
+			out = ft_calloc(l + 2, sizeof(char *));
+			if (!out)
+				return (free(tmp), ft_exit(data, "malloc"), 1);
+			l = 0;
+			while (data->env[l])
+			{
+				out[l] = data->env[l];
+				l++;	
+			}
+			out[l] = ft_strdup(cmd->args[count]);
+			if (!out[l])
+				return (free(tmp), free_split(out), ft_exit(data, "malloc"), 1);
+			free(data->env);
+			data->env = out;		
+// 		}
+// 		free(tmp);
+// 		count++;
+// 	}
+// 	return (0);
+// }
+

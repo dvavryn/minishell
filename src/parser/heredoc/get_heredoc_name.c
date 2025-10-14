@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generate_name.c                                    :+:      :+:    :+:   */
+/*   get_heredoc_name.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:30:32 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 16:30:48 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/14 18:17:50 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*get_heredoc_name(void)
 			i++;
 	}
 	filename[i] = '\0';
+	printf("%s\n", filename);
 	filename = ft_strjoin("/tmp/", filename);
 	close(fd);
 	return (filename);
