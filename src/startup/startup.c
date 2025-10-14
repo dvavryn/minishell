@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:07:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 12:25:20 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/14 14:11:31 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	**empty_env(void)
 	return (out);
 }
 
-static char	**copy_env(char **envp)
+char	**copy_env(char **envp)
 {
 	char	**out;
 	ssize_t	i;

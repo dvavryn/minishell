@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"ioctl.h": "c"
+		"ioctl.h": "c",
+		"minishell.h": "c",
+		"mlx.h": "c"
 	}
 }

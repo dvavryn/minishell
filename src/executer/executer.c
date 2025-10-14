@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 15:51:46 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/14 15:57:15 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,73 @@ static void	waiting(t_data *data, t_exec *exec)
 // 	printf("todo\n");
 // 	return ;
 // }
-int	bi_echo(t_data *data, char **args);
+
+int	buffer_fds(int *buffer)
+{
+	buffer[0] = dup(STDIN_FILENO);
+	buffer[1] = dup(STDOUT_FILENO);	
+	if (buffer[0] == -1 || buffer[1] == -1)
+		return (0);
+	
+	return (1);
+}
+
+int	restore_fds(int *buffer)
+{
+	int		flag;
+
+	flag = 1;
+	if (dup2(buffer[0], STDIN_FILENO) == -1)
+		flag = 0;
+	if (dup2(buffer[1], STDOUT_FILENO) == -1)
+		flag = 0;
+	close(buffer[0]);
+	close(buffer[1]);
+	return (flag);
+}
+
+int	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec)
+{
+	int	buffer[2];
+	static char **export_list;
+
+	(void)export_list;
+	if (!buffer_fds(buffer))
+		ft_exit(data, "dup");
+	if (!open_files(cmd->redirs, exec))
+		return (1);
+	if (!dup_child(exec, 0))
+		return (1);
+	close_fds(exec);
+	if (!ft_strcmp("echo", cmd->args[0]))
+		bi_echo(data, cmd->args);
+	// else if (!ft_strcmp("cd", cmd->args[0]))
+	// 	bi_cd();
+	else if (!ft_strcmp("pwd", cmd->args[0]))
+		bi_pwd(data);
+	else if (!ft_strcmp("export", cmd->args[0]))
+		bi_export(data, cmd);
+	// else if (!ft_strcmp("unset", cmd->args[0]))
+	// 	bi_unset(data, cmd, export_list);
+	else if (!ft_strcmp("env", cmd->args[0]))
+		bi_env(data);
+	else if (!ft_strcmp("exit", cmd->args[0]))
+		bi_exit(data, cmd->args);
+	if (!restore_fds(buffer))
+		ft_exit(data, "dup");
+	return (0);
+}
+
 
 int	executer(t_data *data)				// handle SIGPIPE echo hello | <test.c cat
 {
 	t_exec	exec;
 
 	init_exec(data, &exec);
-	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0] && !ft_strcmp(data->cmd->args[0], "echo"))
+	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0]
+		&& isbuiltin(data->cmd->args[0]))
 	{
-		int	safeout = dup(STDOUT_FILENO);
-		int fd = open(data->cmd->redirs->filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		
-		bi_echo(data, data->cmd->args);
-		
-		dup2(safeout, STDOUT_FILENO);
-		close(safeout);
+		data->ret = single_builtin(data, data->cmd, &exec);
 	}
 	// // if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0] && isbuiltin(data->cmd->args[0]))
 	// // 	single_builtin(data, data->cmd, &exec);
