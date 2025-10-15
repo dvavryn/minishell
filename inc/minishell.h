@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 16:01:55 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:22:29 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,9 @@ void	bi_exit(t_data	*data, char **args);
 void	bi_env(t_data *data);
 int		bi_echo(t_data *data, char **args);
 void	bi_pwd(t_data *data);
-int		bi_unset(t_data *data, t_cmd *cmd, char **export_list);
+int		bi_unset(t_data *data, t_cmd *cmd);
 int		bi_export(t_data *data, t_cmd *cmd);
+int		bi_cd(t_data *data, t_cmd *cmd);
 
 // tokenize
 void	tokenize(t_data *data);

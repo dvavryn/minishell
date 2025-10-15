@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:47:55 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 15:14:47 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 17:37:28 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag)
 		return (1);
 	while (export_list[++i])
 	{
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		if (ft_strchr(export_list[i], '='))
 		{
 			j = -1;
@@ -36,6 +35,8 @@ static int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag)
 		else
 			ft_putendl_fd(export_list[i], STDOUT_FILENO);
 		flag = 0;
+		if (export_list[i + 1] && export_list[i + 1][0] == '_')
+			i++;
 	}
 	return (0);
 }
