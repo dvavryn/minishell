@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 18:20:19 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 16:10:59 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec)
 	close_fds(exec);
 	if (!ft_strcmp("echo", cmd->args[0]))
 		bi_echo(data, cmd->args);
-	// else if (!ft_strcmp("cd", cmd->args[0]))
-	// 	bi_cd();
+	else if (!ft_strcmp("cd", cmd->args[0]))
+		bi_cd(data, cmd);
 	else if (!ft_strcmp("pwd", cmd->args[0]))
 		bi_pwd(data);
 	else if (!ft_strcmp("export", cmd->args[0]))

@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 15:49:11 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:52:43 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
+	// update shelllvl
 	startup(&data, argc, argv, envp);
 	while (1)
 	{
