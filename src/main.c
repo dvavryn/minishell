@@ -6,13 +6,13 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 20:46:18 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:50:20 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	main_loop();
+static void	main_loop(t_data *data);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -20,28 +20,31 @@ int	main(int argc, char **argv, char **envp)
 
 	startup(&data, argc, argv, envp);
 	while (1)
+		main_loop(&data);
+}
+
+static void	main_loop(t_data *data)
+{
+	sig_interactive();
+	if (prompt(data))
 	{
-		sig_interactive();
-		if (prompt(&data))
+		tokenize(data);
+		if (data->tokens)
 		{
-			tokenize(&data);
-			if (data.tokens)
+			expander(data);
+			expanded_tokens(data);
+			if (parser(data))
 			{
-				expander(&data);
-				expanded_tokens(&data);
-				if (parser(&data))
-				{
-					if (!data.hd_quit)
-						executer(&data);
-					else
-						data.hd_quit = 0;
-					free_cmd(data.cmd);
-					data.cmd = NULL;
-				}
+				if (!data->hd_quit)
+					executer(data);
+				else
+					data->hd_quit = 0;
+				free_cmd(data->cmd);
+				data->cmd = NULL;
 			}
-			free_tokens(data.tokens);
-			data.tokens = NULL;
-			free(data.input);
 		}
+		free_tokens(data->tokens);
+		data->tokens = NULL;
+		free(data->input);
 	}
 }

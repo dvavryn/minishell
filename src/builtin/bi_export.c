@@ -6,40 +6,15 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:47:55 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 17:37:28 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 21:00:30 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag)
-{
-	if (!export_list)
-		return (1);
-	while (export_list[++i])
-	{
-		if (ft_strchr(export_list[i], '='))
-		{
-			j = -1;
-			while (export_list[i][++j])
-			{
-				ft_putchar_fd(export_list[i][j], STDOUT_FILENO);
-				if (!flag && export_list[i][j] == '=')
-				{
-					flag = 1;
-					ft_putchar_fd('"', STDOUT_FILENO);
-				}
-			}
-			ft_putendl_fd("\"", STDOUT_FILENO);
-		}
-		else
-			ft_putendl_fd(export_list[i], STDOUT_FILENO);
-		flag = 0;
-		if (export_list[i + 1] && export_list[i + 1][0] == '_')
-			i++;
-	}
-	return (0);
-}
+int	isexported(char **env, char *arg);
+int	isvalidvar(char *var);
+int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag);
 
 char	*replace_env_sub(char *arg, size_t j, size_t k)
 {
@@ -102,66 +77,42 @@ void	add_env(t_data *data, char *arg)
 	data->env = out;
 }
 
-int	isexported(char **env, char *arg)
+static int	bi_export_loop(t_data *data, int flag, char *arg, size_t j)
 {
-	ssize_t	i;
+	char	*tmp;
 
-	i = -1;
-	while (env[++i])
-		if (!ft_strncmp(env[i], arg, ft_strlen(arg)))
-			return (1);
-	return (0);
-}
-
-int	isvalidvar(char *var)
-{
-	ssize_t	i;
-
-	i = -1;
-	if (!ft_isalpha(var[0]))
-		return (0);
-	while (var[++i] && var[i] != '=')
+	if (isvalidvar(arg))
 	{
-		if (!ft_isalnum(var[i]))
-			return (0);
+		while (arg[j] && arg[j] != '=')
+			j++;
+		tmp = ft_substr(arg, 0, j);
+		if (!tmp)
+			ft_exit(data, "malloc");
+		flag = (!isexported(data->env, tmp)) * 1;
+		free(tmp);
+		if (!flag)
+			replace_env(data, arg, j);
+		else
+			add_env(data, arg);
 	}
-	return (1);
+	else
+	{
+		ft_putstr_fd("minishell: export: '", STDERR_FILENO);
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+		data->ret = 1;
+	}
+	return (0);
 }
 
 int	bi_export(t_data *data, t_cmd *cmd)
 {
 	size_t	i;
-	size_t	j;
-	char	*tmp;
-	int		flag;
 
 	if (!cmd->args[1])
 		return (print_exportlist(data->env, -1, -1, 0), 0);
 	i = 0;
 	while (cmd->args[++i])
-	{
-		if (isvalidvar(cmd->args[i]))
-		{
-			j = 0;
-			while (cmd->args[i][j] && cmd->args[i][j] != '=')
-				j++;
-			tmp = ft_substr(cmd->args[i], 0, j);
-			if (!tmp)
-				ft_exit(data, "malloc");
-			flag = (!isexported(data->env, tmp)) * 1;
-			free(tmp);
-			if (!flag)
-				replace_env(data, cmd->args[i], j);
-			else
-				add_env(data, cmd->args[i]);
-		}
-		else
-		{
-			ft_putstr_fd("minishell: export: '", STDERR_FILENO);
-			ft_putstr_fd(cmd->args[i], STDERR_FILENO);
-			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-			data->ret = 1;
-		}
-	}
+		bi_export_loop(data, 0, cmd->args[i], 0);
 	return (0);
 }
