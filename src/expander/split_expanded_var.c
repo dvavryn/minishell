@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:53 by bschwarz          #+#    #+#             */
-/*   Updated: 2025/10/10 13:29:49 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:44:54 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_token	*handle_word(t_data *data, char *value, ssize_t *i)
 	return (create_ext(data, ft_strndup(&value[start], *i - start), 1));
 }
 
-static t_token	*split_tokens(t_data *data, char *value, ssize_t *i)
+t_token	*split_tokens(t_data *data, char *value, ssize_t *i)
 {
 	t_token	*token;
 
@@ -70,7 +70,7 @@ static t_token	*split_tokens(t_data *data, char *value, ssize_t *i)
 	return (token);
 }
 
-static void	add_to_list(t_data *data, t_token *new_tokens,
+void	add_to_list(t_data *data, t_token *new_tokens,
 		t_token **ptr, t_token **prev)
 {
 	t_token	*next;
@@ -96,55 +96,5 @@ static void	add_to_list(t_data *data, t_token *new_tokens,
 		else
 			data->tokens = next;
 		*ptr = next;
-	}
-}
-
-static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **ptr)
-{
-	t_token	*new_tokens;
-	t_token	*last_new;
-	t_token	*token;
-	ssize_t	i;
-
-	new_tokens = NULL;
-	last_new = NULL;
-	i = 0;
-	if (!(*ptr)->value || (*ptr)->value[0] == '\0')
-		return ;
-	while ((*ptr)->value[i])
-	{
-		token = split_tokens(data, (*ptr)->value, &i);
-		if (token)
-		{
-			if (!new_tokens)
-				new_tokens = token;
-			else
-				last_new->next = token;
-			last_new = token;
-		}
-	}
-	add_to_list(data, new_tokens, ptr, prev);
-}
-
-void	expanded_tokens(t_data *data)
-{
-	t_token	*ptr;
-	t_token	*prev;
-
-	prev = NULL;
-	ptr = data->tokens;
-	while (ptr)
-	{
-		if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
-		{
-			prev = ptr;
-			ptr = ptr->next;
-		}
-		if (ptr->expanded == 1)
-			split_expanded_tokens(data, &prev, &ptr);
-		else
-			prev = ptr;
-		if (ptr)
-			ptr = ptr->next;
 	}
 }

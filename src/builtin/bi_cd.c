@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:11:15 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 20:10:55 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 20:35:35 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int assign_pwd(t_data *data, char *pwd, ssize_t i)
 	char	**buf;
 
 	path = getcwd(NULL, 0);
-	while (data->env[++i] && ft_strncmp(data->env[i], pwd, (ft_strlen(pwd) - 1)))
+	while (data->env[i] && ft_strncmp(data->env[i], pwd, (ft_strlen(pwd) - 1)))
 		i++;
 	if (!data->env[i])
 	{
@@ -44,13 +44,13 @@ static int assign_pwd(t_data *data, char *pwd, ssize_t i)
 
 int	bi_cd(t_data *data, t_cmd *cmd)
 {	
-	if(assign_pwd(data, "OLDPWD=", -1))
+	if(assign_pwd(data, "OLDPWD=", 0))
 		return (1);
 	if (!cmd->args[1])
 		chdir(ms_getenv(data->env, "HOME"));
 	else if ((chdir(cmd->args[1])) == -1)
 		return (perror("minishell: cd"), 1);
-	if (assign_pwd(data, "PWD=", -1))
+	if (assign_pwd(data, "PWD=", 0))
 		return (1);
 	return (0);
 }
