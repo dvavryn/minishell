@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:07:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 14:11:31 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 18:16:40 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**empty_env(void)
 {
 	char	**out;
 
-	out = ft_calloc(4, sizeof(char *));
+	out = ft_calloc(5, sizeof(char *));
 	if (!out)
 		return (NULL);
 	out[0] = ms_getcwd();
@@ -43,7 +43,28 @@ static char	**empty_env(void)
 	out[2] = ft_strdup("_=/usr/bin/env");
 	if (!out[2])
 		return (free_split(out), NULL);
+	out[3] = ft_strdup("OLDPWD");
+	if (!out[3])
+		return (free_split(out), NULL);
 	return (out);
+}
+
+char	*set_var(char *env)
+{
+	char	*out;
+	char	*tmp;
+
+	if (!ft_strncmp(env, "SHLVL=", 6))
+	{
+		tmp = ft_itoa(ft_atoi(&env[6]) + 1);
+		if (!tmp)
+			return (NULL);
+		out = ft_strjoin("SHLVL=", tmp);
+		free(tmp);
+		return (out);
+	}
+	else
+		return (ft_strdup(env));
 }
 
 char	**copy_env(char **envp)
@@ -64,12 +85,11 @@ char	**copy_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		out[i] = ft_strdup(envp[i]);
+		out[i] = set_var(envp[i]);
 		if (!out[i])
 			return (free_split_rev(out, i), NULL);
 		i++;
 	}
-	// out = add_to_env(&out);
 	if (!out)
 		return (NULL);
 	return (out);
