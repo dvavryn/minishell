@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 21:19:31 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 21:27:11 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ int		bi_export(t_data *data, t_cmd *cmd);
 int		bi_cd(t_data *data, t_cmd *cmd);
 void	add_env(t_data *data, char *arg);
 int		isexported(char **env, char *arg);
+int		isvalidvar(char *var);
+int		print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag);
 
 // tokenize
 void	tokenize(t_data *data);
@@ -171,6 +173,9 @@ void	expander(t_data *data);
 void	expanded_tokens(t_data *data);
 void	add_to_list(t_data *data, t_token *new_tokens, t_token **ptr,
 			t_token **prev);
+char	*expand_word_dquote(int *flag, char **in);
+void	init_exp(t_expand *exp, char *input);
+int		expand_word_skip(char *ptr, int flag);
 
 // executer
 int		executer(t_data *data);

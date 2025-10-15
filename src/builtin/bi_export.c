@@ -6,15 +6,11 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:47:55 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 21:00:30 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 21:26:57 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	isexported(char **env, char *arg);
-int	isvalidvar(char *var);
-int	print_exportlist(char **export_list, ssize_t i, ssize_t j, int flag);
 
 char	*replace_env_sub(char *arg, size_t j, size_t k)
 {

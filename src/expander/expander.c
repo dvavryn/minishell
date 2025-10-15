@@ -6,15 +6,11 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 21:25:37 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 21:26:34 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*expand_word_dquote(int *flag, char **in);
-void	init_exp(t_expand *exp, char *input);
-int		expand_word_skip(char *ptr, int flag);
 
 static char	*expand_var(t_data *data, char *ptr, size_t *i)
 {
