@@ -6,11 +6,15 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 21:06:15 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 21:25:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*expand_word_dquote(int *flag, char **in);
+void	init_exp(t_expand *exp, char *input);
+int		expand_word_skip(char *ptr, int flag);
 
 static char	*expand_var(t_data *data, char *ptr, size_t *i)
 {
@@ -34,47 +38,31 @@ static char	*expand_var(t_data *data, char *ptr, size_t *i)
 	return (out);
 }
 
-static int	expand_word_skip(char *ptr, int flag)
+static int	expander_sub_mini(t_data *data, t_expand *exp)
 {
-	size_t	i;
-
-	i = 0;
-	if (!flag)
+	exp->i = 1;
+	while (exp->ptr[exp->i] && ft_isalnum(exp->ptr[exp->i]))
+		exp->i++;
+	if (exp->i == 1 && exp->ptr[exp->i] == '?')
 	{
-		while (ptr[i] && !ft_strchr("$\'\"", ptr[i]))
-			i++;
-		if (ptr[i] == '\'')
-		{
-			i++;
-			while (ptr[i] && ptr[i] != '\'')
-				i++;
-			i++;
-		}
+		exp->i++;
+		exp->buf1 = ft_itoa(data->last_ret);
 	}
 	else
-	{
-		while (ptr[i] && !ft_strchr("$\"", ptr[i]))
-			i++;
-	}
-	return (i);
+		exp->buf1 = expand_var(data, exp->ptr, &exp->i);
+	if (!exp->buf1)
+		return (free(exp->out), 0);
+	exp->buf2 = exp->out;
+	exp->out = ft_strjoin(exp->out, exp->buf1);
+	free(exp->buf1);
+	free(exp->buf2);
+	if (!exp->out)
+		return (0);
+	exp->ptr += exp->i;
+	return (1);
 }
 
-static char	*expand_word_dquote(int *flag, char **in)
-{
-	char	*out;
-
-	if (!*flag)
-		*flag = 1;
-	else
-		*flag = 0;
-	out = ft_strjoin(*in, "\"");
-	free(*in);
-	if (!out)
-		return (NULL);
-	return (out);
-}
-
-static int	expander_sub(t_data *data, t_expand *exp)
+int	expander_sub(t_data *data, t_expand *exp)
 {
 	if (*exp->ptr == '\"')
 	{
@@ -85,39 +73,13 @@ static int	expander_sub(t_data *data, t_expand *exp)
 	}
 	if (*exp->ptr == '$')
 	{
-		exp->i = 1;
-		while (exp->ptr[exp->i] && ft_isalnum(exp->ptr[exp->i]))
-			exp->i++;
-		if (exp->i == 1 && exp->ptr[exp->i] == '?')
-		{
-			exp->i++;
-			exp->buf1 = ft_itoa(data->last_ret);
-		}
-		else
-			exp->buf1 = expand_var(data, exp->ptr, &exp->i);
-		if (!exp->buf1)
-			return (free(exp->out), 0);
-		exp->buf2 = exp->out;
-		exp->out = ft_strjoin(exp->out, exp->buf1);
-		free(exp->buf1);
-		free(exp->buf2);
-		if (!exp->out)
+		if (!expander_sub_mini(data, exp))
 			return (0);
-		exp->ptr += exp->i;
 	}
 	return (1);
 }
 
-static void	init_exp(t_expand *exp, char *input)
-{
-	ft_bzero(exp, sizeof(t_expand));
-	exp->ptr = input;
-	exp->out = ft_strdup("");
-	if (!exp->out)
-		exp->out = NULL;
-}
-
-static char	*expand_word(t_data *data, char *input)
+char	*expand_word(t_data *data, char *input)
 {
 	t_expand	exp;
 
