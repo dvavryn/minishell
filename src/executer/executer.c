@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 18:21:47 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 19:24:46 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,12 @@ int	executer(t_data *data)				// handle SIGPIPE echo hello | <test.c cat
 	t_exec	exec;
 
 	init_exec(data, &exec);
+	sig_execute_parent();
 	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0]
 		&& isbuiltin(data->cmd->args[0]))
-	{
 		data->ret = single_builtin(data, data->cmd, &exec);
-	}
-	// // if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0] && isbuiltin(data->cmd->args[0]))
-	// // 	single_builtin(data, data->cmd, &exec);
 	else
 	{
-		sig_execute_parent();
 		pipeline(data, data->cmd, &exec);
 		waiting(data, &exec);
 	}

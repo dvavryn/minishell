@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:57:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 15:36:24 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 19:40:13 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,34 @@ int	dup_child(t_exec *exec, size_t c)
 	return (flag);
 }
 
+void	pipeline_builtin(t_data *data, t_cmd *cmd)
+{
+	int ret;
+
+	ret = 0;
+	if (!ft_strcmp(cmd->args[0], "echo"))
+		ret = bi_echo(data, cmd->args);
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		ret = bi_cd(data, cmd);
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		bi_pwd(data);
+	if (!ft_strcmp(cmd->args[0], "export"))
+		ret = bi_export(data, cmd);
+	if (!ft_strcmp(cmd->args[0], "unset"))
+		ret = bi_unset(data, cmd);
+	if (!ft_strcmp(cmd->args[0], "env"))
+		bi_env(data);
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		bi_exit(data, cmd->args);
+	exit(ret);
+}
+
 int	pipeline_child(t_data *data, t_cmd *cmd, t_exec *exec)
 {
 	char	*buf;
 
 	if (cmd->args && cmd->args[0] && !ft_strchr(cmd->args[0], '/')
-		&& ms_getenv(data->env, "PATH"))
+		&& ms_getenv(data->env, "PATH") && !isbuiltin(cmd->args[0]))
 	{
 		buf = get_path(data, cmd);
 		if (!buf)
@@ -77,12 +99,17 @@ int	pipeline_child(t_data *data, t_cmd *cmd, t_exec *exec)
 		return (free_all(data), exit(1), 1);
 	if (!cmd->args || !cmd->args[0])
 		return (free_all(data), exit(0), 1);
-	execve(cmd->args[0], cmd->args, data->env);
-	perror(cmd->cmd);
-	if (access(cmd->args[0], F_OK))
-		return (free_all(data), exit(127), 1);
-	else if (access(cmd->args[0], F_OK | X_OK))
-		return (free_all(data), exit(126), 1);
+	if (isbuiltin(cmd->args[0]))
+		pipeline_builtin(data, cmd);
+	else
+	{
+		execve(cmd->args[0], cmd->args, data->env);
+		perror(cmd->cmd);
+		if (access(cmd->args[0], F_OK))
+			return (free_all(data), exit(127), 1);
+		else if (access(cmd->args[0], F_OK | X_OK))
+			return (free_all(data), exit(126), 1);
+	}
 	return (0);
 }
 
