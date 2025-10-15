@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 18:50:41 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:09:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,8 @@ struct s_data
 	t_cmd	*cmd;
 	size_t	line;
 	int		ret;
+	int		last_ret;
 	int		hd_quit;
-	// ret error return...
-		// syntax error = 2
 };
 
 struct s_token

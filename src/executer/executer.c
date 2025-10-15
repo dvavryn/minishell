@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:05:19 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 19:24:46 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:06:54 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static void	waiting(t_data *data, t_exec *exec)
 {
 	t_cmd	*ptr;
+	int		*ret;
 
+	ret = &data->ret;
 	ptr = data->cmd;
 	while (ptr)
 	{
@@ -25,28 +27,18 @@ static void	waiting(t_data *data, t_exec *exec)
 		else if (WIFSIGNALED(exec->status))
 		{
 			printf("TERMINATED BY SIGNAL: %d\n", WTERMSIG(exec->status));
-			data->ret = 128 + WTERMSIG(exec->status);
+			*ret = 128 + WTERMSIG(exec->status);
 		}
 		ptr = ptr->next;
 	}
 }
 
-// static void	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec)
-// {
-// 	(void)exec;
-// 	if (cmd->args && cmd->args[0] && !ft_strcmp(cmd->cmd, "exit"))
-// 		bi_exit(data, cmd->args);
-// 	printf("todo\n");
-// 	return ;
-// }
-
 int	buffer_fds(int *buffer)
 {
 	buffer[0] = dup(STDIN_FILENO);
-	buffer[1] = dup(STDOUT_FILENO);	
+	buffer[1] = dup(STDOUT_FILENO);
 	if (buffer[0] == -1 || buffer[1] == -1)
 		return (0);
-	
 	return (1);
 }
 
@@ -64,10 +56,8 @@ int	restore_fds(int *buffer)
 	return (flag);
 }
 
-int	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec)
+int	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec, int buffer[2])
 {
-	int	buffer[2];
-
 	if (!buffer_fds(buffer))
 		ft_exit(data, "dup");
 	if (!open_files(cmd->redirs, exec))
@@ -94,16 +84,16 @@ int	single_builtin(t_data *data, t_cmd *cmd, t_exec *exec)
 	return (0);
 }
 
-
-int	executer(t_data *data)				// handle SIGPIPE echo hello | <test.c cat
+int	executer(t_data *data)
 {
 	t_exec	exec;
+	int		buffer[2];
 
 	init_exec(data, &exec);
 	sig_execute_parent();
 	if (exec.cmd_count == 1 && data->cmd->args && data->cmd->args[0]
 		&& isbuiltin(data->cmd->args[0]))
-		data->ret = single_builtin(data, data->cmd, &exec);
+		data->ret = single_builtin(data, data->cmd, &exec, buffer);
 	else
 	{
 		pipeline(data, data->cmd, &exec);

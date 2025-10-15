@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:46:27 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/01 13:40:44 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 19:48:34 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	prompt(t_data *data)
 {
+	data->last_ret = data->ret;
 	data->input = NULL;
 	if (data->ret)
 		printf ("[%d] ", data->ret);

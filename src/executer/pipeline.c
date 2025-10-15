@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:57:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 19:40:13 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 19:53:49 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	dup_child(t_exec *exec, size_t c)
 
 void	pipeline_builtin(t_data *data, t_cmd *cmd)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (!ft_strcmp(cmd->args[0], "echo"))
