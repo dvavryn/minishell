@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:30:32 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 13:24:37 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 14:03:39 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,5 @@ char	*get_heredoc_name(void)
 	filename[i] = '\0';
 	tmp = filename;
 	filename = ft_strjoin("/tmp/", filename);
-	free(tmp);
-	close(fd);
-	return (filename);
+	return (free(tmp), close(fd), filename);
 }

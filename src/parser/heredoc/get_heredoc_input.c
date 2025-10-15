@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 13:14:53 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 14:05:03 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	heredoc_signal(int sig)
 	(void)sig;
 	g_flag = 1;
 	rl_done = 1;
+	printf("> ^C\n");
 	ioctl(STDIN_FILENO, TIOCSTI, &nl);
 }
 
