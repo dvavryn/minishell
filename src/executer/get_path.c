@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 12:21:57 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/09 15:44:44 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 16:02:13 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_path(t_data *data, t_cmd *cmd)
 	char	*buf[2];
 	char	**path;
 	ssize_t	i;
-	
+
 	buf[0] = ft_strjoin("/", cmd->args[0]);
 	if (!buf[0])
 		return (NULL);

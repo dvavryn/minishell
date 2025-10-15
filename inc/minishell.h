@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 15:30:42 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:01:55 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ struct s_cmd
 	char	**args;
 	int		pipe_in;
 	int		pipe_out;
-	t_redir *redirs;
+	t_redir	*redirs;
 	t_cmd	*next;
 };
 
@@ -126,7 +126,6 @@ struct s_exec
 	size_t	curr;
 	size_t	cmd_count;
 };
-
 
 // prototypes
 // general

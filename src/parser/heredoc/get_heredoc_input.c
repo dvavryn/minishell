@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 15:49:22 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 16:01:02 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	heredoc_signal(int sig)
 
 	nl = 32;
 	(void)sig;
-	g_flag = 1;
+	g_flag = sig;
 	rl_done = 1;
 	printf("> ^C\n");
 	ioctl(STDIN_FILENO, TIOCSTI, &nl);
@@ -32,7 +32,7 @@ static int	manage_heredoc_input(t_data *data, char **out, char *clean_lim,
 	char	*buf;
 	char	*tmp;
 
-	if (g_flag == 1)
+	if (g_flag == SIGINT)
 	{
 		g_flag = 0;
 		data->hd_quit = 1;
