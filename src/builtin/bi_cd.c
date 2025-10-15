@@ -6,45 +6,51 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:11:15 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 18:55:53 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 20:10:55 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	bi_cd(t_data *data, t_cmd *cmd)
+static int assign_pwd(t_data *data, char *pwd, ssize_t i)
 {
-	char	*pwd;
 	char	*tmp;
-	ssize_t	i;
-	
-	pwd = ft_strdup(getcwd(NULL, 0));
+	char	*path;
+	char	**buf;
+
+	path = getcwd(NULL, 0);
+	while (data->env[++i] && ft_strncmp(data->env[i], pwd, (ft_strlen(pwd) - 1)))
+		i++;
+	if (!data->env[i])
+	{
+		buf = ft_calloc(i + 2, sizeof(char *));
+		if (!buf)
+			return (free(path), 1);
+		i = -1;
+		while (data->env[++i])
+			buf[i] = data->env[i];
+		buf[i++] = ft_strjoin(pwd, path);
+		buf[i] = NULL;
+		return (free(path), 0);
+	}
+	else
+		tmp = ft_strjoin(pwd, path);
+	if (!tmp)
+		return (free(path), 1);
+	free(data->env[i]);
+	data->env[i] = tmp;
+	return (free(path), 0);
+}
+
+int	bi_cd(t_data *data, t_cmd *cmd)
+{	
+	if(assign_pwd(data, "OLDPWD=", -1))
+		return (1);
 	if (!cmd->args[1])
 		chdir(ms_getenv(data->env, "HOME"));
 	else if ((chdir(cmd->args[1])) == -1)
-		return (perror("minishell: cd"), 0);
-	if (!isexported(data->env, "OLDPWD"))
-		add_env(data, "OLDPWD");
-	if (!isexported(data->env, "PWD"))
-		add_env(data, "PWD");
-	if (!isexported(data->env, "OLDPWD") || !isexported(data->env, "PWD"))
-		return (free(pwd), ft_exit(data, "malloc"), 1);
-
-	i = -1;
-	while (data->env[++i] && ft_strncmp(data->env[i], "OLDPWD", 6))
-		;
-	tmp = ft_strjoin("OLDPWD=", pwd);
-	free(data->env[i]);
-	data->env[i] = tmp;
-	free(pwd);
-	pwd = ft_strdup(getcwd(NULL, 0));
-	i = -1;
-	while (data->env[++i] && ft_strncmp(data->env[i], "PWD=", 4))
-		;
-	tmp = ft_strjoin("PWD=", pwd);
-	free(data->env[i]);
-	data->env[i] = tmp;
-	free(pwd);
+		return (perror("minishell: cd"), 1);
+	if (assign_pwd(data, "PWD=", -1))
+		return (1);
 	return (0);
 }
-
