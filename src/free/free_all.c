@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:14:42 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/01 14:35:02 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:26:20 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	free_all(t_data *data)
 	data->cmd = NULL;
 	data->env = NULL;
 }
-	

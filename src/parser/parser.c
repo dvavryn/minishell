@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:03:33 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 13:21:57 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:26:36 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_validity(t_data *data)
 {
 	t_token	*ptr;
-	
+
 	ptr = data->tokens;
 	if (ptr->type == TOKEN_PIPE)
 		return (ms_perror("MS syntax: command can't start with pipe"), 0);
