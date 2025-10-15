@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 19:00:26 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:30:03 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	heredoc_signal(int sig)
 	(void)sig;
 	g_flag = 1;
 	printf("\n");
+	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_done = 0;
+	rl_redisplay();
+	rl_done = 1;
 }
 
 // not leak free yet
