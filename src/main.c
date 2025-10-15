@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/14 16:16:26 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:26:03 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt(&data))
 		{
 			tokenize(&data);
-			// print_tokens(data.tokens);
 			if (data.tokens)
 			{
 				expander(&data);
 				expanded_tokens(&data);
 				if (parser(&data))
 				{
-					// print_cmds(data.cmd);
 					executer(&data);
 					free_cmd(data.cmd);
 					data.cmd = NULL;

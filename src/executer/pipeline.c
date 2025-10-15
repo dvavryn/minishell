@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:57:36 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/10 15:47:30 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:36:24 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,17 @@ int	pipeline_child(t_data *data, t_cmd *cmd, t_exec *exec)
 	return (0);
 }
 
+static void	close_pipes(int curr, int fd[2])
+{
+	if (curr > 0)
+	{
+		if (fd[0] > 1)
+			close(fd[0]);
+		if (fd[1] > 1)
+			close(fd[1]);
+	}
+}
+
 void	pipeline(t_data *data, t_cmd *cmd, t_exec *exec)
 {
 	t_cmd	*ptr;
@@ -103,15 +114,7 @@ void	pipeline(t_data *data, t_cmd *cmd, t_exec *exec)
 		else if (!exec->pid)
 			pipeline_child(data, ptr, exec);
 		else
-		{
-			if (exec->curr > 0)
-			{
-				if (exec->pipe[(exec->curr + 1) % 2][0] > 1)
-					close(exec->pipe[(exec->curr + 1) % 2][0]);
-				if (exec->pipe[(exec->curr + 1) % 2][1] > 1)
-					close(exec->pipe[(exec->curr + 1) % 2][1]);
-			}
-		}
+			close_pipes(exec->cmd_count, exec->pipe[(exec->curr + 1) % 2]);
 		ptr = ptr->next;
 		exec->curr++;
 	}
