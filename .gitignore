@@ -1,4 +1,4 @@
 a.out
-.o
-.a
+*.o
+*.a
 minishell
