@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 18:21:23 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 18:50:41 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void	bi_pwd(t_data *data);
 int		bi_unset(t_data *data, t_cmd *cmd);
 int		bi_export(t_data *data, t_cmd *cmd);
 int		bi_cd(t_data *data, t_cmd *cmd);
+void	add_env(t_data *data, char *arg);
+int		isexported(char **env, char *arg);
 
 // tokenize
 void	tokenize(t_data *data);
