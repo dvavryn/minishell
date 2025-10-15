@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:27:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 13:23:26 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:30:26 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	get_heredoc(t_data *data, char **lim)
 	fd = open(name, O_CREAT | O_WRONLY, 0600);
 	if (fd == -1)
 		return (perror("open"), 0);
-	input = get_heredoc_input(data, *lim);
+	input = get_heredoc_input(data, *lim, ft_strdup(""));
 	if (!input)
 		return (close(fd), unlink(name), free(name), 0);
 	if (write_to_heredoc(fd, input) == -1)

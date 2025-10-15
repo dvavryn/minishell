@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 12:50:22 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 15:30:42 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	add_cmd(t_data *data);
 // parser/heredoc
 int		get_heredoc(t_data *data, char **lim);
 char	*get_heredoc_name(void);
-char	*get_heredoc_input(t_data *data, char *lim);
+char	*get_heredoc_input(t_data *data, char *lim, char *out);
 char	*clean_hd(char *in);
 void	cmd_split_join(t_data *data, t_cmd *cmd, char *value);
 char	*expand_heredoc(t_data *data, char *input);
