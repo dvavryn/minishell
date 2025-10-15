@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 12:30:03 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:14:53 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ int	g_flag = 0;
 
 void	heredoc_signal(int sig)
 {
+	char nl = 32;
 	(void)sig;
 	g_flag = 1;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 	rl_done = 1;
+	ioctl(STDIN_FILENO, TIOCSTI, &nl);
 }
 
 // not leak free yet
@@ -42,6 +40,12 @@ char	*get_heredoc_input(t_data *data, char *lim)
 		return (NULL);
 	while (1)
 	{
+		if (g_flag == 1)
+		{
+			g_flag = 0;
+			data->hd_quit = 1;
+			break;
+		}
 		buf = readline("> ");
 		if (!buf)
 		{
@@ -49,12 +53,7 @@ char	*get_heredoc_input(t_data *data, char *lim)
 				"delimited by end-of-file (wanted `%s`)\n", data->line, lim);
 			break ;
 		}
-		if (g_flag == 1)
-		{
-			g_flag = 0;
-			free(buf);
-			break;
-		}
+
 		if (!ft_strcmp(buf, clean_lim))
 		{
 			free(buf);

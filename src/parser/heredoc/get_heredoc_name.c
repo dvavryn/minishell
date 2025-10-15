@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generate_name.c                                    :+:      :+:    :+:   */
+/*   get_heredoc_name.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:30:32 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 16:30:48 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 13:24:37 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ static char	get_char(char *buffer)
 
 char	*get_heredoc_name(void)
 {
-	int		fd;
 	size_t	i;
+	int		fd;
 	char	buffer[50];
 	char	*filename;
+	char	*tmp;
 
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd < 0)
@@ -48,7 +49,9 @@ char	*get_heredoc_name(void)
 			i++;
 	}
 	filename[i] = '\0';
+	tmp = filename;
 	filename = ft_strjoin("/tmp/", filename);
+	free(tmp);
 	close(fd);
 	return (filename);
 }

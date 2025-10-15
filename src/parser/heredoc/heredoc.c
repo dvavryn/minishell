@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:27:06 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/09/25 16:58:45 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 13:23:26 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	get_heredoc(t_data *data, char **lim)
 	if (write_to_heredoc(fd, input) == -1)
 		return (unlink(name), free(name), 0);
 	close(fd);
+	if (data->hd_quit == 1)
+		return (unlink(name), free(name), 0);
 	free(*lim);
 	*lim = name;
 	return (1);
