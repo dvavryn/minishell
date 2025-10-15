@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:07:22 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 19:42:37 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:16:56 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	**empty_env(void)
 	out = ft_calloc(5, sizeof(char *));
 	if (!out)
 		return (NULL);
-	out[0] = ft_strdup(getcwd(NULL, 0));
+	out[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
 	if (!out[0])
 		return (free_split(out), NULL);
 	out[1] = ft_strdup("SHLVL=1");
