@@ -6,7 +6,7 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:02:11 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 20:09:41 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:44:42 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,8 @@ void	cleanup_args(t_data *data);
 // expander
 void	expander(t_data *data);
 void	expanded_tokens(t_data *data);
+void	add_to_list(t_data *data, t_token *new_tokens, t_token **ptr, t_token **prev);
+t_token	*split_tokens(t_data *data, char *value, ssize_t *i);
 
 // executer
 int		executer(t_data *data);

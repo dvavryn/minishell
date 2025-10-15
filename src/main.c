@@ -6,11 +6,13 @@
 /*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 19:52:25 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:46:18 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// static void	main_loop();
 
 int	main(int argc, char **argv, char **envp)
 {
