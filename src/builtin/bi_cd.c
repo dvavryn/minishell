@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:11:15 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 17:47:11 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:17:54 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,36 @@
 
 int	bi_cd(t_data *data, t_cmd *cmd)
 {
-	char	*new_dir = cmd->args[1];
 	char	*pwd;
 	char	*tmp;
-	// char *oldpwd;
+	char	*oldpwd;
+	ssize_t	i;
 	
-	if (!cmd->args[1])
-		chdir("/home");
-	else if ((chdir(new_dir)) == -1)
-		return (perror("minishell: cd"), 0);
 	pwd = ft_strdup(getcwd(NULL, 0));
-	// printf("pwd: %s\n", pwd);
-	ssize_t	i = -1;
-	while (data->env[++i] && !ft_strncmp("PWD=", data->env[i], 4))
+	if (!cmd->args[1])
+		chdir(ms_getenv(data->env, "HOME"));
+	else if ((chdir(cmd->args[1])) == -1)
+		return (perror("minishell: cd"), 0);
+	i = -1;
+	while (data->env[++i] && ft_strncmp(data->env[i], "OLDPWD", 6))
+		;
+	if (!data->env[i])
+		// create OLDPWD and !!!join!!! -- is fun, not -- to env
+		;
+	tmp = ft_strjoin("OLDPWD=", pwd);
+	free(data->env[i]);
+	data->env[i] = tmp;
+	free(pwd);
+	pwd = ft_strdup(getcwd(NULL, 0));
+	i = -1;
+	while (data->env[++i] && ft_strncmp(data->env[i], "PWD=", 4))
 		;
 	if (!data->env[i])
 		printf("wtf?\n");
 		;
-	tmp = data->env[i];
-	// printf("tmp: %s\n", tmp);
-	data->env[i] = ft_strjoin("PWD=", pwd);
-	free(tmp);
+	tmp = ft_strjoin("PWD=", pwd);
+	free(data->env[i]);
+	data->env[i] = tmp;
 	free(pwd);
-
-	// char *old_pwd;
-	
-	// i = -1;
-	// while (env[++i] && !ft_strncmp("OLDPWD=", env[i], 4))
-	// 	;
-	// if (!env[i])
-	// 	// create OLDPWD and !!!join!!! -- is fun, not -- to env
-	// 	;
-	// oldpwd = env[i];
-	(void)new_dir;
 	return (0);
 }
