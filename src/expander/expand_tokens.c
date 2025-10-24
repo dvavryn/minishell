@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 20:42:31 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 20:43:31 by dvavryn          ###   ########.fr       */
+/*   Updated: 2025/10/24 15:00:36 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,27 @@ void	expanded_tokens(t_data *data)
 {
 	t_token	*ptr;
 	t_token	*prev;
+	t_token	*next;
 
 	prev = NULL;
 	ptr = data->tokens;
 	while (ptr)
 	{
+		next = ptr->next;
 		if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
 		{
-			prev = ptr;
+			if (ptr->next)
+				ptr = ptr->next->next;
 			ptr = ptr->next;
+			continue ;
 		}
 		if (ptr->expanded == 1)
+		{
 			split_expanded_tokens(data, &prev, &ptr);
+			continue ;
+		}
 		else
 			prev = ptr;
-		if (ptr)
-			ptr = ptr->next;
+		ptr = next;
 	}
 }
