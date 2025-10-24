@@ -41,7 +41,7 @@ SRC := \
         src/free/free_all.c \
         src/free/free_cmd.c \
         src/free/free_split.c \
-        src/free/free_tokens`.c \
+        src/free/free_tokens.c \
         \
         src/parser/heredoc/clean_hd.c \
         src/parser/heredoc/expand_heredoc.c \
