@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: dvavryn <dvavryn@sudent.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 16:37:30 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/15 16:01:02 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:34:38 by dvavryn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
