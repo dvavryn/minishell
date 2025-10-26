@@ -6,7 +6,7 @@
 /*   By: bschwarz <bschwarz@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 20:42:31 by dvavryn           #+#    #+#             */
-/*   Updated: 2025/10/24 15:00:36 by bschwarz         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:05:20 by bschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ static void	split_expanded_tokens(t_data *data, t_token **prev, t_token **ptr)
 	add_to_list(data, new_tokens, ptr, prev);
 }
 
+static t_token	*skip_redir(t_token *ptr, t_token **prev)
+{
+	if (ptr && ptr->next && ptr->next->next)
+	{
+		*prev = ptr->next;
+		return (ptr->next->next);
+	}
+	*prev = ptr;
+	return (NULL);
+}
+
+static t_token	*handle_expansion(t_data *data, t_token *ptr, t_token **prev)
+{
+	split_expanded_tokens(data, prev, &ptr);
+	if (*prev == NULL)
+		return (data->tokens);
+	return ((*prev)->next);
+}
+
 void	expanded_tokens(t_data *data)
 {
 	t_token	*ptr;
@@ -51,19 +70,13 @@ void	expanded_tokens(t_data *data)
 	{
 		next = ptr->next;
 		if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_HEREDOC)
-		{
-			if (ptr->next)
-				ptr = ptr->next->next;
-			ptr = ptr->next;
-			continue ;
-		}
-		if (ptr->expanded == 1)
-		{
-			split_expanded_tokens(data, &prev, &ptr);
-			continue ;
-		}
+			ptr = skip_redir(ptr, &prev);
+		else if (ptr->expanded == 1)
+			ptr = handle_expansion(data, ptr, &prev);
 		else
+		{
 			prev = ptr;
-		ptr = next;
+			ptr = next;
+		}
 	}
 }
