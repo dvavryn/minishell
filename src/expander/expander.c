@@ -1,0 +1,127 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvavryn <dvavryn@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/26 12:50:57 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/10/15 21:26:34 by dvavryn          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static char	*expand_var(t_data *data, char *ptr, size_t *i)
+{
+	char	*var;
+	char	c;
+	char	*out;
+
+	c = ptr[*i];
+	ptr[*i] = 0;
+	var = ft_strdup(&ptr[1]);
+	ptr[*i] = c;
+	if (!var)
+		return (NULL);
+	if (!ms_getenv(data->env, var))
+		out = ft_strdup("");
+	else
+		out = ft_strdup(ms_getenv(data->env, var));
+	free(var);
+	if (!out)
+		return (NULL);
+	return (out);
+}
+
+static int	expander_sub_mini(t_data *data, t_expand *exp)
+{
+	exp->i = 1;
+	while (exp->ptr[exp->i] && ft_isalnum(exp->ptr[exp->i]))
+		exp->i++;
+	if (exp->i == 1 && exp->ptr[exp->i] == '?')
+	{
+		exp->i++;
+		exp->buf1 = ft_itoa(data->last_ret);
+	}
+	else
+		exp->buf1 = expand_var(data, exp->ptr, &exp->i);
+	if (!exp->buf1)
+		return (free(exp->out), 0);
+	exp->buf2 = exp->out;
+	exp->out = ft_strjoin(exp->out, exp->buf1);
+	free(exp->buf1);
+	free(exp->buf2);
+	if (!exp->out)
+		return (0);
+	exp->ptr += exp->i;
+	return (1);
+}
+
+int	expander_sub(t_data *data, t_expand *exp)
+{
+	if (*exp->ptr == '\"')
+	{
+		exp->out = expand_word_dquote(&exp->flag, &exp->out);
+		if (!exp->out)
+			return (0);
+		exp->ptr++;
+	}
+	if (*exp->ptr == '$')
+	{
+		if (!expander_sub_mini(data, exp))
+			return (0);
+	}
+	return (1);
+}
+
+char	*expand_word(t_data *data, char *input)
+{
+	t_expand	exp;
+
+	init_exp(&exp, input);
+	if (!exp.out)
+		return (NULL);
+	while (*exp.ptr)
+	{
+		exp.i = expand_word_skip(exp.ptr, exp.flag);
+		exp.buf1 = ft_substr(exp.ptr, 0, exp.i);
+		if (!exp.buf1)
+			return (free(exp.out), NULL);
+		exp.buf2 = exp.out;
+		exp.out = ft_strjoin(exp.out, exp.buf1);
+		free(exp.buf1);
+		free(exp.buf2);
+		if (!exp.out)
+			return (NULL);
+		exp.ptr += exp.i;
+		if (!expander_sub(data, &exp))
+			return (NULL);
+	}
+	return (exp.out);
+}
+
+void	expander(t_data *data)
+{
+	t_token	*ptr;
+	char	*buf;
+
+	ptr = data->tokens;
+	while (ptr)
+	{
+		if (ptr->type == TOKEN_HEREDOC)
+			ptr = ptr->next;
+		else if (ptr->type == TOKEN_REDIR || ptr->type == TOKEN_PIPE)
+			;
+		else if (ft_strchr(ptr->value, '$'))
+		{
+			buf = expand_word(data, ptr->value);
+			if (!buf)
+				ft_exit(data, "malloc");
+			free(ptr->value);
+			ptr->expanded = 1;
+			ptr->value = buf;
+		}
+		ptr = ptr->next;
+	}
+}

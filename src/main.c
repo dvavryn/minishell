@@ -1,0 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvavryn <dvavryn@sudent.42vienna.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 15:03:40 by dvavryn           #+#    #+#             */
+/*   Updated: 2025/10/24 13:34:13 by dvavryn          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static void	main_loop(t_data *data);
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_data	data;
+
+	startup(&data, argc, argv, envp);
+	while (1)
+		main_loop(&data);
+}
+
+static void	main_loop(t_data *data)
+{
+	sig_interactive();
+	if (prompt(data))
+	{
+		tokenize(data);
+		if (data->tokens)
+		{
+			expander(data);
+			expanded_tokens(data);
+			if (parser(data))
+			{
+				if (!data->hd_quit)
+					executer(data);
+				else
+					data->hd_quit = 0;
+				free_cmd(data->cmd);
+				data->cmd = NULL;
+			}
+		}
+		free_tokens(data->tokens);
+		data->tokens = NULL;
+		free(data->input);
+	}
+}
